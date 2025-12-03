@@ -1,0 +1,451 @@
+import React, { useState, useEffect, useCallback } from 'react';
+import { Upload, Loader2, Save, ArrowLeft, LogOut, Moon, Sun, FileCheck, AlertTriangle } from 'lucide-react';
+import { AppStep, FormField } from './types';
+import { convertPDFToImages, generateFilledPDF } from './utils/pdfUtils';
+import { analyzeFormImage } from './services/geminiService';
+import VoiceInterviewer from './components/VoiceInterviewer';
+import PDFPreview from './components/PDFPreview';
+import Auth from './components/Auth';
+import Dashboard from './components/Dashboard';
+import Splash from './components/Splash';
+
+// Helper to manage storage keys per user
+const getStorageKey = (userId: string) => `autoform_forms_${userId}`;
+
+function App() {
+  const [user, setUser] = useState<string | null>(null);
+  const [view, setView] = useState<'splash' | 'auth' | 'dashboard' | 'editor'>('splash');
+  
+  // Initialize darkMode lazily to avoid overwriting localStorage on mount
+  const [darkMode, setDarkMode] = useState<boolean>(() => {
+      if (typeof window !== 'undefined') {
+          const stored = localStorage.getItem('autoform_theme');
+          if (stored) {
+              return stored === 'dark';
+          }
+          return window.matchMedia('(prefers-color-scheme: dark)').matches;
+      }
+      return false;
+  });
+  
+  // Editor State
+  const [currentFormId, setCurrentFormId] = useState<string | null>(null);
+  const [step, setStep] = useState<AppStep>('upload');
+  const [file, setFile] = useState<File | null>(null);
+  const [images, setImages] = useState<string[]>([]);
+  const [fields, setFields] = useState<FormField[]>([]);
+  const [error, setError] = useState<string | null>(null);
+  const [formName, setFormName] = useState<string>("Untitled Form");
+  
+  // UI States
+  const [globalSaveStatus, setGlobalSaveStatus] = useState<'idle' | 'saving' | 'saved'>('idle');
+
+  // Dashboard Data
+  const [savedForms, setSavedForms] = useState<any[]>([]);
+
+  // 1. Auth & Initial Load
+  useEffect(() => {
+      const storedUser = localStorage.getItem('autoform_user');
+      if (storedUser) {
+          setUser(storedUser);
+          loadSavedForms(storedUser);
+      }
+  }, []);
+
+  // Apply Dark Mode & Sync to LocalStorage
+  useEffect(() => {
+      if (darkMode) {
+          document.documentElement.classList.add('dark');
+          localStorage.setItem('autoform_theme', 'dark');
+      } else {
+          document.documentElement.classList.remove('dark');
+          localStorage.setItem('autoform_theme', 'light');
+      }
+  }, [darkMode]);
+
+  const loadSavedForms = (userId: string) => {
+      try {
+          const raw = localStorage.getItem(getStorageKey(userId));
+          const forms = raw ? JSON.parse(raw) : [];
+          setSavedForms(forms);
+      } catch (e) {
+          console.error("Error loading forms", e);
+      }
+  };
+
+  const toggleTheme = () => setDarkMode(!darkMode);
+
+  const handleSplashProceed = () => {
+      if (user) {
+          setView('dashboard');
+      } else {
+          setView('auth');
+      }
+  };
+
+  const handleLogin = (email: string) => {
+      setUser(email);
+      localStorage.setItem('autoform_user', email);
+      setView('dashboard');
+      loadSavedForms(email);
+  };
+
+  const handleLogout = () => {
+      setUser(null);
+      localStorage.removeItem('autoform_user');
+      setCurrentFormId(null);
+      setFields([]);
+      setImages([]);
+      setView('splash');
+  };
+
+  // 2. Editor Actions
+  const handleStartNew = () => {
+      setCurrentFormId(Date.now().toString());
+      setStep('upload');
+      setFile(null);
+      setImages([]);
+      setFields([]);
+      setError(null);
+      setFormName("Untitled Form");
+      setView('editor');
+  };
+
+  const handleLoadForm = (formId: string) => {
+      if (!user) return;
+      const forms = JSON.parse(localStorage.getItem(getStorageKey(user)) || '[]');
+      const form = forms.find((f: any) => f.id === formId);
+      if (form) {
+          setCurrentFormId(form.id);
+          setFields(form.fields);
+          setImages(form.images || []); 
+          setStep(form.step || 'review');
+          setFormName(form.name);
+          setView('editor');
+      }
+  };
+  
+  const handleDeleteForm = (formId: string) => {
+      if (!user) return;
+      if (!window.confirm("Are you sure you want to delete this form? This action cannot be undone.")) return;
+      
+      const forms = savedForms.filter(f => f.id !== formId);
+      localStorage.setItem(getStorageKey(user), JSON.stringify(forms));
+      setSavedForms(forms);
+      
+      // If we are currently editing the deleted form, exit to dashboard
+      if (currentFormId === formId) {
+          setView('dashboard');
+      }
+  };
+
+  // 3. Persistence Logic
+  const saveCurrentProgress = useCallback(() => {
+      if (!user || !currentFormId) return false;
+      
+      setGlobalSaveStatus('saving');
+
+      const newFormEntry = {
+          id: currentFormId,
+          name: formName,
+          timestamp: Date.now(),
+          progress: fields.length > 0 ? Math.round((fields.filter(f => f.value).length / fields.length) * 100) : 0,
+          fields,
+          images, // Storing base64 in LS
+          step
+      };
+
+      try {
+          const forms = JSON.parse(localStorage.getItem(getStorageKey(user)) || '[]');
+          const existingIdx = forms.findIndex((f: any) => f.id === currentFormId);
+          
+          if (existingIdx >= 0) {
+              forms[existingIdx] = newFormEntry;
+          } else {
+              forms.push(newFormEntry);
+          }
+          
+          try {
+             localStorage.setItem(getStorageKey(user), JSON.stringify(forms));
+          } catch (e) {
+             console.warn("Storage full, saving without images");
+             if (existingIdx >= 0) forms[existingIdx].images = [];
+             else forms[forms.length-1].images = [];
+             localStorage.setItem(getStorageKey(user), JSON.stringify(forms));
+          }
+          
+          setSavedForms(forms);
+          setGlobalSaveStatus('saved');
+          setTimeout(() => setGlobalSaveStatus('idle'), 2000);
+          return true;
+      } catch (e) {
+          console.error("Save failed", e);
+          setGlobalSaveStatus('idle');
+          return false;
+      }
+  }, [user, currentFormId, formName, fields, images, step]);
+
+  // Auto-save
+  useEffect(() => {
+      if (view === 'editor' && fields.length > 0) {
+          const timeout = setTimeout(() => {
+              if (user && currentFormId) {
+                  saveCurrentProgress();
+              }
+          }, 5000); // Debounce 5s
+          return () => clearTimeout(timeout);
+      }
+  }, [fields, user, currentFormId, saveCurrentProgress, view]);
+
+
+  // --- Specific Step Handlers ---
+
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const selectedFile = e.target.files[0];
+      const fileName = selectedFile.name.toLowerCase();
+      
+      // Handle Word/Docs logic
+      if (fileName.endsWith('.docx') || fileName.endsWith('.doc')) {
+          setError("Microsoft Word documents must be saved as PDF first. Please 'Save As > PDF' in Word and upload the PDF file.");
+          return;
+      }
+      
+      if (!fileName.endsWith('.pdf')) {
+          setError("Unsupported file format. Please upload a PDF.");
+          return;
+      }
+
+      setFormName(selectedFile.name.replace('.pdf', ''));
+      setFile(selectedFile);
+      setError(null);
+      
+      // If just recovering images for an existing session
+      if (images.length === 0 && fields.length > 0) {
+          const { images: imgData } = await convertPDFToImages(selectedFile);
+          setImages(imgData);
+          return;
+      }
+
+      setStep('analyzing');
+      try {
+        const { images: imgData } = await convertPDFToImages(selectedFile);
+        setImages(imgData);
+
+        let allFields: FormField[] = [];
+        let globalLastSection = "";
+
+        for (let i = 0; i < imgData.length; i++) {
+          try {
+            const pageFields = await analyzeFormImage(imgData[i], i);
+            const processedFields = pageFields.map(f => {
+                if (f.section) {
+                    globalLastSection = f.section;
+                    return f;
+                } else if (globalLastSection) {
+                    return { ...f, section: globalLastSection };
+                }
+                return f;
+            });
+
+            allFields = [...allFields, ...processedFields];
+          } catch (pageError) {
+              console.error(`Failed to analyze page ${i + 1}`, pageError);
+          }
+        }
+
+        if (allFields.length === 0) {
+            throw new Error("No fields detected in the PDF.");
+        }
+
+        setFields(allFields);
+        setStep('interview');
+      } catch (err: any) {
+        console.error(err);
+        setError(err.message || 'Failed to analyze PDF. Please ensure API Key is set.');
+        setStep('upload');
+      }
+    }
+  };
+
+  const handleDownload = async () => {
+    if (!file) {
+        setError("Original PDF file is missing. Please re-upload the PDF to export.");
+        return;
+    }
+    setStep('exporting');
+    try {
+      const pdfBytes = await generateFilledPDF(file, fields);
+      const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `filled_${formName}.pdf`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } catch (e) {
+      console.error(e);
+      setError('Failed to generate PDF');
+    } finally {
+      setStep('review');
+    }
+  };
+
+  // --- Render Views ---
+
+  if (view === 'splash') {
+      return <Splash onProceed={handleSplashProceed} darkMode={darkMode} toggleTheme={toggleTheme} />;
+  }
+
+  if (view === 'auth') {
+      return <Auth onLogin={handleLogin} darkMode={darkMode} toggleTheme={toggleTheme} />;
+  }
+
+  if (view === 'dashboard') {
+      return (
+          <Dashboard 
+              userEmail={user!} 
+              onLogout={handleLogout} 
+              onNewForm={handleStartNew}
+              onLoadForm={handleLoadForm}
+              savedForms={savedForms}
+              onDeleteForm={handleDeleteForm}
+              darkMode={darkMode}
+              toggleTheme={toggleTheme}
+          />
+      );
+  }
+
+  // Editor View
+  return (
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-slate-100 font-sans transition-colors duration-300">
+      <header className="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 sticky top-0 z-50 transition-colors duration-300">
+        <div className="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
+            <div className="flex items-center gap-4">
+                <button onClick={() => setView('dashboard')} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-full transition-colors text-slate-500 dark:text-slate-400">
+                    <ArrowLeft size={20} />
+                </button>
+                <div className="flex items-center gap-2">
+                    <FileCheck className="text-blue-600 dark:text-blue-400" size={24} />
+                    <h1 className="text-lg font-bold text-slate-800 dark:text-white truncate max-w-[200px]">{formName}</h1>
+                </div>
+            </div>
+            
+            <div className="flex items-center gap-2">
+                <button onClick={toggleTheme} className="p-2 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-full">
+                    {darkMode ? <Sun size={20} /> : <Moon size={20} />}
+                </button>
+
+                <button 
+                    onClick={() => saveCurrentProgress()} 
+                    className={`flex items-center gap-2 text-sm font-medium px-4 py-2 rounded-lg transition-all ${globalSaveStatus === 'saved' ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400' : 'bg-white dark:bg-slate-700 text-slate-600 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-600 border border-slate-200 dark:border-slate-600'}`}
+                >
+                    {globalSaveStatus === 'saving' ? (
+                         <Loader2 size={16} className="animate-spin" />
+                    ) : (
+                         <Save size={16} />
+                    )}
+                    <span className="hidden sm:inline">{globalSaveStatus === 'saved' ? 'Saved!' : 'Save'}</span>
+                </button>
+                
+                <div className="h-6 w-px bg-slate-200 dark:bg-slate-700 mx-2"></div>
+
+                <button 
+                    onClick={handleLogout}
+                    className="flex items-center gap-2 text-sm font-medium text-slate-500 dark:text-slate-400 hover:text-red-600 dark:hover:text-red-400 px-3 py-2 rounded-lg transition-colors"
+                >
+                    <LogOut size={16} />
+                </button>
+            </div>
+        </div>
+      </header>
+
+      <main className="max-w-5xl mx-auto px-6 py-12">
+        {error && (
+            <div className="mb-8 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg flex items-center gap-3 text-red-700 dark:text-red-300">
+                <AlertTriangle size={20} />
+                <div className="flex-1"><p>{error}</p></div>
+                {error.includes("Word documents") && (
+                     <label className="px-4 py-2 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 rounded-lg cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-700 font-medium text-sm">
+                        Upload PDF
+                        <input type="file" accept=".pdf" className="hidden" onChange={handleFileUpload} />
+                    </label>
+                )}
+            </div>
+        )}
+
+        {step === 'upload' && (
+            <div className="flex flex-col items-center justify-center py-20 animate-fade-in">
+                <div className="text-center mb-10 max-w-lg">
+                    <h2 className="text-4xl font-extrabold text-slate-900 dark:text-white mb-4">New Form Interview</h2>
+                    <p className="text-lg text-slate-500 dark:text-slate-400">Upload a PDF or Word document to begin.</p>
+                </div>
+                <label className="group relative cursor-pointer">
+                    <div className="flex flex-col items-center justify-center w-80 h-64 border-2 border-dashed border-slate-300 dark:border-slate-600 rounded-2xl bg-white dark:bg-slate-800 hover:border-blue-500 dark:hover:border-blue-400 hover:bg-blue-50 dark:hover:bg-slate-750 transition-all duration-300 shadow-sm">
+                        <div className="p-4 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 mb-4 group-hover:scale-110 transition-transform">
+                            <Upload size={32} />
+                        </div>
+                        <p className="font-semibold text-slate-700 dark:text-slate-200">Click to upload document</p>
+                        <p className="text-xs text-slate-400 mt-2">PDF, DOCX, DOC</p>
+                    </div>
+                    {/* Accepting multiple formats, but handling logic filters them */}
+                    <input type="file" accept=".pdf,.doc,.docx" className="hidden" onChange={handleFileUpload} />
+                </label>
+            </div>
+        )}
+
+        {step === 'analyzing' && (
+            <div className="flex flex-col items-center justify-center py-32 space-y-6 animate-pulse">
+                <Loader2 size={64} className="text-blue-600 dark:text-blue-400 animate-spin" />
+                <h3 className="text-2xl font-bold text-slate-800 dark:text-white">Reading Form...</h3>
+            </div>
+        )}
+
+        {step === 'interview' && (
+            <div className="flex flex-col items-center">
+                <VoiceInterviewer 
+                    fields={fields} 
+                    onUpdate={(updated) => setFields(updated)}
+                    onComplete={(updated) => { setFields(updated); setStep('review'); }}
+                    onSaveForLater={() => saveCurrentProgress()}
+                />
+            </div>
+        )}
+
+        {(step === 'review' || step === 'exporting') && (
+            <div className="flex flex-col items-center">
+                 <div className="w-full flex justify-end gap-3 mb-4">
+                     <button 
+                        onClick={handleDownload}
+                        disabled={step === 'exporting'}
+                        className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white px-6 py-3 rounded-xl font-semibold shadow-lg shadow-blue-500/30 transition-all disabled:opacity-50"
+                    >
+                        {step === 'exporting' ? <Loader2 className="animate-spin" /> : <Save size={20} />}
+                        Download PDF
+                    </button>
+                </div>
+                {images.length > 0 ? (
+                    <PDFPreview 
+                        images={images} 
+                        fields={fields} 
+                        onUpdateField={(id, r) => setFields(f => f.map(x => x.id === id ? {...x, rect: r} : x))}
+                        onUpdateValue={(id, v) => setFields(f => f.map(x => x.id === id ? {...x, value: v} : x))}
+                    />
+                ) : (
+                    <div className="bg-slate-100 dark:bg-slate-800 p-12 rounded-xl text-center border border-slate-200 dark:border-slate-700">
+                        <p className="text-slate-500 dark:text-slate-400 mb-4">Preview images not available in restored session.</p>
+                        <label className="text-blue-600 dark:text-blue-400 font-semibold cursor-pointer hover:underline">
+                            Upload PDF to restore preview
+                            <input type="file" accept=".pdf" className="hidden" onChange={handleFileUpload} />
+                        </label>
+                    </div>
+                )}
+            </div>
+        )}
+      </main>
+    </div>
+  );
+}
+
+export default App;

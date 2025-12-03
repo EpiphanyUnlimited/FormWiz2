@@ -1,0 +1,7 @@
+{
+  "name": "AutoForm Voice Filler",
+  "description": "An AI-powered application that analyzes PDF forms, interviews you to gather answers via voice, and automatically fills the PDF.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
