@@ -22,7 +22,10 @@ const Splash: React.FC<SplashProps> = ({ onProceed, darkMode, toggleTheme }) => 
         <div className="space-y-8 animate-fade-in-up">
           <div className="flex items-center gap-3">
               <FileCheck className="text-blue-200 w-12 h-12" />
-              <div className="text-3xl font-bold">FormWiz</div>
+              <div>
+                <div className="text-3xl font-bold leading-none">FormWiz</div>
+                <div className="text-lg text-blue-100">by Epiphany Unlimited, Inc.</div>
+              </div>
           </div>
           
           <h1 className="text-5xl font-extrabold leading-tight">
