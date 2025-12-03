@@ -4,7 +4,9 @@
   "description": "An AI-powered application that analyzes PDF forms and interviews users via voice.",
   "type": "module",
   "scripts": {
-    "start": "npx serve ."
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "keywords": [
     "ai",
@@ -22,5 +24,10 @@
     "lucide-react": "^0.555.0",
     "pdf-lib": "^1.17.1",
     "@google/genai": "^1.30.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.2.1",
+    "vite": "^5.2.0",
+    "typescript": "^5.4.0"
   }
 }
