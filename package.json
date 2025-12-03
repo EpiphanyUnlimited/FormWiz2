@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "remix vite:build",
     "preview": "vite preview"
   },
   "keywords": [
@@ -24,11 +24,11 @@
     "lucide-react": "^0.555.0",
     "pdf-lib": "^1.17.1",
     "@google/genai": "^1.30.0"
-    "remix": "^..."
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.2.1",
     "vite": "^5.2.0",
     "typescript": "^5.4.0"
+    "remix": "1.0.0"
   }
 }
