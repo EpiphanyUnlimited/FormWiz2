@@ -1,5 +1,5 @@
 {
-  "name": "AutoForm Voice Filler",
+  "name": "FormWiz",
   "description": "An AI-powered application that analyzes PDF forms, interviews you to gather answers via voice, and automatically fills the PDF.",
   "requestFramePermissions": [
     "microphone"

@@ -107,7 +107,7 @@ const Auth: React.FC<AuthProps> = ({ onLogin, darkMode, toggleTheme }) => {
           // Create unverified user
           saveUser({ email: cleanEmail, password: cleanPassword, verified: false });
           
-          alert(`AutoForm Verification Code for ${cleanEmail}: 123456`);
+          alert(`FormWiz Verification Code for ${cleanEmail}: 123456`);
           
           setIsLoading(false);
           setView('verify');

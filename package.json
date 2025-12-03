@@ -1,5 +1,5 @@
 {
-  "name": "autoform-voice-filler",
+  "name": "formwiz",
   "version": "1.0.0",
   "description": "An AI-powered application that analyzes PDF forms and interviews users via voice.",
   "type": "module",

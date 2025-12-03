@@ -34,7 +34,7 @@ const Dashboard: React.FC<DashboardProps> = ({
        <nav className="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 px-6 py-4 flex justify-between items-center sticky top-0 z-10">
           <div className="flex items-center gap-2">
             <FileCheck className="text-blue-600 dark:text-blue-400" size={32} />
-            <h1 className="text-xl font-bold text-slate-800 dark:text-white">AutoForm</h1>
+            <h1 className="text-xl font-bold text-slate-800 dark:text-white">FormWiz</h1>
           </div>
           <div className="flex items-center gap-4">
               <span className="text-sm text-slate-500 dark:text-slate-400 hidden sm:block">Signed in as {userEmail}</span>

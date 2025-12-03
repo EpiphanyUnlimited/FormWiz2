@@ -22,7 +22,7 @@ const Splash: React.FC<SplashProps> = ({ onProceed, darkMode, toggleTheme }) => 
         <div className="space-y-8 animate-fade-in-up">
           <div className="flex items-center gap-3">
               <FileCheck className="text-blue-200 w-12 h-12" />
-              <div className="text-3xl font-bold">AutoForm</div>
+              <div className="text-3xl font-bold">FormWiz</div>
           </div>
           
           <h1 className="text-5xl font-extrabold leading-tight">
@@ -31,7 +31,7 @@ const Splash: React.FC<SplashProps> = ({ onProceed, darkMode, toggleTheme }) => 
           </h1>
           
           <p className="text-lg text-blue-100 leading-relaxed">
-            AutoForm analyzes your PDF documents and interviews you to gather the answers. No more typing on tiny mobile screens or deciphering complex paperwork.
+            FormWiz analyzes your PDF documents and interviews you to gather the answers. No more typing on tiny mobile screens or deciphering complex paperwork.
           </p>
 
           <div className="space-y-4">
