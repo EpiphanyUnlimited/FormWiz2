@@ -9,7 +9,7 @@ export default defineConfig(({ mode }) => {
   return {
     plugins: [react()],
     build: {
-      outDir: 'dist/client', // Updated to match netlify.toml publish directory
+      outDir: 'dist',
       sourcemap: true
     },
     // Explicitly define process.env.API_KEY for the client build
