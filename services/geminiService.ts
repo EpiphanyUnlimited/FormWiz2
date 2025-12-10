@@ -21,12 +21,14 @@ const parseFieldsFromResponse = (text: string, pageIndex: number): FormField[] =
         return {
             id: `field-${pageIndex}-${idx}-${Date.now()}`,
             label: item.label || "Unknown Field",
-            // Use current section if item doesn't have one
             section: item.section || currentSection || undefined,
-            value: "",
+            value: item.type === 'checkbox' ? "false" : "",
             rect: item.box_2d || [0, 0, 0, 0],
             pageIndex: pageIndex,
-            required: item.required ?? false
+            required: item.required ?? false,
+            type: item.type || 'text',
+            groupLabel: item.group_label,
+            commonType: item.common_type
         };
       });
     }
@@ -51,19 +53,24 @@ export const analyzeFormImage = async (base64Image: string, pageIndex: number): 
     const prompt = `
       Analyze this form page image and extract the data entry fields.
 
-      GUIDELINES:
-      1. Identify input fields where a user would write an answer (text boxes, checkboxes, lines).
-      2. For each field, identify the Question Label (e.g. "Full Name", "Date of Birth").
-      3. **Bounding Boxes**:
-         - Define the 'box_2d' for the **ANSWER AREA** (empty space), not the label.
-         - Coordinates must be normalized [ymin, xmin, ymax, xmax] (0-1000).
-         - Ensure the box does not overlap the label text.
-      4. **Structure**:
-         - If fields are numbered (1, 2, 3), use those numbers in the label.
-         - Group related small fields (like City, State, Zip) into one logical question if they belong to a single "Address" block, OR keep them separate if they are distinct.
-      5. **Section**: If there is a header (e.g. "Part I"), include it.
+      CRITICAL RULES:
+      1. **Segmented Fields (SSN, EIN, Dates)**: If you see a field split into multiple small boxes for individual characters (e.g. | | | - | | - | | | |), DO NOT detect them as separate fields. Detect the ENTIRE area as a SINGLE 'text' field.
+      2. **Checkboxes**: Only mark as 'checkbox' if it is literally a square box intended for a checkmark. If it is a line or a large rectangular area for writing, it is 'text'.
+      3. **Text vs Checkbox**: 
+         - A question asking "Business name" or "Address" is ALWAYS 'text'.
+         - A question with options like "Individual", "C Corp", "S Corp" are 'checkbox'.
+      4. **Ignore Noise**: Do not create fields for "Office Use Only", form footers, page numbers, or instructional text blocks that do not require input.
+      5. **Smart Types**: Identify if the field expects specific PII (common_type): 'ssn', 'email', 'phone', 'date', 'name', 'address', 'zip'.
 
-      Return a JSON array. If no clear fields are found, return an empty array.
+      OUTPUT STRUCTURE (JSON Array):
+      [
+        { 
+          "label": "Social Security Number", 
+          "type": "text", 
+          "common_type": "ssn",
+          "box_2d": [ymin, xmin, ymax, xmax] 
+        }
+      ]
     `;
 
     const response = await ai.models.generateContent({
@@ -88,13 +95,16 @@ export const analyzeFormImage = async (base64Image: string, pageIndex: number): 
             properties: {
               label: { type: Type.STRING },
               section: { type: Type.STRING },
+              group_label: { type: Type.STRING, description: "The main question number or ID this field belongs to (e.g. '3')" },
+              type: { type: Type.STRING, enum: ["text", "checkbox"] },
+              common_type: { type: Type.STRING, enum: ["ssn", "email", "phone", "date", "name", "address", "zip"] },
               box_2d: { 
                 type: Type.ARRAY,
-                items: { type: Type.NUMBER } // Changed from INTEGER to NUMBER for flexibility
+                items: { type: Type.NUMBER }
               },
               required: { type: Type.BOOLEAN }
             },
-            required: ["label", "box_2d", "required"]
+            required: ["label", "box_2d", "type"]
           }
         }
       }

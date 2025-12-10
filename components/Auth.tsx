@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Mail, Lock, ArrowRight, Loader2, ShieldCheck, FileCheck, Moon, Sun, ArrowLeft } from 'lucide-react';
+import { Mail, Lock, ArrowRight, Loader2, ShieldCheck, Moon, Sun, ArrowLeft } from 'lucide-react';
+import FormWizLogo from './FormWizLogo';
 
 interface AuthProps {
   onLogin: (email: string) => void;
@@ -166,7 +167,7 @@ const Auth: React.FC<AuthProps> = ({ onLogin, darkMode, toggleTheme }) => {
       <div className="max-w-md w-full bg-white dark:bg-slate-800 rounded-2xl shadow-xl p-8 border border-slate-100 dark:border-slate-700 transition-colors duration-300">
         <div className="text-center mb-8">
             <div className="flex justify-center mb-4">
-                <FileCheck className="text-blue-600 dark:text-blue-400 w-16 h-16" />
+                <FormWizLogo size={64} />
             </div>
             <h1 className="text-2xl font-bold text-slate-900 dark:text-white">
                 {view === 'login' && "Welcome Back"}

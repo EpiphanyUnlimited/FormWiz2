@@ -127,7 +127,7 @@ export const generateFilledPDF = async (originalFile: File, fields: FormField[])
     const pages = pdfDoc.getPages();
 
     for (const field of fields) {
-      if (!field.value) continue;
+      if (!field.value || field.value === "false") continue;
       
       // Safety check: Page Index validity
       if (field.pageIndex < 0 || field.pageIndex >= pages.length) {
@@ -154,24 +154,40 @@ export const generateFilledPDF = async (originalFile: File, fields: FormField[])
       const boxX = (xmin / 1000) * width;
       const boxYTop = (ymin / 1000) * height; // Distance from top
       const boxWidth = ((xmax - xmin) / 1000) * width;
+      const boxHeight = ((ymax - ymin) / 1000) * height;
 
       // Effective PDF Y (top left of the box)
       const pdfBoxTopY = height - boxYTop;
 
-      // Use a fixed, readable font size
+      // CHECKBOX LOGIC
+      if (field.type === 'checkbox') {
+         // Draw an 'X' in the center of the box
+         if (field.value === "true") {
+             const centerX = boxX + (boxWidth / 2);
+             const centerY = pdfBoxTopY - (boxHeight / 2);
+             const fontSize = Math.min(boxWidth, boxHeight) * 0.8;
+             
+             page.drawText('X', {
+                 x: centerX - (fontSize / 3), // Rough centering
+                 y: centerY - (fontSize / 3),
+                 size: fontSize,
+                 font: helveticaFont,
+                 color: rgb(0, 0, 0),
+             });
+         }
+         continue; // Done with this field
+      }
+
+      // TEXT LOGIC
       const fontSize = 10;
-      // Increased padding to 4 to provide a safety buffer against overlapping the question text
       const padding = 4;
       const lineHeight = fontSize * 1.2;
       
-      // Break lines based on box width
       const lines = breakTextIntoLines(field.value, fontSize, helveticaFont, boxWidth - (padding * 2));
 
-      // Draw text starting from top
       let currentY = pdfBoxTopY - padding - fontSize; 
 
       for (const line of lines) {
-          // Prevent drawing off the absolute bottom of the page
           if (currentY < 10) break; 
 
           page.drawText(line, {

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Upload, Loader2, Save, ArrowLeft, LogOut, Moon, Sun, FileCheck, AlertTriangle } from 'lucide-react';
+import { Upload, Loader2, Save, ArrowLeft, LogOut, Moon, Sun, AlertTriangle, PlayCircle } from 'lucide-react';
 import { AppStep, FormField } from './types';
 import { convertPDFToImages, generateFilledPDF, convertImageToPDF } from './utils/pdfUtils';
 import { analyzeFormImage } from './services/geminiService';
@@ -8,13 +8,17 @@ import PDFPreview from './components/PDFPreview';
 import Auth from './components/Auth';
 import Dashboard from './components/Dashboard';
 import Splash from './components/Splash';
+import PrivacyPolicy from './components/PrivacyPolicy';
+import Instructions from './components/Instructions';
+import FormWizLogo from './components/FormWizLogo';
+import AnalyzingAnimation from './components/AnalyzingAnimation';
 
 // Helper to manage storage keys per user
 const getStorageKey = (userId: string) => `autoform_forms_${userId}`;
 
 function App() {
   const [user, setUser] = useState<string | null>(null);
-  const [view, setView] = useState<'splash' | 'auth' | 'dashboard' | 'editor'>('splash');
+  const [view, setView] = useState<'splash' | 'auth' | 'dashboard' | 'editor' | 'privacy' | 'instructions'>('splash');
   
   // Initialize darkMode lazily to avoid overwriting localStorage on mount
   const [darkMode, setDarkMode] = useState<boolean>(() => {
@@ -150,7 +154,7 @@ function App() {
           id: currentFormId,
           name: formName,
           timestamp: Date.now(),
-          progress: fields.length > 0 ? Math.round((fields.filter(f => f.value).length / fields.length) * 100) : 0,
+          progress: fields.length > 0 ? Math.round((fields.filter(f => f.value && f.value !== 'false').length / fields.length) * 100) : 0,
           fields,
           images, // Storing base64 in LS
           step
@@ -208,7 +212,7 @@ function App() {
       
       setError(null);
 
-      // Handle Word/Docs - Guidance only, as accurate client-side layout form filling is impossible
+      // Handle Word/Docs - Guidance only
       if (fileName.endsWith('.docx') || fileName.endsWith('.doc')) {
           setError("For Word or Google Docs, please use 'File > Download > PDF Document' first. This ensures the form layout is preserved perfectly for the AI to fill.");
           return;
@@ -266,7 +270,6 @@ function App() {
           }
 
           if (allFields.length === 0) {
-              // If we have a captured error (like API failure), throw that instead of generic message
               if (capturedError) {
                   throw capturedError;
               }
@@ -274,10 +277,10 @@ function App() {
           }
 
           setFields(allFields);
-          setStep('interview');
+          // NEW FLOW: Go to Setup instead of Interview
+          setStep('setup');
       } catch (err: any) {
         console.error(err);
-        // Display a more helpful error message
         let msg = err.message || 'Failed to analyze document.';
         if (msg.includes('API Key not found')) msg = 'API Key is missing. Please check your configuration.';
         if (msg.includes('429')) msg = 'Too many requests. Please try again in a moment.';
@@ -288,6 +291,11 @@ function App() {
           setIsConverting(false);
       }
     }
+  };
+
+  const handleProceedToInterview = () => {
+      saveCurrentProgress();
+      setStep('interview');
   };
 
   const handleDownload = async () => {
@@ -316,8 +324,24 @@ function App() {
 
   // --- Render Views ---
 
+  if (view === 'privacy') {
+      return <PrivacyPolicy onBack={() => setView('splash')} />;
+  }
+
+  if (view === 'instructions') {
+      return <Instructions onBack={() => setView('splash')} />;
+  }
+
   if (view === 'splash') {
-      return <Splash onProceed={handleSplashProceed} darkMode={darkMode} toggleTheme={toggleTheme} />;
+      return (
+        <Splash 
+            onProceed={handleSplashProceed} 
+            onPrivacy={() => setView('privacy')}
+            onInstructions={() => setView('instructions')}
+            darkMode={darkMode} 
+            toggleTheme={toggleTheme} 
+        />
+      );
   }
 
   if (view === 'auth') {
@@ -349,7 +373,7 @@ function App() {
                     <ArrowLeft size={20} />
                 </button>
                 <div className="flex items-center gap-2">
-                    <FileCheck className="text-blue-600 dark:text-blue-400" size={24} />
+                    <FormWizLogo className="text-blue-600 dark:text-blue-400" size={28} />
                     <h1 className="text-lg font-bold text-slate-800 dark:text-white truncate max-w-[200px]">{formName}</h1>
                 </div>
             </div>
@@ -427,14 +451,51 @@ function App() {
         )}
 
         {step === 'analyzing' && (
-            <div className="flex flex-col items-center justify-center py-32 space-y-6 animate-pulse">
-                <Loader2 size={64} className="text-blue-600 dark:text-blue-400 animate-spin" />
-                <h3 className="text-2xl font-bold text-slate-800 dark:text-white">Reading Form...</h3>
+            <AnalyzingAnimation />
+        )}
+
+        {/* NEW SETUP STEP */}
+        {step === 'setup' && (
+            <div className="flex flex-col items-center">
+                <div className="mb-6 text-center max-w-2xl">
+                    <h2 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">Setup Form Fields</h2>
+                    <p className="text-slate-500 dark:text-slate-400">
+                        We detected the following fields. You can move or resize the boxes now to ensure they fit perfectly.
+                    </p>
+                </div>
+                
+                <div className="w-full flex justify-end gap-3 mb-4 max-w-[800px]">
+                     <button 
+                        onClick={handleProceedToInterview}
+                        className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white px-6 py-3 rounded-xl font-semibold shadow-lg shadow-blue-500/30 transition-all transform hover:scale-105"
+                    >
+                        Proceed with Interview
+                        <PlayCircle size={20} />
+                    </button>
+                </div>
+
+                {images.length > 0 && (
+                    <PDFPreview 
+                        images={images} 
+                        fields={fields} 
+                        onUpdateField={(id, r) => setFields(f => f.map(x => x.id === id ? {...x, rect: r} : x))}
+                        onDeleteField={(id) => setFields(f => f.filter(x => x.id !== id))}
+                        mode="setup" 
+                    />
+                )}
             </div>
         )}
 
         {step === 'interview' && (
             <div className="flex flex-col items-center">
+                 <div className="w-full max-w-2xl flex justify-start mb-4">
+                     <button 
+                        onClick={() => setStep('setup')}
+                        className="flex items-center gap-1 text-sm text-slate-500 hover:text-blue-600 dark:text-slate-400 dark:hover:text-blue-400 transition-colors"
+                     >
+                         <ArrowLeft size={16} /> Back to Setup
+                     </button>
+                 </div>
                 <VoiceInterviewer 
                     fields={fields} 
                     onUpdate={(updated) => setFields(updated)}
@@ -446,7 +507,13 @@ function App() {
 
         {(step === 'review' || step === 'exporting') && (
             <div className="flex flex-col items-center">
-                 <div className="w-full flex justify-end gap-3 mb-4">
+                 <div className="w-full max-w-[800px] flex justify-between gap-3 mb-4">
+                     <button 
+                        onClick={() => setStep('interview')}
+                        className="flex items-center gap-1 text-sm text-slate-500 hover:text-blue-600 dark:text-slate-400 dark:hover:text-blue-400 transition-colors"
+                     >
+                         <ArrowLeft size={16} /> Back to Interview
+                     </button>
                      <button 
                         onClick={handleDownload}
                         disabled={step === 'exporting'}
@@ -462,6 +529,7 @@ function App() {
                         fields={fields} 
                         onUpdateField={(id, r) => setFields(f => f.map(x => x.id === id ? {...x, rect: r} : x))}
                         onUpdateValue={(id, v) => setFields(f => f.map(x => x.id === id ? {...x, value: v} : x))}
+                        mode="review"
                     />
                 ) : (
                     <div className="bg-slate-100 dark:bg-slate-800 p-12 rounded-xl text-center border border-slate-200 dark:border-slate-700">
