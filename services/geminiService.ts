@@ -40,7 +40,7 @@ const parseFieldsFromResponse = (text: string, pageIndex: number): FormField[] =
 export const analyzeFormImage = async (base64Image: string, pageIndex: number): Promise<FormField[]> => {
   try {
     if (!process.env.API_KEY) {
-      throw new Error("API Key not found");
+      throw new Error("API Key not found. Please ensure it is configured.");
     }
 
     const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
@@ -49,37 +49,21 @@ export const analyzeFormImage = async (base64Image: string, pageIndex: number): 
     const data = base64Image.split(',')[1];
 
     const prompt = `
-      Analyze this form page. Extract ONLY the main logical questions.
+      Analyze this form page image and extract the data entry fields.
 
-      STRICT RULES FOR EXTRACTION:
-      1. **Follow the Numbers**: If the questions are numbered (1, 2, 3, etc.), ONLY output those numbered items. 
-         - IGNORE any sub-labels like "City", "State", "Zip", "First Name", "Last Name" unless they have their own number.
-         - Combine sub-fields into the main numbered question. 
-         - Example: If "1. Address" has boxes for Street, City, State, create ONE field labeled "1. Address" that covers all those boxes.
-      
-      2. **Top-Down Priority**: Start from the very top. Capture the very first question.
-      
-      3. **Consolidate**: 
-         - A table row = ONE question.
-         - A "Yes/No" section = ONE question.
-         - A date input (MM/DD/YYYY) = ONE question.
-      
-      4. **Expected Count**: A typical page has 10-15 main questions. If you find 20+, you are splitting them up too much. STOP splitting.
+      GUIDELINES:
+      1. Identify input fields where a user would write an answer (text boxes, checkboxes, lines).
+      2. For each field, identify the Question Label (e.g. "Full Name", "Date of Birth").
+      3. **Bounding Boxes**:
+         - Define the 'box_2d' for the **ANSWER AREA** (empty space), not the label.
+         - Coordinates must be normalized [ymin, xmin, ymax, xmax] (0-1000).
+         - Ensure the box does not overlap the label text.
+      4. **Structure**:
+         - If fields are numbered (1, 2, 3), use those numbers in the label.
+         - Group related small fields (like City, State, Zip) into one logical question if they belong to a single "Address" block, OR keep them separate if they are distinct.
+      5. **Section**: If there is a header (e.g. "Part I"), include it.
 
-      5. **Section Headings**: Identify the visual section title or header this question belongs to (e.g. "Part 1: Personal Info", "Employment History"). 
-
-      6. **Bounding Boxes (CRITICAL - NO OVERLAP)**: 
-         - **SEPARATE QUESTION FROM ANSWER**: The bounding box (\`box_2d\`) must contain **ONLY** the blank writing space.
-         - **START BELOW TEXT**: The top edge (\`ymin\`) of the answer box must be strictly **BELOW** the bottom edge of the question text.
-         - **VISUAL GAP**: Ensure there is a visible whitespace gap between the text of the question and the top of the answer box.
-         - **Full Area**: Extend the box to the bottom of the available writing space.
-         - **Normalized Coordinates**: [ymin, xmin, ymax, xmax] (0-1000).
-
-      For each main question, return:
-      - "label": The main question text (e.g. "1. Full Name").
-      - "section": The section title (optional).
-      - "box_2d": The bounding box [ymin, xmin, ymax, xmax] (0-1000) for the ANSWER area.
-      - "required": boolean.
+      Return a JSON array. If no clear fields are found, return an empty array.
     `;
 
     const response = await ai.models.generateContent({
@@ -106,7 +90,7 @@ export const analyzeFormImage = async (base64Image: string, pageIndex: number): 
               section: { type: Type.STRING },
               box_2d: { 
                 type: Type.ARRAY,
-                items: { type: Type.INTEGER }
+                items: { type: Type.NUMBER } // Changed from INTEGER to NUMBER for flexibility
               },
               required: { type: Type.BOOLEAN }
             },

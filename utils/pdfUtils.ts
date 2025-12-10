@@ -8,6 +8,65 @@ declare global {
   }
 }
 
+/**
+ * Converts an image file (JPG, PNG, WEBP, etc.) to a PDF File object.
+ * This allows the app to treat images exactly like PDFs for analysis and filling.
+ */
+export const convertImageToPDF = async (file: File): Promise<File> => {
+    return new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = async (e) => {
+            try {
+                const img = new Image();
+                img.onload = async () => {
+                    try {
+                        // Create a new PDF document
+                        const pdfDoc = await PDFDocument.create();
+                        
+                        // We use canvas to normalize the image format to JPEG
+                        // This handles PNG, WEBP, etc. by converting them to a standard format pdf-lib accepts easily
+                        const canvas = document.createElement('canvas');
+                        canvas.width = img.width;
+                        canvas.height = img.height;
+                        const ctx = canvas.getContext('2d');
+                        if (!ctx) throw new Error("Could not create canvas context");
+                        
+                        // Fill white background for transparency handling
+                        ctx.fillStyle = 'white';
+                        ctx.fillRect(0, 0, canvas.width, canvas.height);
+                        ctx.drawImage(img, 0, 0);
+                        
+                        const jpgDataUrl = canvas.toDataURL('image/jpeg', 0.9);
+                        const jpgImageBytes = await fetch(jpgDataUrl).then(res => res.arrayBuffer());
+                        
+                        const jpgImage = await pdfDoc.embedJpg(jpgImageBytes);
+                        const page = pdfDoc.addPage([img.width, img.height]);
+                        
+                        page.drawImage(jpgImage, {
+                            x: 0,
+                            y: 0,
+                            width: img.width,
+                            height: img.height,
+                        });
+                        
+                        const pdfBytes = await pdfDoc.save();
+                        const newFile = new File([pdfBytes], file.name.replace(/\.[^/.]+$/, "") + ".pdf", { type: 'application/pdf' });
+                        resolve(newFile);
+                    } catch (err) {
+                        reject(err);
+                    }
+                };
+                img.onerror = (err) => reject(new Error("Failed to load image"));
+                img.src = e.target?.result as string;
+            } catch (err) {
+                reject(err);
+            }
+        };
+        reader.onerror = (err) => reject(err);
+        reader.readAsDataURL(file);
+    });
+};
+
 export const convertPDFToImages = async (file: File): Promise<{ images: string[]; dimensions: { width: number; height: number }[] }> => {
   const arrayBuffer = await file.arrayBuffer();
   const pdf = await window.pdfjsLib.getDocument({ data: arrayBuffer }).promise;
@@ -20,7 +79,8 @@ export const convertPDFToImages = async (file: File): Promise<{ images: string[]
 
   for (let i = 1; i <= limit; i++) {
     const page = await pdf.getPage(i);
-    const viewport = page.getViewport({ scale: 1.5 }); // Good quality for OCR
+    // Increased scale to 2.0 for better AI recognition quality
+    const viewport = page.getViewport({ scale: 2.0 }); 
     const canvas = document.createElement('canvas');
     const context = canvas.getContext('2d');
     canvas.height = viewport.height;

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Upload, Loader2, Save, ArrowLeft, LogOut, Moon, Sun, FileCheck, AlertTriangle } from 'lucide-react';
 import { AppStep, FormField } from './types';
-import { convertPDFToImages, generateFilledPDF } from './utils/pdfUtils';
+import { convertPDFToImages, generateFilledPDF, convertImageToPDF } from './utils/pdfUtils';
 import { analyzeFormImage } from './services/geminiService';
 import VoiceInterviewer from './components/VoiceInterviewer';
 import PDFPreview from './components/PDFPreview';
@@ -39,6 +39,7 @@ function App() {
   
   // UI States
   const [globalSaveStatus, setGlobalSaveStatus] = useState<'idle' | 'saving' | 'saved'>('idle');
+  const [isConverting, setIsConverting] = useState(false);
 
   // Dashboard Data
   const [savedForms, setSavedForms] = useState<any[]>([]);
@@ -202,75 +203,96 @@ function App() {
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
-      const selectedFile = e.target.files[0];
+      let selectedFile = e.target.files[0];
       const fileName = selectedFile.name.toLowerCase();
       
-      // Handle Word/Docs logic
+      setError(null);
+
+      // Handle Word/Docs - Guidance only, as accurate client-side layout form filling is impossible
       if (fileName.endsWith('.docx') || fileName.endsWith('.doc')) {
-          setError("Microsoft Word documents must be saved as PDF first. Please 'Save As > PDF' in Word and upload the PDF file.");
-          return;
-      }
-      
-      if (!fileName.endsWith('.pdf')) {
-          setError("Unsupported file format. Please upload a PDF.");
+          setError("For Word or Google Docs, please use 'File > Download > PDF Document' first. This ensures the form layout is preserved perfectly for the AI to fill.");
           return;
       }
 
-      setFormName(selectedFile.name.replace('.pdf', ''));
-      setFile(selectedFile);
-      setError(null);
-      
-      // If just recovering images for an existing session
-      if (images.length === 0 && fields.length > 0) {
+      setFormName(selectedFile.name.replace(/\.[^/.]+$/, ""));
+      setIsConverting(true);
+
+      try {
+          // Handle Images - Auto-convert to PDF
+          if (selectedFile.type.startsWith('image/')) {
+              selectedFile = await convertImageToPDF(selectedFile);
+          }
+
+          if (selectedFile.type !== 'application/pdf') {
+              throw new Error("Unsupported file format. Please upload a PDF or Image.");
+          }
+
+          setFile(selectedFile);
+          
+          // If just recovering images for an existing session
+          if (images.length === 0 && fields.length > 0) {
+              const { images: imgData } = await convertPDFToImages(selectedFile);
+              setImages(imgData);
+              setIsConverting(false);
+              return;
+          }
+
+          setStep('analyzing');
           const { images: imgData } = await convertPDFToImages(selectedFile);
           setImages(imgData);
-          return;
-      }
 
-      setStep('analyzing');
-      try {
-        const { images: imgData } = await convertPDFToImages(selectedFile);
-        setImages(imgData);
+          let allFields: FormField[] = [];
+          let globalLastSection = "";
+          let capturedError: Error | null = null;
 
-        let allFields: FormField[] = [];
-        let globalLastSection = "";
+          for (let i = 0; i < imgData.length; i++) {
+            try {
+              const pageFields = await analyzeFormImage(imgData[i], i);
+              const processedFields = pageFields.map(f => {
+                  if (f.section) {
+                      globalLastSection = f.section;
+                      return f;
+                  } else if (globalLastSection) {
+                      return { ...f, section: globalLastSection };
+                  }
+                  return f;
+              });
 
-        for (let i = 0; i < imgData.length; i++) {
-          try {
-            const pageFields = await analyzeFormImage(imgData[i], i);
-            const processedFields = pageFields.map(f => {
-                if (f.section) {
-                    globalLastSection = f.section;
-                    return f;
-                } else if (globalLastSection) {
-                    return { ...f, section: globalLastSection };
-                }
-                return f;
-            });
-
-            allFields = [...allFields, ...processedFields];
-          } catch (pageError) {
-              console.error(`Failed to analyze page ${i + 1}`, pageError);
+              allFields = [...allFields, ...processedFields];
+            } catch (pageError: any) {
+                console.error(`Failed to analyze page ${i + 1}`, pageError);
+                capturedError = pageError;
+            }
           }
-        }
 
-        if (allFields.length === 0) {
-            throw new Error("No fields detected in the PDF.");
-        }
+          if (allFields.length === 0) {
+              // If we have a captured error (like API failure), throw that instead of generic message
+              if (capturedError) {
+                  throw capturedError;
+              }
+              throw new Error("No fields detected in the PDF. The AI could not identify any form fields.");
+          }
 
-        setFields(allFields);
-        setStep('interview');
+          setFields(allFields);
+          setStep('interview');
       } catch (err: any) {
         console.error(err);
-        setError(err.message || 'Failed to analyze PDF. Please ensure API Key is set.');
+        // Display a more helpful error message
+        let msg = err.message || 'Failed to analyze document.';
+        if (msg.includes('API Key not found')) msg = 'API Key is missing. Please check your configuration.';
+        if (msg.includes('429')) msg = 'Too many requests. Please try again in a moment.';
+        
+        setError(msg);
         setStep('upload');
+      } finally {
+          setIsConverting(false);
       }
     }
   };
 
   const handleDownload = async () => {
     if (!file) {
-        setError("Original PDF file is missing. Please re-upload the PDF to export.");
+        setError("Original file is missing. Please re-upload to export.");
         return;
     }
     setStep('exporting');
@@ -364,11 +386,11 @@ function App() {
       <main className="max-w-5xl mx-auto px-6 py-12">
         {error && (
             <div className="mb-8 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg flex items-center gap-3 text-red-700 dark:text-red-300">
-                <AlertTriangle size={20} />
-                <div className="flex-1"><p>{error}</p></div>
-                {error.includes("Word documents") && (
-                     <label className="px-4 py-2 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 rounded-lg cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-700 font-medium text-sm">
-                        Upload PDF
+                <AlertTriangle size={20} className="shrink-0" />
+                <div className="flex-1 break-words"><p>{error}</p></div>
+                {error.includes("Word or Google Docs") && (
+                    <label className="px-4 py-2 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 rounded-lg cursor-pointer hover:bg-slate-50 dark:hover:bg-slate-700 font-medium text-sm whitespace-nowrap">
+                        Select PDF
                         <input type="file" accept=".pdf" className="hidden" onChange={handleFileUpload} />
                     </label>
                 )}
@@ -379,18 +401,27 @@ function App() {
             <div className="flex flex-col items-center justify-center py-20 animate-fade-in">
                 <div className="text-center mb-10 max-w-lg">
                     <h2 className="text-4xl font-extrabold text-slate-900 dark:text-white mb-4">New Form Interview</h2>
-                    <p className="text-lg text-slate-500 dark:text-slate-400">Upload a PDF or Word document to begin.</p>
+                    <p className="text-lg text-slate-500 dark:text-slate-400">Upload a PDF, Image, or Document to begin.</p>
                 </div>
                 <label className="group relative cursor-pointer">
                     <div className="flex flex-col items-center justify-center w-80 h-64 border-2 border-dashed border-slate-300 dark:border-slate-600 rounded-2xl bg-white dark:bg-slate-800 hover:border-blue-500 dark:hover:border-blue-400 hover:bg-blue-50 dark:hover:bg-slate-750 transition-all duration-300 shadow-sm">
-                        <div className="p-4 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 mb-4 group-hover:scale-110 transition-transform">
-                            <Upload size={32} />
-                        </div>
-                        <p className="font-semibold text-slate-700 dark:text-slate-200">Click to upload document</p>
-                        <p className="text-xs text-slate-400 mt-2">PDF, DOCX, DOC</p>
+                        {isConverting ? (
+                             <div className="flex flex-col items-center animate-pulse">
+                                <Loader2 size={32} className="text-blue-600 dark:text-blue-400 animate-spin mb-4" />
+                                <p className="font-semibold text-slate-700 dark:text-slate-200">Processing File...</p>
+                             </div>
+                        ) : (
+                            <>
+                                <div className="p-4 rounded-full bg-blue-100 dark:bg-blue-900/30 text-blue-600 dark:text-blue-400 mb-4 group-hover:scale-110 transition-transform">
+                                    <Upload size={32} />
+                                </div>
+                                <p className="font-semibold text-slate-700 dark:text-slate-200">Click to upload document</p>
+                                <p className="text-xs text-slate-400 mt-2 text-center">PDF, JPG, PNG<br/>Word & Google Docs</p>
+                            </>
+                        )}
                     </div>
-                    {/* Accepting multiple formats, but handling logic filters them */}
-                    <input type="file" accept=".pdf,.doc,.docx" className="hidden" onChange={handleFileUpload} />
+                    {/* Accepting multiple formats, with logic to handle/guide them */}
+                    <input type="file" accept=".pdf,.doc,.docx,.jpg,.jpeg,.png,.webp" className="hidden" onChange={handleFileUpload} disabled={isConverting} />
                 </label>
             </div>
         )}
