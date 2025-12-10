@@ -1,5 +1,5 @@
 import React from 'react';
-import { FileText, Clock, Trash2, ArrowRight, Plus, Moon, Sun } from 'lucide-react';
+import { FileText, Clock, Trash2, ArrowRight, Plus, Moon, Sun, Settings, Crown } from 'lucide-react';
 import FormWizLogo from './FormWizLogo';
 
 interface SavedForm {
@@ -18,6 +18,8 @@ interface DashboardProps {
   onDeleteForm: (formId: string) => void;
   darkMode: boolean;
   toggleTheme: () => void;
+  onSettings: () => void;
+  onUpgrade: () => void;
 }
 
 const Dashboard: React.FC<DashboardProps> = ({ 
@@ -28,7 +30,9 @@ const Dashboard: React.FC<DashboardProps> = ({
   savedForms,
   onDeleteForm,
   darkMode,
-  toggleTheme
+  toggleTheme,
+  onSettings,
+  onUpgrade
 }) => {
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-900 transition-colors duration-300">
@@ -38,25 +42,40 @@ const Dashboard: React.FC<DashboardProps> = ({
             <h1 className="text-xl font-bold text-slate-800 dark:text-white">FormWiz</h1>
           </div>
           <div className="flex items-center gap-4">
-              <span className="text-sm text-slate-500 dark:text-slate-400 hidden sm:block">Signed in as {userEmail}</span>
-              <button onClick={toggleTheme} className="p-2 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-full">
+              <button 
+                onClick={onUpgrade}
+                className="hidden sm:flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-amber-200 to-yellow-400 hover:from-amber-300 hover:to-yellow-500 text-amber-900 rounded-full font-bold text-sm shadow-md transition-all transform hover:scale-105"
+              >
+                  <Crown size={16} /> Upgrade
+              </button>
+
+              <div className="h-6 w-px bg-slate-200 dark:bg-slate-700 hidden sm:block"></div>
+
+              <span className="text-sm text-slate-500 dark:text-slate-400 hidden md:block">Signed in as {userEmail}</span>
+              
+              <button onClick={toggleTheme} className="p-2 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-full transition-colors">
                 {darkMode ? <Sun size={20} /> : <Moon size={20} />}
               </button>
-              <button onClick={onLogout} className="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-red-500 dark:hover:text-red-400 transition-colors">
+
+              <button onClick={onSettings} className="p-2 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-full transition-colors" title="Account Settings">
+                  <Settings size={20} />
+              </button>
+
+              <button onClick={onLogout} className="text-sm font-medium text-slate-600 dark:text-slate-300 hover:text-red-500 dark:hover:text-red-400 transition-colors ml-2">
                   Sign Out
               </button>
           </div>
        </nav>
 
        <main className="max-w-5xl mx-auto px-6 py-12">
-           <div className="flex justify-between items-end mb-8">
+           <div className="flex flex-col sm:flex-row justify-between items-end mb-8 gap-4">
                <div>
                    <h2 className="text-3xl font-bold text-slate-900 dark:text-white">Your Forms</h2>
                    <p className="text-slate-500 dark:text-slate-400 mt-1">Manage your in-progress and completed documents.</p>
                </div>
                <button 
                   onClick={onNewForm}
-                  className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white px-5 py-3 rounded-xl font-semibold shadow-lg shadow-blue-500/20 transition-all transform hover:scale-105"
+                  className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white px-5 py-3 rounded-xl font-semibold shadow-lg shadow-blue-500/20 transition-all transform hover:scale-105 w-full sm:w-auto justify-center"
                >
                    <Plus size={20} />
                    New Form

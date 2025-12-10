@@ -8,11 +8,11 @@ interface InstructionsProps {
 
 const Instructions: React.FC<InstructionsProps> = ({ onBack }) => {
   return (
-    <div className="min-h-screen bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 font-sans p-6">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-100 dark:from-slate-900 dark:via-slate-800 dark:to-indigo-950 text-slate-900 dark:text-slate-100 font-sans p-6">
       <div className="max-w-4xl mx-auto">
         <button 
             onClick={onBack}
-            className="flex items-center gap-2 text-slate-500 hover:text-blue-600 mb-8 transition-colors"
+            className="flex items-center gap-2 text-slate-500 hover:text-blue-600 mb-8 transition-colors font-medium"
         >
             <ArrowLeft size={20} /> Back
         </button>
@@ -25,7 +25,7 @@ const Instructions: React.FC<InstructionsProps> = ({ onBack }) => {
 
         <div className="grid md:grid-cols-2 gap-8">
             {/* Step 1 */}
-            <div className="bg-slate-50 dark:bg-slate-800 p-8 rounded-3xl border border-slate-100 dark:border-slate-700 relative overflow-hidden group">
+            <div className="bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm p-8 rounded-3xl border border-slate-100 dark:border-slate-700 relative overflow-hidden group shadow-sm hover:shadow-md transition-shadow">
                 <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
                     <Upload size={120} />
                 </div>
@@ -39,7 +39,7 @@ const Instructions: React.FC<InstructionsProps> = ({ onBack }) => {
             </div>
 
              {/* Step 2 */}
-             <div className="bg-slate-50 dark:bg-slate-800 p-8 rounded-3xl border border-slate-100 dark:border-slate-700 relative overflow-hidden group">
+             <div className="bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm p-8 rounded-3xl border border-slate-100 dark:border-slate-700 relative overflow-hidden group shadow-sm hover:shadow-md transition-shadow">
                 <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
                     <Settings size={120} />
                 </div>
@@ -57,7 +57,7 @@ const Instructions: React.FC<InstructionsProps> = ({ onBack }) => {
             </div>
 
              {/* Step 3 */}
-             <div className="bg-slate-50 dark:bg-slate-800 p-8 rounded-3xl border border-slate-100 dark:border-slate-700 relative overflow-hidden group">
+             <div className="bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm p-8 rounded-3xl border border-slate-100 dark:border-slate-700 relative overflow-hidden group shadow-sm hover:shadow-md transition-shadow">
                 <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
                     <Mic size={120} />
                 </div>
@@ -73,7 +73,7 @@ const Instructions: React.FC<InstructionsProps> = ({ onBack }) => {
             </div>
 
              {/* Step 4 */}
-             <div className="bg-slate-50 dark:bg-slate-800 p-8 rounded-3xl border border-slate-100 dark:border-slate-700 relative overflow-hidden group">
+             <div className="bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm p-8 rounded-3xl border border-slate-100 dark:border-slate-700 relative overflow-hidden group shadow-sm hover:shadow-md transition-shadow">
                 <div className="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition-opacity">
                     <Download size={120} />
                 </div>

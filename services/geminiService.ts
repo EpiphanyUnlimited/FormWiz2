@@ -30,6 +30,11 @@ const parseFieldsFromResponse = (text: string, pageIndex: number): FormField[] =
             groupLabel: item.group_label,
             commonType: item.common_type
         };
+      }).filter(f => {
+          // Double safety filter for signatures
+          const label = f.label.toLowerCase();
+          const isSignature = label.includes('signature') || label.includes('sign here') || label.includes('applicant signature');
+          return !isSignature;
       });
     }
     return [];
@@ -54,13 +59,12 @@ export const analyzeFormImage = async (base64Image: string, pageIndex: number): 
       Analyze this form page image and extract the data entry fields.
 
       CRITICAL RULES:
-      1. **Segmented Fields (SSN, EIN, Dates)**: If you see a field split into multiple small boxes for individual characters (e.g. | | | - | | - | | | |), DO NOT detect them as separate fields. Detect the ENTIRE area as a SINGLE 'text' field.
-      2. **Checkboxes**: Only mark as 'checkbox' if it is literally a square box intended for a checkmark. If it is a line or a large rectangular area for writing, it is 'text'.
-      3. **Text vs Checkbox**: 
-         - A question asking "Business name" or "Address" is ALWAYS 'text'.
-         - A question with options like "Individual", "C Corp", "S Corp" are 'checkbox'.
-      4. **Ignore Noise**: Do not create fields for "Office Use Only", form footers, page numbers, or instructional text blocks that do not require input.
-      5. **Smart Types**: Identify if the field expects specific PII (common_type): 'ssn', 'email', 'phone', 'date', 'name', 'address', 'zip'.
+      1. **Segmented Fields**: If a field is split into boxes (e.g. | | |), detect as ONE single field.
+      2. **Checkboxes**: Only mark square boxes as 'checkbox'.
+      3. **Text vs Checkbox**: "Business name" -> 'text'. "C Corp" -> 'checkbox'.
+      4. **Ignore Noise**: Do not create fields for "Office Use Only", page numbers.
+      5. **NO SIGNATURES**: Do not create fields for signatures, "Sign Here", "Signature of Applicant", or "By:" lines. These require wet signatures.
+      6. **Smart Types**: Identify 'ssn', 'email', 'phone', 'date', 'name', 'address', 'zip'.
 
       OUTPUT STRUCTURE (JSON Array):
       [

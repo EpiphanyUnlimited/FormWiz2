@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Upload, Loader2, Save, ArrowLeft, LogOut, Moon, Sun, AlertTriangle, PlayCircle } from 'lucide-react';
-import { AppStep, FormField } from './types';
+import { Upload, Loader2, Save, ArrowLeft, LogOut, Moon, Sun, AlertTriangle, PlayCircle, Crown } from 'lucide-react';
+import { AppStep, FormField, PlanType, UserSettings } from './types';
 import { convertPDFToImages, generateFilledPDF, convertImageToPDF } from './utils/pdfUtils';
 import { analyzeFormImage } from './services/geminiService';
 import VoiceInterviewer from './components/VoiceInterviewer';
@@ -10,16 +10,33 @@ import Dashboard from './components/Dashboard';
 import Splash from './components/Splash';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import Instructions from './components/Instructions';
+import Pricing from './components/Pricing';
+import AccountSettings from './components/AccountSettings';
 import FormWizLogo from './components/FormWizLogo';
 import AnalyzingAnimation from './components/AnalyzingAnimation';
 
 // Helper to manage storage keys per user
 const getStorageKey = (userId: string) => `autoform_forms_${userId}`;
+const getSettingsKey = (userId: string) => `autoform_settings_${userId}`;
+
+const PLAN_LIMITS = {
+    free: { saved: 3, downloads: 3 },
+    premium: { saved: 10, downloads: 10 },
+    pro: { saved: 25, downloads: 99999 }, // Unlimited
+    enterprise: { saved: 99999, downloads: 99999 }
+};
 
 function App() {
   const [user, setUser] = useState<string | null>(null);
-  const [view, setView] = useState<'splash' | 'auth' | 'dashboard' | 'editor' | 'privacy' | 'instructions'>('splash');
+  const [view, setView] = useState<'splash' | 'auth' | 'dashboard' | 'editor' | 'privacy' | 'instructions' | 'pricing' | 'settings'>('splash');
   
+  // User Settings (Plan & Usage)
+  const [settings, setSettings] = useState<UserSettings>({
+      plan: 'free',
+      downloadsUsed: 0,
+      lastResetDate: Date.now()
+  });
+
   // Initialize darkMode lazily to avoid overwriting localStorage on mount
   const [darkMode, setDarkMode] = useState<boolean>(() => {
       if (typeof window !== 'undefined') {
@@ -53,7 +70,7 @@ function App() {
       const storedUser = localStorage.getItem('autoform_user');
       if (storedUser) {
           setUser(storedUser);
-          loadSavedForms(storedUser);
+          loadUserData(storedUser);
       }
   }, []);
 
@@ -68,14 +85,50 @@ function App() {
       }
   }, [darkMode]);
 
-  const loadSavedForms = (userId: string) => {
+  const loadUserData = (userId: string) => {
       try {
-          const raw = localStorage.getItem(getStorageKey(userId));
-          const forms = raw ? JSON.parse(raw) : [];
+          // Load Forms
+          const rawForms = localStorage.getItem(getStorageKey(userId));
+          const forms = rawForms ? JSON.parse(rawForms) : [];
           setSavedForms(forms);
+
+          // Load Settings (Plan/Usage)
+          const rawSettings = localStorage.getItem(getSettingsKey(userId));
+          if (rawSettings) {
+              const parsedSettings = JSON.parse(rawSettings);
+              // Check monthly reset logic
+              const now = new Date();
+              const lastReset = new Date(parsedSettings.lastResetDate);
+              if (now.getMonth() !== lastReset.getMonth() || now.getFullYear() !== lastReset.getFullYear()) {
+                  // Reset monthly downloads
+                  const newSettings = {
+                      ...parsedSettings,
+                      downloadsUsed: 0,
+                      lastResetDate: Date.now()
+                  };
+                  setSettings(newSettings);
+                  localStorage.setItem(getSettingsKey(userId), JSON.stringify(newSettings));
+              } else {
+                  setSettings(parsedSettings);
+              }
+          } else {
+              // Default for new user
+              const defaultSettings: UserSettings = { plan: 'free', downloadsUsed: 0, lastResetDate: Date.now() };
+              setSettings(defaultSettings);
+              localStorage.setItem(getSettingsKey(userId), JSON.stringify(defaultSettings));
+          }
       } catch (e) {
-          console.error("Error loading forms", e);
+          console.error("Error loading user data", e);
       }
+  };
+
+  const handleUpgradePlan = (newPlan: PlanType) => {
+      if (!user) return;
+      const newSettings = { ...settings, plan: newPlan };
+      setSettings(newSettings);
+      localStorage.setItem(getSettingsKey(user), JSON.stringify(newSettings));
+      // Return to dashboard or settings depending on where they came from (logic simplified here)
+      setView('dashboard');
   };
 
   const toggleTheme = () => setDarkMode(!darkMode);
@@ -92,7 +145,7 @@ function App() {
       setUser(email);
       localStorage.setItem('autoform_user', email);
       setView('dashboard');
-      loadSavedForms(email);
+      loadUserData(email);
   };
 
   const handleLogout = () => {
@@ -104,8 +157,31 @@ function App() {
       setView('splash');
   };
 
-  // 2. Editor Actions
+  // 2. Editor Actions & Limit Checks
+
+  const checkStorageLimit = (): boolean => {
+      const limit = PLAN_LIMITS[settings.plan].saved;
+      if (typeof limit === 'number' && savedForms.length >= limit) {
+          alert(`You have reached the limit of ${limit} active documents for the ${settings.plan.toUpperCase()} plan. Please delete some documents or upgrade.`);
+          setView('pricing');
+          return false;
+      }
+      return true;
+  };
+
+  const checkDownloadLimit = (): boolean => {
+      const limit = PLAN_LIMITS[settings.plan].downloads;
+      if (typeof limit === 'number' && settings.downloadsUsed >= limit) {
+          alert(`You have reached your monthly download limit of ${limit} for the ${settings.plan.toUpperCase()} plan. Upgrade to increase your limit.`);
+          setView('pricing');
+          return false;
+      }
+      return true;
+  };
+
   const handleStartNew = () => {
+      if (!checkStorageLimit()) return;
+
       setCurrentFormId(Date.now().toString());
       setStep('upload');
       setFile(null);
@@ -167,6 +243,14 @@ function App() {
           if (existingIdx >= 0) {
               forms[existingIdx] = newFormEntry;
           } else {
+              // Check limit only if adding new
+              const limit = PLAN_LIMITS[settings.plan].saved;
+              if (typeof limit === 'number' && forms.length >= limit) {
+                   // This is an edge case if they bypassed the first check or downgraded
+                   alert("Storage limit reached. Cannot save new document.");
+                   setGlobalSaveStatus('idle');
+                   return false;
+              }
               forms.push(newFormEntry);
           }
           
@@ -188,7 +272,7 @@ function App() {
           setGlobalSaveStatus('idle');
           return false;
       }
-  }, [user, currentFormId, formName, fields, images, step]);
+  }, [user, currentFormId, formName, fields, images, step, settings.plan]);
 
   // Auto-save
   useEffect(() => {
@@ -202,6 +286,20 @@ function App() {
       }
   }, [fields, user, currentFormId, saveCurrentProgress, view]);
 
+  // NEW: Manual Field Addition
+  const handleAddField = (rect: [number, number, number, number], pageIndex: number, label: string) => {
+      const newField: FormField = {
+          id: `field-manual-${Date.now()}`,
+          label: label,
+          value: '',
+          rect: rect,
+          pageIndex: pageIndex,
+          required: false, // Default to not required for manual fields
+          type: 'text'
+      };
+      // Append to fields state - VoiceInterviewer will pick this up automatically via props
+      setFields(prev => [...prev, newField]);
+  };
 
   // --- Specific Step Handlers ---
 
@@ -299,6 +397,8 @@ function App() {
   };
 
   const handleDownload = async () => {
+    if (!checkDownloadLimit()) return;
+    
     if (!file) {
         setError("Original file is missing. Please re-upload to export.");
         return;
@@ -314,6 +414,14 @@ function App() {
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
+
+      // Increment Download Count
+      if (user) {
+          const newSettings = { ...settings, downloadsUsed: settings.downloadsUsed + 1 };
+          setSettings(newSettings);
+          localStorage.setItem(getSettingsKey(user), JSON.stringify(newSettings));
+      }
+
     } catch (e) {
       console.error(e);
       setError('Failed to generate PDF');
@@ -323,6 +431,30 @@ function App() {
   };
 
   // --- Render Views ---
+
+  if (view === 'settings' && user) {
+      return (
+          <AccountSettings 
+              userEmail={user}
+              settings={settings}
+              onBack={() => setView('dashboard')}
+              onLogout={handleLogout}
+              onUpgrade={() => setView('pricing')}
+              toggleTheme={toggleTheme}
+              darkMode={darkMode}
+          />
+      );
+  }
+
+  if (view === 'pricing') {
+      return (
+        <Pricing 
+            onBack={() => setView(user ? 'dashboard' : 'splash')} 
+            currentPlan={settings.plan}
+            onUpgrade={handleUpgradePlan}
+        />
+      );
+  }
 
   if (view === 'privacy') {
       return <PrivacyPolicy onBack={() => setView('splash')} />;
@@ -338,6 +470,7 @@ function App() {
             onProceed={handleSplashProceed} 
             onPrivacy={() => setView('privacy')}
             onInstructions={() => setView('instructions')}
+            onPricing={() => setView('pricing')}
             darkMode={darkMode} 
             toggleTheme={toggleTheme} 
         />
@@ -359,6 +492,8 @@ function App() {
               onDeleteForm={handleDeleteForm}
               darkMode={darkMode}
               toggleTheme={toggleTheme}
+              onSettings={() => setView('settings')}
+              onUpgrade={() => setView('pricing')}
           />
       );
   }
@@ -379,6 +514,16 @@ function App() {
             </div>
             
             <div className="flex items-center gap-2">
+                {/* Upgrade Button - Hide during upload/analysis */}
+                {step !== 'upload' && step !== 'analyzing' && settings.plan !== 'enterprise' && (
+                    <button 
+                        onClick={() => setView('pricing')}
+                        className="hidden sm:flex items-center gap-1 text-xs font-bold uppercase tracking-wide bg-amber-100 dark:bg-amber-900/30 text-amber-600 dark:text-amber-400 px-3 py-1 rounded-full mr-2 hover:bg-amber-200 transition-colors"
+                    >
+                        <Crown size={12} /> Upgrade
+                    </button>
+                )}
+                
                 <button onClick={toggleTheme} className="p-2 text-slate-500 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-full">
                     {darkMode ? <Sun size={20} /> : <Moon size={20} />}
                 </button>
@@ -480,6 +625,7 @@ function App() {
                         fields={fields} 
                         onUpdateField={(id, r) => setFields(f => f.map(x => x.id === id ? {...x, rect: r} : x))}
                         onDeleteField={(id) => setFields(f => f.filter(x => x.id !== id))}
+                        onAddField={handleAddField}
                         mode="setup" 
                     />
                 )}

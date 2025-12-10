@@ -8,11 +8,11 @@ interface PrivacyPolicyProps {
 
 const PrivacyPolicy: React.FC<PrivacyPolicyProps> = ({ onBack }) => {
   return (
-    <div className="min-h-screen bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100 font-sans p-6">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-100 dark:from-slate-900 dark:via-slate-800 dark:to-indigo-950 text-slate-900 dark:text-slate-100 font-sans p-6">
       <div className="max-w-3xl mx-auto">
         <button 
             onClick={onBack}
-            className="flex items-center gap-2 text-slate-500 hover:text-blue-600 mb-8 transition-colors"
+            className="flex items-center gap-2 text-slate-500 hover:text-blue-600 mb-8 transition-colors font-medium"
         >
             <ArrowLeft size={20} /> Back
         </button>
@@ -24,7 +24,7 @@ const PrivacyPolicy: React.FC<PrivacyPolicyProps> = ({ onBack }) => {
 
         <div className="space-y-8">
             
-            <section className="bg-blue-50 dark:bg-slate-800 p-6 rounded-2xl border border-blue-100 dark:border-slate-700">
+            <section className="bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm p-6 rounded-2xl border border-blue-100 dark:border-slate-700 shadow-sm">
                 <div className="flex items-start gap-4">
                     <div className="p-3 bg-blue-100 dark:bg-blue-900/50 text-blue-600 rounded-xl">
                         <Lock size={24} />
@@ -56,7 +56,7 @@ const PrivacyPolicy: React.FC<PrivacyPolicyProps> = ({ onBack }) => {
                 </ul>
             </section>
 
-            <section className="bg-red-50 dark:bg-red-900/10 p-6 rounded-2xl border border-red-100 dark:border-red-900/30">
+            <section className="bg-red-50/50 dark:bg-red-900/10 backdrop-blur-sm p-6 rounded-2xl border border-red-100 dark:border-red-900/30">
                  <div className="flex items-start gap-4">
                     <div className="p-3 bg-red-100 dark:bg-red-900/30 text-red-600 rounded-xl">
                         <Trash2 size={24} />

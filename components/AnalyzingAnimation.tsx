@@ -4,6 +4,7 @@ import { Sparkles } from 'lucide-react';
 
 const AnalyzingAnimation: React.FC = () => {
   const [text, setText] = useState("Scanning Document...");
+  const [progress, setProgress] = useState(0);
   
   useEffect(() => {
     const messages = [
@@ -17,7 +18,22 @@ const AnalyzingAnimation: React.FC = () => {
       i = (i + 1) % messages.length;
       setText(messages[i]);
     }, 1500);
-    return () => clearInterval(interval);
+
+    // Progress bar simulation (approx 6 seconds total)
+    const progressInterval = setInterval(() => {
+        setProgress(old => {
+            if (old >= 100) {
+                clearInterval(progressInterval);
+                return 100;
+            }
+            return old + 1.5; // Increment
+        });
+    }, 100);
+
+    return () => {
+        clearInterval(interval);
+        clearInterval(progressInterval);
+    };
   }, []);
 
   return (
@@ -46,13 +62,25 @@ const AnalyzingAnimation: React.FC = () => {
       </div>
 
       {/* Text Area */}
-      <div className="text-center space-y-2">
-        <h3 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400">
-          {text}
-        </h3>
-        <p className="text-slate-500 dark:text-slate-400 text-sm">
-          FormWiz AI is working its magic...
-        </p>
+      <div className="text-center space-y-4 w-full max-w-xs">
+        <div>
+            <h3 className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 dark:from-blue-400 dark:to-indigo-400">
+            {text}
+            </h3>
+            <p className="text-slate-500 dark:text-slate-400 text-sm">
+            FormWiz AI is working its magic...
+            </p>
+        </div>
+
+        {/* Progress Bar */}
+        <div className="w-full h-2 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+            <div 
+                className="h-full bg-blue-600 dark:bg-blue-400 transition-all duration-100 ease-out relative"
+                style={{ width: `${progress}%` }}
+            >
+                <div className="absolute top-0 right-0 bottom-0 w-4 bg-white/30 blur-sm"></div>
+            </div>
+        </div>
       </div>
 
       <style>{`

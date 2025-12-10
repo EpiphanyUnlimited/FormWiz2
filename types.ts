@@ -17,3 +17,11 @@ export interface PDFDimensions {
   width: number;
   height: number;
 }
+
+export type PlanType = 'free' | 'premium' | 'pro' | 'enterprise';
+
+export interface UserSettings {
+  plan: PlanType;
+  downloadsUsed: number;
+  lastResetDate: number; // Timestamp for monthly reset
+}

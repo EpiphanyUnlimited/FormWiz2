@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Mail, Lock, ArrowRight, Loader2, ShieldCheck, Moon, Sun, ArrowLeft } from 'lucide-react';
+import { Mail, Lock, ArrowRight, Loader2, ShieldCheck, Moon, Sun, ArrowLeft, Eye, EyeOff } from 'lucide-react';
 import FormWizLogo from './FormWizLogo';
 
 interface AuthProps {
@@ -19,6 +19,7 @@ const Auth: React.FC<AuthProps> = ({ onLogin, darkMode, toggleTheme }) => {
   const [view, setView] = useState<'login' | 'signup' | 'verify' | 'forgot'>('login');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [verifyCode, setVerifyCode] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -273,13 +274,20 @@ const Auth: React.FC<AuthProps> = ({ onLogin, darkMode, toggleTheme }) => {
                     <div className="relative">
                         <Lock className="absolute left-3 top-3 text-slate-400" size={18} />
                         <input 
-                            type="password" 
+                            type={showPassword ? "text" : "password"} 
                             required
-                            className="w-full pl-10 pr-4 py-2.5 rounded-lg border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
+                            className="w-full pl-10 pr-10 py-2.5 rounded-lg border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-700 text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all"
                             placeholder="••••••••"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                         />
+                        <button 
+                            type="button"
+                            onClick={() => setShowPassword(!showPassword)}
+                            className="absolute right-3 top-3 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 transition-colors"
+                        >
+                            {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                        </button>
                     </div>
                     {view === 'signup' && (
                         <div className="mt-2 text-xs text-slate-500 dark:text-slate-400 space-y-1">
