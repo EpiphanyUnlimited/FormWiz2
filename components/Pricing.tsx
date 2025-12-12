@@ -1,7 +1,7 @@
 import React from 'react';
 import { Check, ArrowLeft, CreditCard, Sparkles, Building2, Crown, Zap } from 'lucide-react';
 import { PlanType } from '../types';
-import FormWizLogo from './FormWizLogo';
+import VoiceDoxLogo from './FormWizLogo';
 
 interface PricingProps {
   onBack: () => void;
@@ -114,7 +114,7 @@ const Pricing: React.FC<PricingProps> = ({ onBack, currentPlan, onUpgrade }) => 
         </button>
 
         <div className="text-center mb-12">
-            <FormWizLogo size={48} className="mx-auto mb-4" />
+            <VoiceDoxLogo size={48} className="mx-auto mb-4" />
             <h1 className="text-4xl font-extrabold mb-4">Choose Your Plan</h1>
             <p className="text-xl text-slate-500 dark:text-slate-400">Unlock more documents, downloads, and premium features.</p>
         </div>

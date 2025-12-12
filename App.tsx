@@ -12,7 +12,7 @@ import PrivacyPolicy from './components/PrivacyPolicy';
 import Instructions from './components/Instructions';
 import Pricing from './components/Pricing';
 import AccountSettings from './components/AccountSettings';
-import FormWizLogo from './components/FormWizLogo';
+import VoiceDoxLogo from './components/FormWizLogo';
 import AnalyzingAnimation from './components/AnalyzingAnimation';
 
 // Helper to manage storage keys per user
@@ -508,7 +508,7 @@ function App() {
                     <ArrowLeft size={20} />
                 </button>
                 <div className="flex items-center gap-2">
-                    <FormWizLogo className="text-blue-600 dark:text-blue-400" size={28} />
+                    <VoiceDoxLogo className="text-blue-600 dark:text-blue-400" size={28} />
                     <h1 className="text-lg font-bold text-slate-800 dark:text-white truncate max-w-[200px]">{formName}</h1>
                 </div>
             </div>
