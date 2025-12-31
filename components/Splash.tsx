@@ -1,6 +1,6 @@
 import React from 'react';
 import { Mic, CheckCircle, ArrowRight, Moon, Sun, Play } from 'lucide-react';
-import VoiceDoxLogo from './FormWizLogo';
+import FormWizLogo from './FormWizLogo';
 
 interface SplashProps {
   onProceed: () => void;
@@ -20,11 +20,11 @@ const Splash: React.FC<SplashProps> = ({ onProceed, onPrivacy, onInstructions, o
          <div className="flex items-center gap-3">
             {/* Logo background matches footer link color (blue-200) with low opacity for glass effect */}
             <div className="bg-blue-200/20 p-2 rounded-xl backdrop-blur-sm">
-               <VoiceDoxLogo size={28} />
+               <FormWizLogo size={28} />
             </div>
             <div className="flex flex-col">
                 <div className="flex items-start">
-                    <span className="font-bold text-2xl tracking-tight leading-none">VoiceDox</span>
+                    <span className="font-bold text-2xl tracking-tight leading-none">FormWiz</span>
                     <span className="text-[10px] font-medium opacity-60 ml-1 mt-0.5">© 2025</span>
                 </div>
                 <span className="text-[10px] text-blue-200 font-medium tracking-wide uppercase mt-1 opacity-80">
@@ -94,10 +94,10 @@ const Splash: React.FC<SplashProps> = ({ onProceed, onPrivacy, onInstructions, o
                     <div className="flex items-center justify-between mb-8 border-b border-white/10 pb-6">
                         <div className="flex items-center gap-3">
                             <div className="w-10 h-10 rounded-full bg-gradient-to-br from-blue-400 to-indigo-500 flex items-center justify-center shadow-lg">
-                                <VoiceDoxLogo size={20} className="text-white" />
+                                <FormWizLogo size={20} className="text-white" />
                             </div>
                             <div>
-                                <div className="text-sm font-bold text-white">VoiceDox AI</div>
+                                <div className="text-sm font-bold text-white">FormWiz AI</div>
                                 <div className="text-xs text-blue-200">Interviewing...</div>
                             </div>
                         </div>

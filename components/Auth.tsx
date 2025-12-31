@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Mail, Lock, ArrowRight, Loader2, ShieldCheck, Moon, Sun, ArrowLeft, Eye, EyeOff } from 'lucide-react';
-import VoiceDoxLogo from './FormWizLogo';
+import FormWizLogo from './FormWizLogo';
 
 interface AuthProps {
   onLogin: (email: string) => void;
@@ -109,7 +109,7 @@ const Auth: React.FC<AuthProps> = ({ onLogin, darkMode, toggleTheme }) => {
           // Create unverified user
           saveUser({ email: cleanEmail, password: cleanPassword, verified: false });
           
-          alert(`VoiceDox Verification Code for ${cleanEmail}: 123456`);
+          alert(`FormWiz Verification Code for ${cleanEmail}: 123456`);
           
           setIsLoading(false);
           setView('verify');
@@ -168,7 +168,7 @@ const Auth: React.FC<AuthProps> = ({ onLogin, darkMode, toggleTheme }) => {
       <div className="max-w-md w-full bg-white dark:bg-slate-800 rounded-2xl shadow-xl p-8 border border-slate-100 dark:border-slate-700 transition-colors duration-300">
         <div className="text-center mb-8">
             <div className="flex justify-center mb-4">
-                <VoiceDoxLogo size={64} />
+                <FormWizLogo size={64} />
             </div>
             <h1 className="text-2xl font-bold text-slate-900 dark:text-white">
                 {view === 'login' && "Welcome Back"}

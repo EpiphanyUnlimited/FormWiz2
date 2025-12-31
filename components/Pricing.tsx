@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
-import { useStripe } from '@stripe/react-stripe-js';
-import { Check, ArrowLeft, CreditCard, Sparkles, Building2, Crown, Zap, Loader2 } from 'lucide-react';
+import React from 'react';
+import { Check, ArrowLeft, CreditCard, Sparkles, Building2, Crown, Zap } from 'lucide-react';
 import { PlanType } from '../types';
-import VoiceDoxLogo from './FormWizLogo';
+import FormWizLogo from './FormWizLogo';
 
 interface PricingProps {
   onBack: () => void;
@@ -11,64 +10,30 @@ interface PricingProps {
 }
 
 const Pricing: React.FC<PricingProps> = ({ onBack, currentPlan, onUpgrade }) => {
-  const stripe = useStripe();
-  const [loadingPlan, setLoadingPlan] = useState<PlanType | null>(null);
-
-  const handlePayment = async (plan: PlanType, priceId: string) => {
-    if (!stripe) {
-      console.error("Stripe.js has not yet loaded.");
-      return;
-    }
-
-    setLoadingPlan(plan);
-
-    try {
-      const response = await fetch('/.netlify/functions/create-checkout-session', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ priceId }),
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to create checkout session.');
+  
+  const handlePayment = (plan: PlanType, price: string) => {
+      // In a real app, this would initialize Stripe or PayPal SDK
+      if (window.confirm(`Proceed to payment of ${price} via Stripe/PayPal for the ${plan.toUpperCase()} plan?`)) {
+          alert("Payment Successful! Your account has been upgraded.");
+          onUpgrade(plan);
       }
-
-      const { sessionId } = await response.json();
-
-      const { error } = await stripe.redirectToCheckout({
-        sessionId,
-      });
-
-      if (error) {
-        console.error("Stripe checkout error:", error);
-        alert(`Error: ${error.message}`);
-      }
-    } catch (error) {
-      console.error("Payment error:", error);
-      alert("Could not initiate payment. Please try again.");
-    } finally {
-      setLoadingPlan(null);
-    }
   };
 
-  const PlanCard = ({
-    type,
-    price,
-    period,
-    features,
+  const PlanCard = ({ 
+    type, 
+    price, 
+    period, 
+    features, 
     icon: Icon,
-    priceId,
     popular = false,
-  }: {
-    type: PlanType;
-    price: string;
-    period?: string;
-    features: string[];
+  }: { 
+    type: PlanType; 
+    price: string; 
+    period?: string; 
+    features: string[]; 
     icon: any;
-    priceId?: string;
     popular?: boolean;
+    color?: string;
   }) => {
     const isCurrent = currentPlan === type;
 
@@ -118,17 +83,18 @@ const Pricing: React.FC<PricingProps> = ({ onBack, currentPlan, onUpgrade }) => 
         ) : (
             <div className="space-y-2">
                 <button 
-                    onClick={() => priceId && handlePayment(type, priceId)}
-                    disabled={!priceId || loadingPlan === type}
+                    onClick={() => handlePayment(type, price)}
                     className={`w-full py-3 rounded-xl font-bold text-white shadow-lg transition-transform hover:-translate-y-0.5 flex items-center justify-center gap-2 ${
                         type === 'pro' ? 'bg-gradient-to-r from-indigo-600 to-purple-600' : 'bg-blue-600 hover:bg-blue-700'
-                    } disabled:opacity-50 disabled:cursor-not-allowed`}
+                    }`}
                 >
-                    {loadingPlan === type ? <Loader2 className="animate-spin" /> : (type === 'free' ? 'Downgrade' : 'Subscribe')}
+                    {type === 'free' ? 'Downgrade' : 'Subscribe'}
                 </button>
                 {type !== 'free' && (
                     <div className="flex justify-center gap-2 opacity-50">
                         <span className="text-[10px] text-slate-400 flex items-center gap-1"><CreditCard size={10} /> Stripe</span>
+                        <span className="text-[10px] text-slate-400">|</span>
+                        <span className="text-[10px] text-slate-400 font-serif italic">PayPal</span>
                     </div>
                 )}
             </div>
@@ -148,14 +114,14 @@ const Pricing: React.FC<PricingProps> = ({ onBack, currentPlan, onUpgrade }) => 
         </button>
 
         <div className="text-center mb-12">
-            <VoiceDoxLogo size={48} className="mx-auto mb-4" />
+            <FormWizLogo size={48} className="mx-auto mb-4" />
             <h1 className="text-4xl font-extrabold mb-4">Choose Your Plan</h1>
             <p className="text-xl text-slate-500 dark:text-slate-400">Unlock more documents, downloads, and premium features.</p>
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto items-start">
             
-            {/* TODO: User needs to create these products in their Stripe Dashboard */}
+            {/* FREE */}
             <PlanCard 
                 type="free" 
                 price="Free" 
@@ -168,12 +134,12 @@ const Pricing: React.FC<PricingProps> = ({ onBack, currentPlan, onUpgrade }) => 
                 ]} 
             />
 
+            {/* PREMIUM */}
             <PlanCard 
                 type="premium" 
                 price="$6.99" 
                 period="mo"
                 icon={Sparkles}
-                priceId="price_1SeymiIBiOShj96XAq1X8XyU" // REPLACE THIS with your Stripe Price ID
                 features={[
                     "10 Saved Documents (Active)",
                     "10 PDF Downloads / Month",
@@ -183,13 +149,13 @@ const Pricing: React.FC<PricingProps> = ({ onBack, currentPlan, onUpgrade }) => 
                 ]} 
             />
 
+            {/* PRO */}
             <PlanCard 
                 type="pro" 
                 price="$11.99" 
                 period="mo"
                 icon={Crown}
                 popular={true}
-                priceId="price_1SeypPIBiOShj96XIwTYfZ5S" // REPLACE THIS with your Stripe Price ID
                 features={[
                     "25 Saved Documents (Active)",
                     "Unlimited Downloads",
@@ -200,6 +166,7 @@ const Pricing: React.FC<PricingProps> = ({ onBack, currentPlan, onUpgrade }) => 
                 ]} 
             />
 
+            {/* ENTERPRISE */}
             <PlanCard 
                 type="enterprise" 
                 price="Custom" 
@@ -218,7 +185,7 @@ const Pricing: React.FC<PricingProps> = ({ onBack, currentPlan, onUpgrade }) => 
         
         <div className="mt-12 text-center text-sm text-slate-400 max-w-2xl mx-auto">
             <p>Prices are in USD. Subscription auto-renews monthly. Cancel anytime from your account settings.</p>
-            <p className="mt-2">Secure payments processed by Stripe.</p>
+            <p className="mt-2">Secure payments processed by Stripe and PayPal.</p>
         </div>
       </div>
     </div>

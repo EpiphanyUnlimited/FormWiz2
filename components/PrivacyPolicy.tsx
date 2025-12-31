@@ -1,6 +1,6 @@
 import React from 'react';
 import { Shield, Lock, Trash2, ArrowLeft } from 'lucide-react';
-import VoiceDoxLogo from './FormWizLogo';
+import FormWizLogo from './FormWizLogo';
 
 interface PrivacyPolicyProps {
   onBack: () => void;
@@ -18,7 +18,7 @@ const PrivacyPolicy: React.FC<PrivacyPolicyProps> = ({ onBack }) => {
         </button>
 
         <div className="flex items-center gap-3 mb-8">
-            <VoiceDoxLogo size={40} />
+            <FormWizLogo size={40} />
             <h1 className="text-3xl font-bold">Privacy & Data Security</h1>
         </div>
 
@@ -32,7 +32,7 @@ const PrivacyPolicy: React.FC<PrivacyPolicyProps> = ({ onBack }) => {
                     <div>
                         <h2 className="text-xl font-bold mb-2">Local-Only Storage</h2>
                         <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
-                            VoiceDox operates on a <strong>Local-First</strong> principle. We do not maintain a central database of your filled forms, answers, or voice recordings on our servers. All form data is stored securely within your browser's local storage mechanism on your specific device.
+                            FormWiz operates on a <strong>Local-First</strong> principle. We do not maintain a central database of your filled forms, answers, or voice recordings on our servers. All form data is stored securely within your browser's local storage mechanism on your specific device.
                         </p>
                     </div>
                 </div>
@@ -43,11 +43,11 @@ const PrivacyPolicy: React.FC<PrivacyPolicyProps> = ({ onBack }) => {
                 <ul className="space-y-4 text-slate-600 dark:text-slate-300">
                     <li className="flex gap-3">
                         <div className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-2.5"></div>
-                        <p><strong>Voice Processing:</strong> Your voice is processed in real-time to transcribe answers. Audio recordings are transient and are not saved, archived, or used for model training purposes by VoiceDox.</p>
+                        <p><strong>Voice Processing:</strong> Your voice is processed in real-time to transcribe answers. Audio recordings are transient and are not saved, archived, or used for model training purposes by FormWiz.</p>
                     </li>
                     <li className="flex gap-3">
                         <div className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-2.5"></div>
-                        <p><strong>Document Analysis:</strong> When you upload a PDF, it is processed temporarily by our AI to identify fields. The document content is not retained by VoiceDox after the session ends.</p>
+                        <p><strong>Document Analysis:</strong> When you upload a PDF, it is processed temporarily by our AI to identify fields. The document content is not retained by FormWiz after the session ends.</p>
                     </li>
                     <li className="flex gap-3">
                         <div className="w-1.5 h-1.5 rounded-full bg-blue-500 mt-2.5"></div>

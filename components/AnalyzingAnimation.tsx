@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import VoiceDoxLogo from './FormWizLogo';
+import FormWizLogo from './FormWizLogo';
 import { Sparkles } from 'lucide-react';
 
 const AnalyzingAnimation: React.FC = () => {
@@ -46,7 +46,7 @@ const AnalyzingAnimation: React.FC = () => {
 
         {/* The Document (Logo) */}
         <div className="relative z-10 w-full h-full bg-white dark:bg-slate-800 rounded-xl border-2 border-slate-200 dark:border-slate-600 shadow-2xl flex items-center justify-center overflow-hidden">
-           <VoiceDoxLogo size={64} className="opacity-80" />
+           <FormWizLogo size={64} className="opacity-80" />
            
            {/* Scanning Beam */}
            <div className="absolute top-0 left-0 w-full h-1 bg-blue-400 shadow-[0_0_15px_rgba(96,165,250,0.8)] animate-[scan_2s_ease-in-out_infinite]"></div>
@@ -68,7 +68,7 @@ const AnalyzingAnimation: React.FC = () => {
             {text}
             </h3>
             <p className="text-slate-500 dark:text-slate-400 text-sm">
-            VoiceDox AI is working its magic...
+            FormWiz AI is working its magic...
             </p>
         </div>
 

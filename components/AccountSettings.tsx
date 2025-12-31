@@ -155,7 +155,7 @@ const AccountSettings: React.FC<AccountSettingsProps> = ({
         </div>
 
         <div className="text-center mt-8 text-xs text-slate-400">
-            <p>VoiceDox v1.0.0 • Epiphany Unlimited, Inc.</p>
+            <p>FormWiz v1.0.0 • Epiphany Unlimited, Inc.</p>
         </div>
       </div>
     </div>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { ArrowLeft, Upload, Mic, Layout, Download, Settings } from 'lucide-react';
-import VoiceDoxLogo from './FormWizLogo';
+import FormWizLogo from './FormWizLogo';
 
 interface InstructionsProps {
   onBack: () => void;
@@ -18,8 +18,8 @@ const Instructions: React.FC<InstructionsProps> = ({ onBack }) => {
         </button>
 
         <div className="text-center mb-12">
-            <VoiceDoxLogo size={64} className="mx-auto mb-4" />
-            <h1 className="text-4xl font-extrabold mb-4">How VoiceDox Works</h1>
+            <FormWizLogo size={64} className="mx-auto mb-4" />
+            <h1 className="text-4xl font-extrabold mb-4">How FormWiz Works</h1>
             <p className="text-xl text-slate-500 dark:text-slate-400">Your intelligent assistant for paperwork.</p>
         </div>
 
@@ -33,7 +33,7 @@ const Instructions: React.FC<InstructionsProps> = ({ onBack }) => {
                     <div className="w-12 h-12 bg-blue-600 text-white rounded-2xl flex items-center justify-center font-bold text-xl mb-6 shadow-lg shadow-blue-500/30">1</div>
                     <h3 className="text-2xl font-bold mb-3">Upload Document</h3>
                     <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
-                        Start by uploading a PDF, Image, or taking a photo of your form. VoiceDox uses advanced AI to scan the document and detect every question, checkbox, and writing area automatically.
+                        Start by uploading a PDF, Image, or taking a photo of your form. FormWiz uses advanced AI to scan the document and detect every question, checkbox, and writing area automatically.
                     </p>
                 </div>
             </div>
@@ -65,7 +65,7 @@ const Instructions: React.FC<InstructionsProps> = ({ onBack }) => {
                     <div className="w-12 h-12 bg-purple-600 text-white rounded-2xl flex items-center justify-center font-bold text-xl mb-6 shadow-lg shadow-purple-500/30">3</div>
                     <h3 className="text-2xl font-bold mb-3">The Interview</h3>
                     <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
-                        VoiceDox will act as your interviewer. It reads questions aloud, and you can simply speak your answers. 
+                        FormWiz will act as your interviewer. It reads questions aloud, and you can simply speak your answers. 
                         <br/><br/>
                         Tap the microphone to speak. The AI auto-detects when you pause and keeps listening until you're done.
                     </p>

@@ -1,4 +1,4 @@
-# VoiceDox
+# FormWiz
 
 An AI-powered web application that streamlines the process of filling out PDF forms. It analyzes uploaded PDFs to identify questions and interview the user via voice to gather answers, automatically filling the document.
 

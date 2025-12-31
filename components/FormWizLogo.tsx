@@ -1,11 +1,11 @@
 import React from 'react';
 
-interface VoiceDoxLogoProps {
+interface FormWizLogoProps {
   size?: number;
   className?: string;
 }
 
-const VoiceDoxLogo: React.FC<VoiceDoxLogoProps> = ({ size = 24, className = "" }) => {
+const FormWizLogo: React.FC<FormWizLogoProps> = ({ size = 24, className = "" }) => {
   return (
     <svg 
       width={size} 
@@ -47,4 +47,4 @@ const VoiceDoxLogo: React.FC<VoiceDoxLogoProps> = ({ size = 24, className = "" }
   );
 };
 
-export default VoiceDoxLogo;
+export default FormWizLogo;
