@@ -40,9 +40,6 @@ const PDFPreview: React.FC<PDFPreviewProps> = ({ images, fields, onUpdateField, 
 
   const handlePointerDownMove = (e: React.PointerEvent, field: FormField) => {
     if (isDrawMode) return; // Don't move if drawing
-    if (mode === 'review' && (e.target as HTMLElement).tagName.toLowerCase() === 'textarea') {
-        return; 
-    }
 
     e.preventDefault();
     e.stopPropagation();
@@ -135,7 +132,7 @@ const PDFPreview: React.FC<PDFPreviewProps> = ({ images, fields, onUpdateField, 
 
     const [ymin, xmin, ymax, xmax] = initialRect;
 
-    if (interactionMode === 'moving' && !isResizeHandle) {
+    if (interactionMode === 'moving') {
         const h = ymax - ymin;
         const w = xmax - xmin;
         
@@ -148,9 +145,15 @@ const PDFPreview: React.FC<PDFPreviewProps> = ({ images, fields, onUpdateField, 
 
         onUpdateField(activeFieldId, [newY, newX, newY + h, newX + w]);
 
-    } else if (interactionMode === 'resizing' && isResizeHandle) {
-        let newYMin = ymin + dYNorm;
+    } else if (interactionMode === 'resizing') {
+        let newYMin = ymin;
         let newXMax = xmax + dXNorm;
+        let newYMax = ymax + dYNorm;
+
+        // This logic is for a bottom-right handle. The current one is top-right. Let's adjust.
+        // For a top-right handle, we adjust ymin and xmax.
+        newYMin = ymin + dYNorm;
+        newXMax = xmax + dXNorm;
         
         // Constrain min size (20 units)
         newYMin = Math.max(0, Math.min(ymax - 20, newYMin));
@@ -263,18 +266,15 @@ const PDFPreview: React.FC<PDFPreviewProps> = ({ images, fields, onUpdateField, 
             return (
                 <div
                     key={field.id}
-                    onPointerDown={(e) => handlePointerDownMove(e, field)}
-                    // onPointerMove handled by container for smooth capture
-                    // onPointerUp handled by container
-                    className={`absolute border-2 rounded flex items-start justify-start touch-none ${isActive ? 'z-50 border-blue-600 bg-blue-100/30' : 'z-10 border-blue-500/50 bg-blue-100/20 hover:border-blue-600 hover:bg-blue-100/40'} group`}
+                    className={`absolute border-2 rounded flex items-start justify-start bg-blue-100/20 ${isActive ? 'z-40 border-blue-600 bg-blue-100/30' : 'z-10 border-blue-500/50 hover:border-blue-600 hover:bg-blue-100/40'} group`}
                     style={{
                         top: `${top}%`,
                         left: `${left}%`,
                         width: `${Math.max(width, 2)}%`,
                         height: `${Math.max(height, 2)}%`,
                         touchAction: 'none',
-                        cursor: mode === 'setup' ? (isDrawMode ? 'crosshair' : 'move') : 'default',
-                        pointerEvents: isDrawMode ? 'none' : 'auto' // Let clicks pass through to background when drawing
+                        cursor: 'default',
+                        pointerEvents: isDrawMode ? 'none' : 'auto'
                     }}
                 >
                     {mode === 'review' ? (
@@ -286,10 +286,7 @@ const PDFPreview: React.FC<PDFPreviewProps> = ({ images, fields, onUpdateField, 
                             readOnly={field.type === 'checkbox'}
                         />
                     ) : (
-                        // Setup mode
-                        <div className="w-full h-full flex items-center justify-center opacity-0 group-hover:opacity-50">
-                             <Move size={16} className="text-blue-800" />
-                        </div>
+                        <div className="w-full h-full"></div> // Placeholder
                     )}
                     
                     {/* Floating Label */}
@@ -298,10 +295,19 @@ const PDFPreview: React.FC<PDFPreviewProps> = ({ images, fields, onUpdateField, 
                         {field.commonType ? ` • ${field.commonType.toUpperCase()}` : ''}
                     </div>
 
+                    {/* Move Handle - Top Left */}
+                    <div
+                        onPointerDown={(e) => handlePointerDownMove(e, field)}
+                        className="absolute top-[-8px] left-[-8px] w-6 h-6 flex items-center justify-center bg-blue-600 text-white rounded-full shadow-md touch-none z-50 opacity-0 group-hover:opacity-100 hover:scale-110 transition-all cursor-move"
+                        title="Move Box"
+                        style={{ display: isDrawMode ? 'none' : 'flex' }}
+                    >
+                        <Move size={12} />
+                    </div>
+
                     {/* Resize Handle - Top Right */}
                     <div 
                         onPointerDown={(e) => handlePointerDownResize(e, field)}
-                        // onPointerMove handled by container
                         className="absolute top-[-8px] right-[-8px] w-6 h-6 flex items-center justify-center bg-blue-600 text-white rounded-full shadow-md touch-none z-50 opacity-0 group-hover:opacity-100 hover:scale-110 transition-all"
                         title="Resize Box"
                         style={{ 
@@ -334,8 +340,8 @@ const PDFPreview: React.FC<PDFPreviewProps> = ({ images, fields, onUpdateField, 
       </div>
       <p className="mt-4 text-sm text-slate-500 dark:text-slate-400 text-center px-4">
         {mode === 'setup' 
-           ? <span><span className="font-semibold">Tap & Drag</span> to move. Use <span className="font-semibold text-red-500">Trash</span> icon to delete. Click <strong>"Add Missing Field"</strong> to draw new boxes.</span>
-           : <span>Review your answers.</span>
+           ? <span><span className="font-semibold">Tap & Drag handles</span> to move or resize. Use <span className="font-semibold text-red-500">Trash</span> icon to delete. Click <strong>"Add Missing Field"</strong> to draw new boxes.</span>
+           : <span>Review your answers. <span className="font-semibold">Hover to move or resize fields.</span></span>
         }
       </p>
     </div>
