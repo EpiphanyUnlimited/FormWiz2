@@ -82,7 +82,7 @@ const PDFPreview: React.FC<PDFPreviewProps> = ({ images, fields, onUpdateField, 
       setDrawRect([yNorm, xNorm, yNorm, xNorm]);
   };
 
-  const handlePointerMove = (e: React.PointerEvent, isResizeHandle = false) => {
+  const handlePointerMove = (e: React.PointerEvent) => {
     if (!containerRef.current) return;
     
     // Check if we are drawing on background
@@ -97,20 +97,7 @@ const PDFPreview: React.FC<PDFPreviewProps> = ({ images, fields, onUpdateField, 
 
          const xNorm = (x / rect.width) * 1000;
          const yNorm = (y / rect.height) * 1000;
-
-         // drawRect is [ymin, xmin, ymax, xmax]
-         // The start point was set in handlePointerDownBackground
-         // We need to determine new min/max based on current mouse pos vs start point
-         // Actually, let's simplify: Start point is fixed. We update the 2nd point.
-         // Wait, to do this correctly without extra state, let's assume drawRect[0]/[1] are startY/startX
-         // and we update [2]/[3] as endY/endX.
-         // But we need to handle dragging up/left (negative width/height).
-         // So let's store Anchor point in drawRect for now and normalize on Up?
-         // Simpler: Store anchor in a Ref or just use drawRect[0], drawRect[1] as anchor if we don't swap them yet.
-         // Let's rely on StartPos being the anchor in pixel coords? No, StartPos is screen coords.
          
-         // Let's just update based on current mouse.
-         // We'll treat drawRect as [startY, startX, currentY, currentX] during draw, then normalize on release.
          setDrawRect([drawRect[0], drawRect[1], yNorm, xNorm]);
          return;
     }
@@ -146,14 +133,9 @@ const PDFPreview: React.FC<PDFPreviewProps> = ({ images, fields, onUpdateField, 
         onUpdateField(activeFieldId, [newY, newX, newY + h, newX + w]);
 
     } else if (interactionMode === 'resizing') {
-        let newYMin = ymin;
+        // This logic is for the top-right handle.
+        let newYMin = ymin + dYNorm;
         let newXMax = xmax + dXNorm;
-        let newYMax = ymax + dYNorm;
-
-        // This logic is for a bottom-right handle. The current one is top-right. Let's adjust.
-        // For a top-right handle, we adjust ymin and xmax.
-        newYMin = ymin + dYNorm;
-        newXMax = xmax + dXNorm;
         
         // Constrain min size (20 units)
         newYMin = Math.max(0, Math.min(ymax - 20, newYMin));
@@ -298,7 +280,7 @@ const PDFPreview: React.FC<PDFPreviewProps> = ({ images, fields, onUpdateField, 
                     {/* Move Handle - Top Left */}
                     <div
                         onPointerDown={(e) => handlePointerDownMove(e, field)}
-                        className="absolute top-[-8px] left-[-8px] w-6 h-6 flex items-center justify-center bg-blue-600 text-white rounded-full shadow-md touch-none z-50 hover:scale-110 transition-all cursor-move"
+                        className="absolute top-[-8px] left-[-8px] w-6 h-6 flex items-center justify-center bg-blue-600 text-white rounded-full shadow-md touch-none z-50 opacity-0 group-hover:opacity-100 hover:scale-110 transition-all cursor-move"
                         title="Move Box"
                         style={{ display: isDrawMode ? 'none' : 'flex' }}
                     >
@@ -308,7 +290,7 @@ const PDFPreview: React.FC<PDFPreviewProps> = ({ images, fields, onUpdateField, 
                     {/* Resize Handle - Top Right */}
                     <div 
                         onPointerDown={(e) => handlePointerDownResize(e, field)}
-                        className="absolute top-[-8px] right-[-8px] w-6 h-6 flex items-center justify-center bg-blue-600 text-white rounded-full shadow-md touch-none z-50 hover:scale-110 transition-all"
+                        className="absolute top-[-8px] right-[-8px] w-6 h-6 flex items-center justify-center bg-blue-600 text-white rounded-full shadow-md touch-none z-50 opacity-0 group-hover:opacity-100 hover:scale-110 transition-all"
                         title="Resize Box"
                         style={{ 
                             touchAction: 'none',
