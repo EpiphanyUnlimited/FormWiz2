@@ -298,7 +298,7 @@ const PDFPreview: React.FC<PDFPreviewProps> = ({ images, fields, onUpdateField, 
                     {/* Move Handle - Top Left */}
                     <div
                         onPointerDown={(e) => handlePointerDownMove(e, field)}
-                        className="absolute top-[-8px] left-[-8px] w-6 h-6 flex items-center justify-center bg-blue-600 text-white rounded-full shadow-md touch-none z-50 opacity-0 group-hover:opacity-100 hover:scale-110 transition-all cursor-move"
+                        className="absolute top-[-8px] left-[-8px] w-6 h-6 flex items-center justify-center bg-blue-600 text-white rounded-full shadow-md touch-none z-50 hover:scale-110 transition-all cursor-move"
                         title="Move Box"
                         style={{ display: isDrawMode ? 'none' : 'flex' }}
                     >
@@ -308,7 +308,7 @@ const PDFPreview: React.FC<PDFPreviewProps> = ({ images, fields, onUpdateField, 
                     {/* Resize Handle - Top Right */}
                     <div 
                         onPointerDown={(e) => handlePointerDownResize(e, field)}
-                        className="absolute top-[-8px] right-[-8px] w-6 h-6 flex items-center justify-center bg-blue-600 text-white rounded-full shadow-md touch-none z-50 opacity-0 group-hover:opacity-100 hover:scale-110 transition-all"
+                        className="absolute top-[-8px] right-[-8px] w-6 h-6 flex items-center justify-center bg-blue-600 text-white rounded-full shadow-md touch-none z-50 hover:scale-110 transition-all"
                         title="Resize Box"
                         style={{ 
                             touchAction: 'none',
