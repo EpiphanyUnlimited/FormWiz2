@@ -103,7 +103,6 @@ const PDFPreview: React.FC<PDFPreviewProps> = ({ images, fields, onUpdateField, 
     }
 
     if (interactionMode === 'none' || !activeFieldId) return;
-    if (!e.currentTarget.hasPointerCapture(e.pointerId)) return;
 
     e.preventDefault();
 
