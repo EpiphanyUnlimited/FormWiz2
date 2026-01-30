@@ -5,6 +5,7 @@ import FormWizLogo from './FormWizLogo';
 import { loadStripe } from '@stripe/stripe-js';
 import { auth } from '../utils/auth';
 import { STRIPE_PRICES } from '../config/stripeConfig';
+import EnterpriseContactModal from './EnterpriseContactModal';
 
 interface PricingProps {
     onBack: () => void;
@@ -13,12 +14,14 @@ interface PricingProps {
 }
 
 const Pricing: React.FC<PricingProps> = ({ onBack, currentPlan, onUpgrade }) => {
+    const [showEnterpriseModal, setShowEnterpriseModal] = React.useState(false);
+
 
     const handlePayment = async (plan: PlanType, price: string) => {
         // 1. Check if user is logged in
         const user = auth.currentUser();
         if (!user) {
-            alert("Please sign in to subscribe.");
+            auth.signup();
             return;
         }
 
@@ -119,7 +122,7 @@ const Pricing: React.FC<PricingProps> = ({ onBack, currentPlan, onUpgrade }) => 
 
                 {type === 'enterprise' ? (
                     <button
-                        onClick={() => window.location.href = "mailto:info@epiphanyunltd.com?subject=Enterprise Inquiry"}
+                        onClick={() => setShowEnterpriseModal(true)}
                         className="w-full py-3 rounded-xl border-2 border-slate-900 dark:border-slate-100 text-slate-900 dark:text-white font-bold hover:bg-slate-900 hover:text-white dark:hover:bg-white dark:hover:text-slate-900 transition-colors"
                     >
                         Contact Sales
@@ -150,6 +153,8 @@ const Pricing: React.FC<PricingProps> = ({ onBack, currentPlan, onUpgrade }) => 
         );
     };
 
+
+
     return (
         <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-100 dark:from-slate-900 dark:via-slate-800 dark:to-indigo-950 text-slate-900 dark:text-slate-100 font-sans p-6 overflow-y-auto">
             <div className="max-w-7xl mx-auto">
@@ -161,7 +166,7 @@ const Pricing: React.FC<PricingProps> = ({ onBack, currentPlan, onUpgrade }) => 
                 </button>
 
                 <div className="text-center mb-12">
-                    <FormWizLogo size={48} className="mx-auto mb-4" />
+                    <FormWizLogo size={96} className="mx-auto mb-4" />
                     <h1 className="text-4xl font-extrabold mb-4">Choose Your Plan</h1>
                     <p className="text-xl text-slate-500 dark:text-slate-400">Unlock more documents, downloads, and premium features.</p>
                 </div>
@@ -235,6 +240,8 @@ const Pricing: React.FC<PricingProps> = ({ onBack, currentPlan, onUpgrade }) => 
                     <p className="mt-2">Secure payments processed by Stripe and PayPal.</p>
                 </div>
             </div>
+
+            <EnterpriseContactModal isOpen={showEnterpriseModal} onClose={() => setShowEnterpriseModal(false)} />
         </div>
     );
 };

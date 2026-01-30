@@ -28,9 +28,9 @@ const Auth: React.FC<AuthProps> = ({ onLogin, darkMode, toggleTheme }) => {
                 </button>
             </div>
 
-            <div className="max-w-md w-full bg-white dark:bg-slate-800 rounded-2xl shadow-xl p-8 border border-slate-100 dark:border-slate-700 transition-colors duration-300 text-center">
+            <div className="max-w-md w-full p-8 text-center">
                 <div className="flex justify-center mb-8">
-                    <FormWizLogo size={64} />
+                    <FormWizLogo size={128} />
                 </div>
                 <h1 className="text-2xl font-bold text-slate-900 dark:text-white mb-2">
                     Welcome to FormWiz
