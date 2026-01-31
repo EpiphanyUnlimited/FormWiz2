@@ -31,15 +31,15 @@ const Splash: React.FC<SplashProps> = ({ onProceed, onPrivacy, onInstructions, o
                     </div>
                 </div>
 
-                <div className="flex items-center gap-4 sm:gap-6 pt-1">
-                    <button onClick={onInstructions} className="hidden sm:flex text-sm font-medium text-blue-100 hover:text-white transition-colors">How it Works</button>
-                    <button onClick={onPricing} className="hidden sm:flex text-sm font-medium text-blue-100 hover:text-white transition-colors">Pricing</button>
-                    <button onClick={onPrivacy} className="hidden sm:flex text-sm font-medium text-blue-100 hover:text-white transition-colors">Privacy</button>
+                <div className="flex items-center gap-2 sm:gap-6 pt-1">
+                    <button onClick={onInstructions} className="text-xs sm:text-sm font-medium text-blue-100 hover:text-white transition-colors">How it Works</button>
+                    <button onClick={onPricing} className="text-xs sm:text-sm font-medium text-blue-100 hover:text-white transition-colors">Pricing</button>
+                    <button onClick={onPrivacy} className="hidden xs:flex text-xs sm:text-sm font-medium text-blue-100 hover:text-white transition-colors">Privacy</button>
 
                     <div className="h-5 w-px bg-white/20 hidden sm:block"></div>
 
-                    <button onClick={toggleTheme} className="p-2 text-white/70 hover:bg-white/10 rounded-full transition-colors">
-                        {darkMode ? <Sun size={20} /> : <Moon size={20} />}
+                    <button onClick={toggleTheme} className="p-1 sm:p-2 text-white/70 hover:bg-white/10 rounded-full transition-colors">
+                        {darkMode ? <Sun size={18} className="sm:w-5 sm:h-5" /> : <Moon size={18} className="sm:w-5 sm:h-5" />}
                     </button>
                 </div>
             </header>
