@@ -21,7 +21,7 @@ const Auth: React.FC<AuthProps> = ({ onLogin, darkMode, toggleTheme }) => {
     }, []);
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-900 px-4 font-sans transition-colors duration-300">
+        <div className="min-h-screen flex items-center justify-center bg-blue-50 dark:bg-slate-900 px-4 font-sans transition-colors duration-300">
             <div className="absolute top-4 right-4">
                 <button onClick={toggleTheme} className="p-2 text-slate-500 dark:text-slate-400 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-full transition-colors">
                     {darkMode ? <Sun size={20} /> : <Moon size={20} />}

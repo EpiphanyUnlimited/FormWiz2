@@ -35,7 +35,7 @@ const Dashboard: React.FC<DashboardProps> = ({
     onUpgrade
 }) => {
     return (
-        <div className="min-h-screen bg-slate-50 dark:bg-slate-900 transition-colors duration-300">
+        <div className="min-h-screen bg-blue-50 dark:bg-slate-900 transition-colors duration-300">
             <nav className="bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 px-6 py-4 flex justify-between items-center sticky top-0 z-10">
                 <div className="flex items-center gap-2">
                     <FormWizLogo size={32} />
