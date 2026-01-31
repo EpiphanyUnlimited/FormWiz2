@@ -119,7 +119,6 @@ const Pricing: React.FC<PricingProps> = ({ onBack, currentPlan, onUpgrade }) => 
                 <div className="mt-2 mb-6">
                     <span className="text-3xl font-extrabold text-slate-900 dark:text-white">{price}</span>
                     {period && <span className="text-slate-500 dark:text-slate-400 text-sm">/{period}</span>}
-                    {type === 'enterprise' && <div className="text-xs text-slate-400 mt-1 font-normal">(email info@epiphanyunltd.com for a price quote)</div>}
                 </div>
 
                 <ul className="space-y-3 mb-8 flex-1">
@@ -210,12 +209,11 @@ const Pricing: React.FC<PricingProps> = ({ onBack, currentPlan, onUpgrade }) => 
                             "10 Saved Documents (Active)",
                             "10 PDF Downloads / Month",
                             "Priority AI Processing",
-                            "Voice Interviewer",
-                            "Email Support"
+                            "Voice Interviewer"
                         ]}
                     />
 
-                    {/* PRO */}
+                    {/* PRO (Displayed as Plus) */}
                     <PlanCard
                         type="pro"
                         price="$11.99"
@@ -226,9 +224,7 @@ const Pricing: React.FC<PricingProps> = ({ onBack, currentPlan, onUpgrade }) => 
                             "25 Saved Documents (Active)",
                             "Unlimited Downloads",
                             "Advanced AI Analysis (Full PII Detection)",
-                            "Priority Voice Processing",
-                            "Priority Support",
-                            "Remove Watermarks"
+                            "Priority Support"
                         ]}
                     />
 
@@ -238,6 +234,7 @@ const Pricing: React.FC<PricingProps> = ({ onBack, currentPlan, onUpgrade }) => 
                         price="Custom"
                         icon={Building2}
                         features={[
+                            "All features of Plus",
                             "White Label Version",
                             "Custom Pre-written Templates",
                             "Onboarding & Intake Workflows",

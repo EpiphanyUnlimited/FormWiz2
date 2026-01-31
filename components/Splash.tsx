@@ -19,7 +19,7 @@ const Splash: React.FC<SplashProps> = ({ onProceed, onPrivacy, onInstructions, o
             <header className="flex justify-between items-start p-6 z-20 max-w-7xl mx-auto w-full">
                 <div className="flex items-center gap-3">
                     {/* Logo background matches footer link color (blue-200) with low opacity for glass effect */}
-                    <FormWizLogo size={28} />
+                    <FormWizLogo size={56} />
                     <div className="flex flex-col">
                         <div className="flex items-start">
                             <span className="font-bold text-2xl tracking-tight leading-none">FormWiz</span>
