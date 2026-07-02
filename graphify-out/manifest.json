@@ -1,0 +1,122 @@
+{
+  "C:\\Users\\givin\\github-repos\\FormWiz2\\App.tsx": {
+    "mtime": 1783030840.7299845,
+    "hash": "5312dd536cb493353e9b09ba9b3566b5"
+  },
+  "C:\\Users\\givin\\github-repos\\FormWiz2\\index.tsx": {
+    "mtime": 1783030840.7706237,
+    "hash": "a5e50a333a2f8e0f77bef38473262117"
+  },
+  "C:\\Users\\givin\\github-repos\\FormWiz2\\types.ts": {
+    "mtime": 1783030840.8152142,
+    "hash": "e6bfa86f3a2f89c427557b516179eef3"
+  },
+  "C:\\Users\\givin\\github-repos\\FormWiz2\\vite.config.ts": {
+    "mtime": 1783030840.8251202,
+    "hash": "5e698206d67d1e8654b0f29218da1416"
+  },
+  "C:\\Users\\givin\\github-repos\\FormWiz2\\components\\AccountSettings.tsx": {
+    "mtime": 1783030840.740066,
+    "hash": "0161137a5394a53281a2789f42ee4e76"
+  },
+  "C:\\Users\\givin\\github-repos\\FormWiz2\\components\\AnalyzingAnimation.tsx": {
+    "mtime": 1783030840.7430882,
+    "hash": "761902a2164b8ecff0d5766a0968d1ca"
+  },
+  "C:\\Users\\givin\\github-repos\\FormWiz2\\components\\Auth.tsx": {
+    "mtime": 1783030840.745812,
+    "hash": "440cc29e0e605bd08f99ddf771cdc92e"
+  },
+  "C:\\Users\\givin\\github-repos\\FormWiz2\\components\\Dashboard.tsx": {
+    "mtime": 1783030840.7478108,
+    "hash": "313996fa9485cfa8a5392206751bac51"
+  },
+  "C:\\Users\\givin\\github-repos\\FormWiz2\\components\\EnterpriseContactModal.tsx": {
+    "mtime": 1783030840.749364,
+    "hash": "7baf980d28c976888f774ea3986b9193"
+  },
+  "C:\\Users\\givin\\github-repos\\FormWiz2\\components\\FormWizLogo.tsx": {
+    "mtime": 1783030840.7513452,
+    "hash": "786fdb8a49bb8ec8bef9e1ba3111d2be"
+  },
+  "C:\\Users\\givin\\github-repos\\FormWiz2\\components\\Instructions.tsx": {
+    "mtime": 1783030840.7523606,
+    "hash": "10182ebd6e7e4994235ce05e62679f50"
+  },
+  "C:\\Users\\givin\\github-repos\\FormWiz2\\components\\PDFPreview.tsx": {
+    "mtime": 1783030840.7555518,
+    "hash": "1b2b6491350db37e9db3fc4150df347f"
+  },
+  "C:\\Users\\givin\\github-repos\\FormWiz2\\components\\Pricing.tsx": {
+    "mtime": 1783030840.7577033,
+    "hash": "9601b8ff2f675c16114df9358df1cf4e"
+  },
+  "C:\\Users\\givin\\github-repos\\FormWiz2\\components\\PrivacyPolicy.tsx": {
+    "mtime": 1783030840.7597165,
+    "hash": "206822dfadb61793c7e15df6e18ba923"
+  },
+  "C:\\Users\\givin\\github-repos\\FormWiz2\\components\\Splash.tsx": {
+    "mtime": 1783030840.7627318,
+    "hash": "c7399fd202d90b65e63fde57261f2972"
+  },
+  "C:\\Users\\givin\\github-repos\\FormWiz2\\components\\VoiceInterviewer.tsx": {
+    "mtime": 1783030840.7651014,
+    "hash": "575f33e36c22bb3baa9ce86d31c9e134"
+  },
+  "C:\\Users\\givin\\github-repos\\FormWiz2\\config\\stripeConfig.ts": {
+    "mtime": 1783030840.767608,
+    "hash": "3dd4911ceccae370058a12818e87077b"
+  },
+  "C:\\Users\\givin\\github-repos\\FormWiz2\\netlify\\functions\\analyze.ts": {
+    "mtime": 1783030840.7795086,
+    "hash": "6695f6dedcd0356204be35e9d5ee8c8e"
+  },
+  "C:\\Users\\givin\\github-repos\\FormWiz2\\netlify\\functions\\create-checkout-session.ts": {
+    "mtime": 1783030840.7815075,
+    "hash": "0c9411dc9c2f96c5278a3a148ed66cb8"
+  },
+  "C:\\Users\\givin\\github-repos\\FormWiz2\\netlify\\functions\\get-user.ts": {
+    "mtime": 1783030840.7830148,
+    "hash": "2daebecaf14a32c432438dd0e613320c"
+  },
+  "C:\\Users\\givin\\github-repos\\FormWiz2\\netlify\\functions\\stripe-webhook.ts": {
+    "mtime": 1783030840.7843795,
+    "hash": "39f5c242ddaf47dde8829e5193365713"
+  },
+  "C:\\Users\\givin\\github-repos\\FormWiz2\\services\\geminiService.ts": {
+    "mtime": 1783030840.81083,
+    "hash": "3accae25ab4fcf2ccc73cf00163b8392"
+  },
+  "C:\\Users\\givin\\github-repos\\FormWiz2\\utils\\auth.ts": {
+    "mtime": 1783030840.8177254,
+    "hash": "25dfc7668d36608c45afeaf3d97f25c2"
+  },
+  "C:\\Users\\givin\\github-repos\\FormWiz2\\utils\\db.ts": {
+    "mtime": 1783030840.8197508,
+    "hash": "3a4f523785f03fdcedb3fe9c7f5071a3"
+  },
+  "C:\\Users\\givin\\github-repos\\FormWiz2\\utils\\pdfUtils.ts": {
+    "mtime": 1783030840.8227375,
+    "hash": "d6e76ff0118837e1d068fcfc374920e7"
+  },
+  "C:\\Users\\givin\\github-repos\\FormWiz2\\index.html": {
+    "mtime": 1783030840.7696452,
+    "hash": "4b949d9587c923606827828223f8298b"
+  },
+  "C:\\Users\\givin\\github-repos\\FormWiz2\\README.md": {
+    "mtime": 1783030840.734075,
+    "hash": "c5cb739f17687387669d715b7106a191"
+  },
+  "C:\\Users\\givin\\github-repos\\FormWiz2\\public\\logo-blue.png": {
+    "mtime": 1783030840.8022802,
+    "hash": "873224d58d7d96ef8604c92b8388f790"
+  },
+  "C:\\Users\\givin\\github-repos\\FormWiz2\\public\\logo-dark.png": {
+    "mtime": 1783030840.8037171,
+    "hash": "304c73af146ac5ce277999d551a08032"
+  },
+  "C:\\Users\\givin\\github-repos\\FormWiz2\\public\\logo-light.png": {
+    "mtime": 1783030840.806719,
+    "hash": "205488b94feba9ac3067a59918be88c4"
+  }
+}
