@@ -12,12 +12,14 @@ const handler: Handler = async (event: HandlerEvent) => {
 
   // Lazy init so a missing key returns a clean error instead of a
   // module-scope crash (502 with a stack trace).
-  if (!process.env.STRIPE_SECRET_KEY) {
-    console.error('STRIPE_SECRET_KEY is not configured');
+  // STRIPE_SK accepted as an alternate name for STRIPE_SECRET_KEY.
+  const stripeSecretKey = process.env.STRIPE_SECRET_KEY || process.env.STRIPE_SK;
+  if (!stripeSecretKey) {
+    console.error('Stripe secret key is not configured');
     return { statusCode: 500, body: 'Payments are not configured.' };
   }
   // Omit apiVersion to use the version pinned by the installed Stripe SDK
-  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+  const stripe = new Stripe(stripeSecretKey);
 
   let stripeEvent: Stripe.Event;
 
