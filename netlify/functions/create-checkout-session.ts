@@ -99,11 +99,26 @@ const handler: Handler = async (event: HandlerEvent, context: HandlerContext) =>
       statusCode: 200,
       body: JSON.stringify({ sessionId: session.id, url: session.url }),
     };
-  } catch (error) {
+  } catch (error: any) {
     console.error('Error creating checkout session:', error);
+    // Classify the failure so config problems are actionable without log
+    // access. Categories only — no secrets or internals.
+    const msg = String(error?.message ?? '');
+    let publicError = 'Internal Server Error';
+    if (msg.includes('Database not connected') || msg.includes('connect') && msg.includes('ECONNREFUSED')) {
+      publicError = 'Database is not configured (NETLIFY_DATABASE_URL).';
+    } else if (error?.type === 'StripePermissionError') {
+      publicError = 'Payment key lacks permissions. Grant Checkout Sessions: Write and Customers: Write to the restricted key.';
+    } else if (msg.includes('No such price')) {
+      publicError = 'Price ID not found — the price IDs and API key must be from the same Stripe mode (test vs live).';
+    } else if (error?.type) {
+      publicError = `Payment provider error (${error.type}).`;
+    } else if (msg) {
+      publicError = `Checkout failed (${error?.code ?? error?.name ?? 'server error'}).`;
+    }
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: 'Internal Server Error' }),
+      body: JSON.stringify({ error: publicError }),
     };
   }
 };
