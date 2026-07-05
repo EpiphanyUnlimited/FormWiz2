@@ -6,7 +6,20 @@ export default defineConfig(() => {
     plugins: [react()],
     build: {
       outDir: 'dist',
-      sourcemap: true
+      sourcemap: true,
+      rollupOptions: {
+        output: {
+          // Split stable vendor code from app code so returning visitors
+          // hit cache for the heavy libraries (faster first paint = better
+          // conversion on the landing/pricing pages).
+          manualChunks: {
+            react: ['react', 'react-dom'],
+            pdf: ['pdf-lib'],
+            icons: ['lucide-react'],
+            identity: ['netlify-identity-widget'],
+          },
+        },
+      },
     }
     // NOTE: no `define` for API keys — Gemini calls go through
     // netlify/functions/analyze so the key never reaches the client bundle.
