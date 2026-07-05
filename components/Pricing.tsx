@@ -60,7 +60,12 @@ const Pricing: React.FC<PricingProps> = ({ onBack, currentPlan, onUpgrade }) => 
             });
 
             if (!response.ok) {
-                throw new Error('Network response was not ok');
+                let detail = 'Network response was not ok';
+                try {
+                    const body = await response.json();
+                    if (body?.error) detail = body.error;
+                } catch { /* non-JSON body */ }
+                throw new Error(detail);
             }
 
             const { url } = await response.json();
@@ -71,9 +76,9 @@ const Pricing: React.FC<PricingProps> = ({ onBack, currentPlan, onUpgrade }) => 
             }
             window.location.href = url;
 
-        } catch (error) {
+        } catch (error: any) {
             console.error("Payment error:", error);
-            alert("Failed to initiate payment. Please try again.");
+            alert(`Failed to initiate payment: ${error?.message ?? 'unknown error'}`);
         }
     };
 
