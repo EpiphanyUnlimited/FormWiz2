@@ -1,4 +1,4 @@
-import { Handler, HandlerContext } from '@netlify/functions';
+import { Handler, HandlerEvent, HandlerContext } from '@netlify/functions';
 import { getDb, setupDatabase } from '../../utils/db';
 
 const handler: Handler = async (event: HandlerEvent, context: HandlerContext) => {

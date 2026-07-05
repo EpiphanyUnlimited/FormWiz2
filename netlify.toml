@@ -4,3 +4,10 @@
 
 [build.environment]
   NODE_VERSION = "20.20.0"
+
+# SPA fallback — required so Stripe checkout return URLs (and any deep link)
+# resolve to the app instead of a 404.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

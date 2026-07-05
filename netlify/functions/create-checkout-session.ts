@@ -2,20 +2,27 @@ import { Handler, HandlerEvent, HandlerContext } from '@netlify/functions';
 import Stripe from 'stripe';
 import { getDb, setupDatabase } from '../../utils/db';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2024-06-20',
-});
+// Omit apiVersion to use the version pinned by the installed Stripe SDK
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
 const handler: Handler = async (event: HandlerEvent, context: HandlerContext) => {
   if (event.httpMethod !== 'POST') {
     return { statusCode: 405, body: 'Method Not Allowed' };
   }
 
-  const { priceId } = JSON.parse(event.body || '{}');
+  const { priceId: rawPriceId, plan } = JSON.parse(event.body || '{}');
   const { user } = context.clientContext!;
 
+  // Accept either an explicit Stripe priceId (web) or a plan key (mobile),
+  // resolving plan keys server-side so price IDs never live in clients.
+  const PLAN_PRICE_IDS: Record<string, string | undefined> = {
+    premium: process.env.STRIPE_PRICE_PREMIUM,
+    pro: process.env.STRIPE_PRICE_PRO,
+  };
+  const priceId = rawPriceId || (typeof plan === 'string' ? PLAN_PRICE_IDS[plan] : undefined);
+
   if (!priceId) {
-    return { statusCode: 400, body: JSON.stringify({ error: 'Missing priceId' }) };
+    return { statusCode: 400, body: JSON.stringify({ error: 'Missing or unrecognized priceId/plan' }) };
   }
 
   if (!user) {
@@ -26,9 +33,7 @@ const handler: Handler = async (event: HandlerEvent, context: HandlerContext) =>
     await setupDatabase();
     const db = getDb();
 
-    let { data: userData, error } = await db.query('SELECT stripe_customer_id FROM users WHERE id = $1', [user.sub]);
-    
-    if (error) throw error;
+    const userData = await db.query('SELECT stripe_customer_id FROM users WHERE id = $1', [user.sub]);
 
     let stripeCustomerId: string;
 
@@ -59,13 +64,18 @@ const handler: Handler = async (event: HandlerEvent, context: HandlerContext) =>
       ],
       mode: 'subscription',
       customer: stripeCustomerId,
-      success_url: `${process.env.URL}/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${process.env.URL}/cancel`,
+      // Recorded so the webhook knows which plan was purchased
+      metadata: {
+        plan: (typeof plan === 'string' && PLAN_PRICE_IDS[plan]) ? plan
+          : (priceId === PLAN_PRICE_IDS.pro ? 'pro' : 'premium'),
+      },
+      success_url: `${process.env.URL}/?checkout=success&session_id={CHECKOUT_SESSION_ID}`,
+      cancel_url: `${process.env.URL}/?checkout=cancelled`,
     });
 
     return {
       statusCode: 200,
-      body: JSON.stringify({ sessionId: session.id }),
+      body: JSON.stringify({ sessionId: session.id, url: session.url }),
     };
   } catch (error) {
     console.error('Error creating checkout session:', error);

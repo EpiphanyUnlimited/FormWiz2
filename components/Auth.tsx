@@ -4,12 +4,13 @@ import FormWizLogo from './FormWizLogo';
 import { auth } from '../utils/auth';
 
 interface AuthProps {
-    onLogin: (email: string) => void;
     darkMode: boolean;
     toggleTheme: () => void;
 }
 
-const Auth: React.FC<AuthProps> = ({ onLogin, darkMode, toggleTheme }) => {
+// Login success is handled globally via Netlify Identity events in App.tsx,
+// so this component only needs to open the widget.
+const Auth: React.FC<AuthProps> = ({ darkMode, toggleTheme }) => {
 
     // Auto-open login on mount
     useEffect(() => {

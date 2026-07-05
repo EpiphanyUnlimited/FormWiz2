@@ -2,7 +2,6 @@ import React from 'react';
 import { Check, ArrowLeft, CreditCard, Sparkles, Building2, Crown, Zap } from 'lucide-react';
 import { PlanType } from '../types';
 import FormWizLogo from './FormWizLogo';
-import { loadStripe } from '@stripe/stripe-js';
 import { auth } from '../utils/auth';
 import { STRIPE_PRICES } from '../config/stripeConfig';
 import EnterpriseContactModal from './EnterpriseContactModal';
@@ -64,14 +63,13 @@ const Pricing: React.FC<PricingProps> = ({ onBack, currentPlan, onUpgrade }) => 
                 throw new Error('Network response was not ok');
             }
 
-            const { sessionId } = await response.json();
+            const { url } = await response.json();
 
-            // 5. Redirect to Stripe
-            const stripe = await loadStripe(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
-            if (stripe) {
-                const { error } = await stripe.redirectToCheckout({ sessionId });
-                if (error) throw error;
+            // 5. Redirect to Stripe's hosted checkout page
+            if (!url) {
+                throw new Error('Checkout session did not return a URL');
             }
+            window.location.href = url;
 
         } catch (error) {
             console.error("Payment error:", error);

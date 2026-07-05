@@ -50,7 +50,7 @@ export const convertImageToPDF = async (file: File): Promise<File> => {
                         });
                         
                         const pdfBytes = await pdfDoc.save();
-                        const newFile = new File([pdfBytes], file.name.replace(/\.[^/.]+$/, "") + ".pdf", { type: 'application/pdf' });
+                        const newFile = new File([new Uint8Array(pdfBytes)], file.name.replace(/\.[^/.]+$/, "") + ".pdf", { type: 'application/pdf' });
                         resolve(newFile);
                     } catch (err) {
                         reject(err);
@@ -94,6 +94,45 @@ export const convertPDFToImages = async (file: File): Promise<{ images: string[]
   }
 
   return { images, dimensions };
+};
+
+/**
+ * Normalizes values to standard presentation for common field types:
+ * ssn ###-##-####, phone (###) ###-####, date MM/DD/YYYY, zip #####(-####).
+ * Returns the value unchanged when it can't be confidently normalized.
+ */
+const normalizeFieldValue = (value: string, commonType?: string): string => {
+  const digits = value.replace(/\D/g, '');
+  switch (commonType) {
+    case 'ssn':
+      return digits.length === 9
+        ? `${digits.slice(0, 3)}-${digits.slice(3, 5)}-${digits.slice(5)}`
+        : value;
+    case 'phone': {
+      const d = digits.length === 11 && digits.startsWith('1') ? digits.slice(1) : digits;
+      return d.length === 10
+        ? `(${d.slice(0, 3)}) ${d.slice(3, 6)}-${d.slice(6)}`
+        : value;
+    }
+    case 'date':
+      return digits.length === 8 || digits.length === 6
+        ? `${digits.slice(0, 2)}/${digits.slice(2, 4)}/${digits.slice(4)}`
+        : value;
+    case 'zip':
+      if (digits.length === 9) return `${digits.slice(0, 5)}-${digits.slice(5)}`;
+      if (digits.length === 5) return digits;
+      return value;
+    case 'email':
+      // Dictated speech: "john smith at gmail dot com" -> johnsmith@gmail.com
+      return value
+        .toLowerCase()
+        .trim()
+        .replace(/\s+at\s+/g, '@')
+        .replace(/\s+dot\s+/g, '.')
+        .replace(/\s+/g, '');
+    default:
+      return value;
+  }
 };
 
 const breakTextIntoLines = (text: string, size: number, font: PDFFont, maxWidth: number): string[] => {
@@ -179,16 +218,23 @@ export const generateFilledPDF = async (originalFile: File, fields: FormField[])
       }
 
       // TEXT LOGIC
-      const fontSize = 10;
+      // Font scales with the box so answers match the form's print size
+      const fontSize = Math.min(14, Math.max(11, boxHeight * 0.45));
       const padding = 4;
       const lineHeight = fontSize * 1.2;
-      
-      const lines = breakTextIntoLines(field.value, fontSize, helveticaFont, boxWidth - (padding * 2));
 
-      let currentY = pdfBoxTopY - padding - fontSize; 
+      const value = normalizeFieldValue(field.value, field.commonType);
+      const lines = breakTextIntoLines(value, fontSize, helveticaFont, boxWidth - (padding * 2));
+
+      // Anchor the text block to the BOTTOM of the box so answers sit just
+      // above the form's ruled line (like handwriting). If the block is too
+      // tall for the box, fall back to starting at the box top.
+      const pdfBoxBottomY = pdfBoxTopY - boxHeight;
+      const bottomAnchoredStart = pdfBoxBottomY + padding + (lines.length - 1) * lineHeight;
+      let currentY = Math.min(pdfBoxTopY - padding - fontSize, bottomAnchoredStart);
 
       for (const line of lines) {
-          if (currentY < 10) break; 
+          if (currentY < 10) break;
 
           page.drawText(line, {
               x: boxX + padding,

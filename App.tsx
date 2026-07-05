@@ -67,6 +67,43 @@ function App() {
     // Dashboard Data
     const [savedForms, setSavedForms] = useState<any[]>([]);
 
+    // Stripe checkout return notice ('success' | 'cancelled')
+    const [checkoutNotice, setCheckoutNotice] = useState<'success' | 'cancelled' | null>(null);
+
+    // Pull the authoritative plan from the backend (updated by the Stripe
+    // webhook) and persist it locally. localStorage alone would leave paying
+    // customers stuck on 'free'.
+    const syncPlanFromServer = async (email: string, retryOnFree = false) => {
+        try {
+            const token = await auth.getToken();
+            if (!token) return;
+            const res = await fetch('/.netlify/functions/get-user', {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            if (!res.ok) return;
+            const data = await res.json();
+            const status = data?.subscription_status;
+            const plan: PlanType = status === 'pro' ? 'pro'
+                : status === 'premium' ? 'premium'
+                : status === 'enterprise' ? 'enterprise'
+                : 'free';
+
+            if (plan === 'free' && retryOnFree) {
+                // The webhook may lag the checkout redirect by a few seconds
+                setTimeout(() => syncPlanFromServer(email), 4000);
+                return;
+            }
+
+            setSettings(prev => {
+                const next = { ...prev, plan };
+                localStorage.setItem(getSettingsKey(email), JSON.stringify(next));
+                return next;
+            });
+        } catch (e) {
+            console.error('Plan sync failed', e);
+        }
+    };
+
     // 1. Auth & Initial Load
     useEffect(() => {
         // Check for existing user
@@ -74,12 +111,28 @@ function App() {
         if (currentUser) {
             setUser(currentUser.email);
             loadUserData(currentUser.email);
+            syncPlanFromServer(currentUser.email);
+        }
+
+        // Handle Stripe checkout return (?checkout=success|cancelled)
+        const params = new URLSearchParams(window.location.search);
+        const checkout = params.get('checkout');
+        if (checkout === 'success' || checkout === 'cancelled') {
+            setCheckoutNotice(checkout);
+            window.history.replaceState({}, '', window.location.pathname);
+            if (currentUser) {
+                setView('dashboard');
+                if (checkout === 'success') {
+                    syncPlanFromServer(currentUser.email, true);
+                }
+            }
         }
 
         // Listen for login/logout
         auth.on('login', (user) => {
             setUser(user.email);
             loadUserData(user.email);
+            syncPlanFromServer(user.email);
             setView('dashboard');
             netlifyIdentity.close();
         });
@@ -430,7 +483,7 @@ function App() {
         setStep('exporting');
         try {
             const pdfBytes = await generateFilledPDF(file, fields);
-            const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+            const blob = new Blob([new Uint8Array(pdfBytes)], { type: 'application/pdf' });
             const url = URL.createObjectURL(blob);
             const link = document.createElement('a');
             link.href = url;
@@ -502,23 +555,41 @@ function App() {
     }
 
     if (view === 'auth') {
-        return <Auth onLogin={handleLogin} darkMode={darkMode} toggleTheme={toggleTheme} />;
+        return <Auth darkMode={darkMode} toggleTheme={toggleTheme} />;
     }
 
     if (view === 'dashboard') {
         return (
-            <Dashboard
-                userEmail={user!}
-                onLogout={handleLogout}
-                onNewForm={handleStartNew}
-                onLoadForm={handleLoadForm}
-                savedForms={savedForms}
-                onDeleteForm={handleDeleteForm}
-                darkMode={darkMode}
-                toggleTheme={toggleTheme}
-                onSettings={() => setView('settings')}
-                onUpgrade={() => setView('pricing')}
-            />
+            <>
+                {checkoutNotice && (
+                    <div className={`fixed top-0 inset-x-0 z-[60] flex items-center justify-center gap-3 px-4 py-3 text-sm font-medium text-white ${checkoutNotice === 'success' ? 'bg-green-600' : 'bg-slate-600'}`}>
+                        <span>
+                            {checkoutNotice === 'success'
+                                ? '🎉 Payment successful — your plan has been upgraded!'
+                                : 'Checkout cancelled — you have not been charged.'}
+                        </span>
+                        <button
+                            onClick={() => setCheckoutNotice(null)}
+                            className="ml-2 rounded-full px-2 py-0.5 hover:bg-white/20 transition-colors"
+                            aria-label="Dismiss"
+                        >
+                            ✕
+                        </button>
+                    </div>
+                )}
+                <Dashboard
+                    userEmail={user!}
+                    onLogout={handleLogout}
+                    onNewForm={handleStartNew}
+                    onLoadForm={handleLoadForm}
+                    savedForms={savedForms}
+                    onDeleteForm={handleDeleteForm}
+                    darkMode={darkMode}
+                    toggleTheme={toggleTheme}
+                    onSettings={() => setView('settings')}
+                    onUpgrade={() => setView('pricing')}
+                />
+            </>
         );
     }
 
