@@ -122,6 +122,14 @@ const normalizeFieldValue = (value: string, commonType?: string): string => {
       if (digits.length === 9) return `${digits.slice(0, 5)}-${digits.slice(5)}`;
       if (digits.length === 5) return digits;
       return value;
+    case 'email':
+      // Dictated speech: "john smith at gmail dot com" -> johnsmith@gmail.com
+      return value
+        .toLowerCase()
+        .trim()
+        .replace(/\s+at\s+/g, '@')
+        .replace(/\s+dot\s+/g, '.')
+        .replace(/\s+/g, '');
     default:
       return value;
   }
@@ -210,7 +218,8 @@ export const generateFilledPDF = async (originalFile: File, fields: FormField[])
       }
 
       // TEXT LOGIC
-      const fontSize = 10;
+      // Font scales with the box so answers match the form's print size
+      const fontSize = Math.min(14, Math.max(11, boxHeight * 0.45));
       const padding = 4;
       const lineHeight = fontSize * 1.2;
 

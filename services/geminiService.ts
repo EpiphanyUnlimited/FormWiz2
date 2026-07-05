@@ -36,10 +36,13 @@ export const analyzeFormImage = async (base64Image: string, pageIndex: number): 
     const [ymin, xmin, ymax, xmax] = field.rect;
     const h = ymax - ymin;
     if (h >= 25) return field; // already a tall writing-area box
+    // The ruled line runs through the vertical CENTER of the thin box;
+    // anchor the writing area's bottom right on it so boxes hug the line.
+    const line = ymin + h / 2;
     const writeHeight = Math.min(Math.max(h * 2.5, 22), 45);
     return {
       ...field,
-      rect: [Math.max(ymin - writeHeight, 0), xmin, ymin, xmax] as [number, number, number, number],
+      rect: [Math.max(line - writeHeight, 0), xmin, line, xmax] as [number, number, number, number],
     };
   });
 };
