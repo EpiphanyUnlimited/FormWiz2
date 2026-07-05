@@ -1,7 +1,7 @@
 
 import { Handler, HandlerEvent } from "@netlify/functions";
 import { GoogleGenAI, Type } from "@google/genai";
-import { FormField } from "../../src/types";
+import { FormField } from "../../types";
 
 const parseFieldsFromResponse = (text: string, pageIndex: number): FormField[] => {
   try {
@@ -118,10 +118,18 @@ export const handler: Handler = async (event: HandlerEvent) => {
       body: JSON.stringify(fields),
     };
   } catch (error) {
+    // Log full detail server-side only — upstream error messages can contain
+    // sensitive details (e.g. API key identifiers), so never echo them.
     console.error("Handler Error:", error);
+    const message = String(error?.message ?? '');
+    const publicError = message.includes('API Key not found')
+      ? 'API Key not found. Please ensure it is configured in your Netlify environment variables.'
+      : message.includes('429')
+        ? 'The analysis service is busy. Please try again in a moment.'
+        : 'Document analysis failed. Please try again.';
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: error.message }),
+      body: JSON.stringify({ error: publicError }),
     };
   }
 };

@@ -2,9 +2,8 @@ import { Handler, HandlerEvent } from '@netlify/functions';
 import Stripe from 'stripe';
 import { getDb, setupDatabase } from '../../utils/db';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2024-06-20',
-});
+// Omit apiVersion to use the version pinned by the installed Stripe SDK
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
 
 const handler: Handler = async (event: HandlerEvent) => {
   const sig = event.headers['stripe-signature'];
@@ -31,10 +30,12 @@ const handler: Handler = async (event: HandlerEvent) => {
       case 'checkout.session.completed': {
         const session = stripeEvent.data.object as Stripe.Checkout.Session;
         const customerId = session.customer as string;
+        // Plan recorded in metadata by create-checkout-session; default to premium
+        const plan = session.metadata?.plan === 'pro' ? 'pro' : 'premium';
 
         await db.query(
-          "UPDATE users SET subscription_status = 'premium' WHERE stripe_customer_id = $1",
-          [customerId]
+          'UPDATE users SET subscription_status = $1 WHERE stripe_customer_id = $2',
+          [plan, customerId]
         );
         break;
       }

@@ -1,20 +1,14 @@
-import { defineConfig, loadEnv } from 'vite';
+import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
-export default defineConfig(({ mode }) => {
-  // Use (process as any) to avoid type errors in environments without @types/node
-  const cwd = (process as any).cwd();
-  const env = loadEnv(mode, cwd, '');
-  
+export default defineConfig(() => {
   return {
     plugins: [react()],
     build: {
       outDir: 'dist',
       sourcemap: true
-    },
-    // Explicitly define process.env.API_KEY for the client build
-    define: {
-      'process.env.API_KEY': JSON.stringify(env.API_KEY),
     }
+    // NOTE: no `define` for API keys — Gemini calls go through
+    // netlify/functions/analyze so the key never reaches the client bundle.
   };
 });

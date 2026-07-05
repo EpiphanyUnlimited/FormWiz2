@@ -90,7 +90,7 @@
       "source_file": "types.ts",
       "source_location": "L1",
       "id": "formwiz2_types_formfield",
-      "community": 4,
+      "community": 8,
       "norm_label": "formfield"
     },
     {
@@ -99,7 +99,7 @@
       "source_file": "types.ts",
       "source_location": "L14",
       "id": "formwiz2_types_appstep",
-      "community": 6,
+      "community": 3,
       "norm_label": "appstep"
     },
     {
@@ -137,24 +137,6 @@
       "id": "vite_config_ts",
       "community": 10,
       "norm_label": "vite.config.ts"
-    },
-    {
-      "label": "cwd",
-      "file_type": "code",
-      "source_file": "vite.config.ts",
-      "source_location": "L6",
-      "id": "formwiz2_vite_config_cwd",
-      "community": 10,
-      "norm_label": "cwd"
-    },
-    {
-      "label": "env",
-      "file_type": "code",
-      "source_file": "vite.config.ts",
-      "source_location": "L7",
-      "id": "formwiz2_vite_config_env",
-      "community": 10,
-      "norm_label": "env"
     },
     {
       "label": "AccountSettings.tsx",
@@ -223,7 +205,7 @@
       "label": "Auth()",
       "file_type": "code",
       "source_file": "components/Auth.tsx",
-      "source_location": "L12",
+      "source_location": "L13",
       "id": "components_auth_auth",
       "community": 1,
       "norm_label": "auth()"
@@ -351,7 +333,7 @@
       "source_file": "components/PDFPreview.tsx",
       "source_location": "L1",
       "id": "components_pdfpreview_tsx",
-      "community": 4,
+      "community": 8,
       "norm_label": "pdfpreview.tsx"
     },
     {
@@ -360,7 +342,7 @@
       "source_file": "components/PDFPreview.tsx",
       "source_location": "L5",
       "id": "components_pdfpreview_pdfpreviewprops",
-      "community": 4,
+      "community": 8,
       "norm_label": "pdfpreviewprops"
     },
     {
@@ -369,7 +351,7 @@
       "source_file": "components/PDFPreview.tsx",
       "source_location": "L15",
       "id": "components_pdfpreview_pdfpreview",
-      "community": 4,
+      "community": 8,
       "norm_label": "pdfpreview()"
     },
     {
@@ -385,7 +367,7 @@
       "label": "PricingProps",
       "file_type": "code",
       "source_file": "components/Pricing.tsx",
-      "source_location": "L10",
+      "source_location": "L9",
       "id": "components_pricing_pricingprops",
       "community": 1,
       "norm_label": "pricingprops"
@@ -394,7 +376,7 @@
       "label": "Pricing()",
       "file_type": "code",
       "source_file": "components/Pricing.tsx",
-      "source_location": "L16",
+      "source_location": "L15",
       "id": "components_pricing_pricing",
       "community": 1,
       "norm_label": "pricing()"
@@ -459,7 +441,7 @@
       "source_file": "components/VoiceInterviewer.tsx",
       "source_location": "L1",
       "id": "components_voiceinterviewer_tsx",
-      "community": 4,
+      "community": 12,
       "norm_label": "voiceinterviewer.tsx"
     },
     {
@@ -468,7 +450,7 @@
       "source_file": "components/VoiceInterviewer.tsx",
       "source_location": "L5",
       "id": "components_voiceinterviewer_voiceinterviewerprops",
-      "community": 4,
+      "community": 12,
       "norm_label": "voiceinterviewerprops"
     },
     {
@@ -477,7 +459,7 @@
       "source_file": "components/VoiceInterviewer.tsx",
       "source_location": "L12",
       "id": "components_voiceinterviewer_voiceinterviewer",
-      "community": 4,
+      "community": 12,
       "norm_label": "voiceinterviewer()"
     },
     {
@@ -504,7 +486,7 @@
       "source_file": "netlify/functions/analyze.ts",
       "source_location": "L1",
       "id": "netlify_functions_analyze_ts",
-      "community": 8,
+      "community": 7,
       "norm_label": "analyze.ts"
     },
     {
@@ -513,7 +495,7 @@
       "source_file": "netlify/functions/analyze.ts",
       "source_location": "L6",
       "id": "functions_analyze_parsefieldsfromresponse",
-      "community": 8,
+      "community": 7,
       "norm_label": "parsefieldsfromresponse()"
     },
     {
@@ -522,7 +504,7 @@
       "source_file": "netlify/functions/analyze.ts",
       "source_location": "L43",
       "id": "functions_analyze_analyzeformimage",
-      "community": 8,
+      "community": 7,
       "norm_label": "analyzeformimage()"
     },
     {
@@ -531,7 +513,7 @@
       "source_file": "netlify/functions/analyze.ts",
       "source_location": "L103",
       "id": "functions_analyze_handler",
-      "community": 8,
+      "community": 7,
       "norm_label": "handler()"
     },
     {
@@ -547,7 +529,7 @@
       "label": "stripe",
       "file_type": "code",
       "source_file": "netlify/functions/create-checkout-session.ts",
-      "source_location": "L5",
+      "source_location": "L6",
       "id": "functions_create_checkout_session_stripe",
       "community": 2,
       "norm_label": "stripe"
@@ -556,7 +538,7 @@
       "label": "handler()",
       "file_type": "code",
       "source_file": "netlify/functions/create-checkout-session.ts",
-      "source_location": "L9",
+      "source_location": "L8",
       "id": "functions_create_checkout_session_handler",
       "community": 2,
       "norm_label": "handler()"
@@ -592,7 +574,7 @@
       "label": "stripe",
       "file_type": "code",
       "source_file": "netlify/functions/stripe-webhook.ts",
-      "source_location": "L5",
+      "source_location": "L6",
       "id": "functions_stripe_webhook_stripe",
       "community": 2,
       "norm_label": "stripe"
@@ -601,7 +583,7 @@
       "label": "handler()",
       "file_type": "code",
       "source_file": "netlify/functions/stripe-webhook.ts",
-      "source_location": "L9",
+      "source_location": "L8",
       "id": "functions_stripe_webhook_handler",
       "community": 2,
       "norm_label": "handler()"
@@ -616,19 +598,10 @@
       "norm_label": "geminiservice.ts"
     },
     {
-      "label": "parseFieldsFromResponse()",
-      "file_type": "code",
-      "source_file": "services/geminiService.ts",
-      "source_location": "L4",
-      "id": "services_geminiservice_parsefieldsfromresponse",
-      "community": 11,
-      "norm_label": "parsefieldsfromresponse()"
-    },
-    {
       "label": "analyzeFormImage()",
       "file_type": "code",
       "source_file": "services/geminiService.ts",
-      "source_location": "L47",
+      "source_location": "L10",
       "id": "services_geminiservice_analyzeformimage",
       "community": 11,
       "norm_label": "analyzeformimage()"
@@ -684,7 +657,7 @@
       "source_file": "utils/pdfUtils.ts",
       "source_location": "L1",
       "id": "utils_pdfutils_ts",
-      "community": 5,
+      "community": 4,
       "norm_label": "pdfutils.ts"
     },
     {
@@ -693,7 +666,7 @@
       "source_file": "utils/pdfUtils.ts",
       "source_location": "L6",
       "id": "utils_pdfutils_window",
-      "community": 5,
+      "community": 4,
       "norm_label": "window"
     },
     {
@@ -702,7 +675,7 @@
       "source_file": "utils/pdfUtils.ts",
       "source_location": "L15",
       "id": "utils_pdfutils_convertimagetopdf",
-      "community": 5,
+      "community": 4,
       "norm_label": "convertimagetopdf()"
     },
     {
@@ -711,7 +684,7 @@
       "source_file": "utils/pdfUtils.ts",
       "source_location": "L70",
       "id": "utils_pdfutils_convertpdftoimages",
-      "community": 5,
+      "community": 4,
       "norm_label": "convertpdftoimages()"
     },
     {
@@ -720,7 +693,7 @@
       "source_file": "utils/pdfUtils.ts",
       "source_location": "L99",
       "id": "utils_pdfutils_breaktextintolines",
-      "community": 5,
+      "community": 4,
       "norm_label": "breaktextintolines()"
     },
     {
@@ -729,7 +702,7 @@
       "source_file": "utils/pdfUtils.ts",
       "source_location": "L121",
       "id": "utils_pdfutils_generatefilledpdf",
-      "community": 5,
+      "community": 4,
       "norm_label": "generatefilledpdf()"
     },
     {
@@ -738,7 +711,7 @@
       "source_file": "README.md",
       "source_location": "L1",
       "id": "readme_md",
-      "community": 7,
+      "community": 5,
       "norm_label": "readme.md"
     },
     {
@@ -747,7 +720,7 @@
       "source_file": "README.md",
       "source_location": "L1",
       "id": "formwiz2_readme_formwiz",
-      "community": 7,
+      "community": 5,
       "norm_label": "formwiz"
     },
     {
@@ -756,7 +729,7 @@
       "source_file": "README.md",
       "source_location": "L5",
       "id": "formwiz2_readme_features",
-      "community": 7,
+      "community": 5,
       "norm_label": "features"
     },
     {
@@ -765,7 +738,7 @@
       "source_file": "README.md",
       "source_location": "L13",
       "id": "formwiz2_readme_tech_stack",
-      "community": 7,
+      "community": 5,
       "norm_label": "tech stack"
     },
     {
@@ -774,7 +747,7 @@
       "source_file": "README.md",
       "source_location": "L20",
       "id": "formwiz2_readme_setup",
-      "community": 7,
+      "community": 5,
       "norm_label": "setup"
     },
     {
@@ -783,8 +756,35 @@
       "source_file": "README.md",
       "source_location": "L26",
       "id": "formwiz2_readme_usage",
-      "community": 7,
+      "community": 5,
       "norm_label": "usage"
+    },
+    {
+      "label": "cwd",
+      "file_type": "code",
+      "source_file": "vite.config.ts",
+      "source_location": "L6",
+      "community": 10,
+      "norm_label": "cwd",
+      "id": "formwiz2_vite_config_cwd"
+    },
+    {
+      "label": "env",
+      "file_type": "code",
+      "source_file": "vite.config.ts",
+      "source_location": "L7",
+      "community": 10,
+      "norm_label": "env",
+      "id": "formwiz2_vite_config_env"
+    },
+    {
+      "label": "parseFieldsFromResponse()",
+      "file_type": "code",
+      "source_file": "services/geminiService.ts",
+      "source_location": "L4",
+      "community": 11,
+      "norm_label": "parsefieldsfromresponse()",
+      "id": "services_geminiservice_parsefieldsfromresponse"
     }
   ],
   "links": [
@@ -795,9 +795,9 @@
       "source_file": "App.tsx",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_tsx",
-      "target": "types_ts",
-      "confidence_score": 1.0
+      "target": "types_ts"
     },
     {
       "relation": "imports",
@@ -806,9 +806,9 @@
       "source_file": "App.tsx",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_tsx",
-      "target": "formwiz2_types_appstep",
-      "confidence_score": 1.0
+      "target": "formwiz2_types_appstep"
     },
     {
       "relation": "imports",
@@ -817,9 +817,9 @@
       "source_file": "App.tsx",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_tsx",
-      "target": "formwiz2_types_formfield",
-      "confidence_score": 1.0
+      "target": "formwiz2_types_formfield"
     },
     {
       "relation": "imports",
@@ -828,9 +828,9 @@
       "source_file": "App.tsx",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_tsx",
-      "target": "formwiz2_types_plantype",
-      "confidence_score": 1.0
+      "target": "formwiz2_types_plantype"
     },
     {
       "relation": "imports",
@@ -839,9 +839,9 @@
       "source_file": "App.tsx",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_tsx",
-      "target": "formwiz2_types_usersettings",
-      "confidence_score": 1.0
+      "target": "formwiz2_types_usersettings"
     },
     {
       "relation": "imports_from",
@@ -850,9 +850,9 @@
       "source_file": "App.tsx",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_tsx",
-      "target": "utils_pdfutils_ts",
-      "confidence_score": 1.0
+      "target": "utils_pdfutils_ts"
     },
     {
       "relation": "imports",
@@ -861,9 +861,9 @@
       "source_file": "App.tsx",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_tsx",
-      "target": "utils_pdfutils_convertpdftoimages",
-      "confidence_score": 1.0
+      "target": "utils_pdfutils_convertpdftoimages"
     },
     {
       "relation": "imports",
@@ -872,9 +872,9 @@
       "source_file": "App.tsx",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_tsx",
-      "target": "utils_pdfutils_generatefilledpdf",
-      "confidence_score": 1.0
+      "target": "utils_pdfutils_generatefilledpdf"
     },
     {
       "relation": "imports",
@@ -883,9 +883,9 @@
       "source_file": "App.tsx",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_tsx",
-      "target": "utils_pdfutils_convertimagetopdf",
-      "confidence_score": 1.0
+      "target": "utils_pdfutils_convertimagetopdf"
     },
     {
       "relation": "imports_from",
@@ -894,9 +894,9 @@
       "source_file": "App.tsx",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_tsx",
-      "target": "services_geminiservice_ts",
-      "confidence_score": 1.0
+      "target": "services_geminiservice_ts"
     },
     {
       "relation": "imports",
@@ -905,9 +905,9 @@
       "source_file": "App.tsx",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_tsx",
-      "target": "services_geminiservice_analyzeformimage",
-      "confidence_score": 1.0
+      "target": "services_geminiservice_analyzeformimage"
     },
     {
       "relation": "imports_from",
@@ -916,9 +916,9 @@
       "source_file": "App.tsx",
       "source_location": "L6",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_tsx",
-      "target": "components_voiceinterviewer_tsx",
-      "confidence_score": 1.0
+      "target": "components_voiceinterviewer_tsx"
     },
     {
       "relation": "imports_from",
@@ -927,9 +927,9 @@
       "source_file": "App.tsx",
       "source_location": "L7",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_tsx",
-      "target": "components_pdfpreview_tsx",
-      "confidence_score": 1.0
+      "target": "components_pdfpreview_tsx"
     },
     {
       "relation": "imports_from",
@@ -938,9 +938,9 @@
       "source_file": "App.tsx",
       "source_location": "L8",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_tsx",
-      "target": "components_auth_tsx",
-      "confidence_score": 1.0
+      "target": "components_auth_tsx"
     },
     {
       "relation": "imports_from",
@@ -949,9 +949,9 @@
       "source_file": "App.tsx",
       "source_location": "L9",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_tsx",
-      "target": "components_dashboard_tsx",
-      "confidence_score": 1.0
+      "target": "components_dashboard_tsx"
     },
     {
       "relation": "imports_from",
@@ -960,9 +960,9 @@
       "source_file": "App.tsx",
       "source_location": "L10",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_tsx",
-      "target": "components_splash_tsx",
-      "confidence_score": 1.0
+      "target": "components_splash_tsx"
     },
     {
       "relation": "imports_from",
@@ -971,9 +971,9 @@
       "source_file": "App.tsx",
       "source_location": "L11",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_tsx",
-      "target": "components_privacypolicy_tsx",
-      "confidence_score": 1.0
+      "target": "components_privacypolicy_tsx"
     },
     {
       "relation": "imports_from",
@@ -982,9 +982,9 @@
       "source_file": "App.tsx",
       "source_location": "L12",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_tsx",
-      "target": "components_instructions_tsx",
-      "confidence_score": 1.0
+      "target": "components_instructions_tsx"
     },
     {
       "relation": "imports_from",
@@ -993,9 +993,9 @@
       "source_file": "App.tsx",
       "source_location": "L13",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_tsx",
-      "target": "components_pricing_tsx",
-      "confidence_score": 1.0
+      "target": "components_pricing_tsx"
     },
     {
       "relation": "imports_from",
@@ -1004,9 +1004,9 @@
       "source_file": "App.tsx",
       "source_location": "L14",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_tsx",
-      "target": "components_accountsettings_tsx",
-      "confidence_score": 1.0
+      "target": "components_accountsettings_tsx"
     },
     {
       "relation": "imports_from",
@@ -1015,9 +1015,9 @@
       "source_file": "App.tsx",
       "source_location": "L15",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_tsx",
-      "target": "components_formwizlogo_tsx",
-      "confidence_score": 1.0
+      "target": "components_formwizlogo_tsx"
     },
     {
       "relation": "imports_from",
@@ -1026,9 +1026,9 @@
       "source_file": "App.tsx",
       "source_location": "L16",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_tsx",
-      "target": "components_analyzinganimation_tsx",
-      "confidence_score": 1.0
+      "target": "components_analyzinganimation_tsx"
     },
     {
       "relation": "imports_from",
@@ -1037,9 +1037,9 @@
       "source_file": "App.tsx",
       "source_location": "L17",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_tsx",
-      "target": "utils_auth_ts",
-      "confidence_score": 1.0
+      "target": "utils_auth_ts"
     },
     {
       "relation": "imports",
@@ -1048,9 +1048,9 @@
       "source_file": "App.tsx",
       "source_location": "L17",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_tsx",
-      "target": "utils_auth_auth",
-      "confidence_score": 1.0
+      "target": "utils_auth_auth"
     },
     {
       "relation": "contains",
@@ -1058,9 +1058,9 @@
       "source_file": "App.tsx",
       "source_location": "L21",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_tsx",
-      "target": "formwiz2_app_getstoragekey",
-      "confidence_score": 1.0
+      "target": "formwiz2_app_getstoragekey"
     },
     {
       "relation": "contains",
@@ -1068,9 +1068,9 @@
       "source_file": "App.tsx",
       "source_location": "L22",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_tsx",
-      "target": "formwiz2_app_getsettingskey",
-      "confidence_score": 1.0
+      "target": "formwiz2_app_getsettingskey"
     },
     {
       "relation": "contains",
@@ -1078,9 +1078,9 @@
       "source_file": "App.tsx",
       "source_location": "L24",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_tsx",
-      "target": "formwiz2_app_plan_limits",
-      "confidence_score": 1.0
+      "target": "formwiz2_app_plan_limits"
     },
     {
       "relation": "contains",
@@ -1088,9 +1088,9 @@
       "source_file": "App.tsx",
       "source_location": "L31",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "app_tsx",
-      "target": "formwiz2_app_app",
-      "confidence_score": 1.0
+      "target": "formwiz2_app_app"
     },
     {
       "relation": "imports_from",
@@ -1099,9 +1099,9 @@
       "source_file": "index.tsx",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "index_tsx",
-      "target": "app_tsx",
-      "confidence_score": 1.0
+      "target": "app_tsx"
     },
     {
       "relation": "contains",
@@ -1109,9 +1109,9 @@
       "source_file": "index.tsx",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "index_tsx",
-      "target": "formwiz2_index_container",
-      "confidence_score": 1.0
+      "target": "formwiz2_index_container"
     },
     {
       "relation": "contains",
@@ -1119,9 +1119,9 @@
       "source_file": "index.tsx",
       "source_location": "L6",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "index_tsx",
-      "target": "formwiz2_index_root",
-      "confidence_score": 1.0
+      "target": "formwiz2_index_root"
     },
     {
       "relation": "contains",
@@ -1129,9 +1129,9 @@
       "source_file": "types.ts",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "types_ts",
-      "target": "formwiz2_types_formfield",
-      "confidence_score": 1.0
+      "target": "formwiz2_types_formfield"
     },
     {
       "relation": "contains",
@@ -1139,9 +1139,9 @@
       "source_file": "types.ts",
       "source_location": "L14",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "types_ts",
-      "target": "formwiz2_types_appstep",
-      "confidence_score": 1.0
+      "target": "formwiz2_types_appstep"
     },
     {
       "relation": "contains",
@@ -1149,9 +1149,9 @@
       "source_file": "types.ts",
       "source_location": "L16",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "types_ts",
-      "target": "formwiz2_types_pdfdimensions",
-      "confidence_score": 1.0
+      "target": "formwiz2_types_pdfdimensions"
     },
     {
       "relation": "contains",
@@ -1159,9 +1159,9 @@
       "source_file": "types.ts",
       "source_location": "L21",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "types_ts",
-      "target": "formwiz2_types_plantype",
-      "confidence_score": 1.0
+      "target": "formwiz2_types_plantype"
     },
     {
       "relation": "contains",
@@ -1169,9 +1169,9 @@
       "source_file": "types.ts",
       "source_location": "L23",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "types_ts",
-      "target": "formwiz2_types_usersettings",
-      "confidence_score": 1.0
+      "target": "formwiz2_types_usersettings"
     },
     {
       "relation": "imports_from",
@@ -1180,9 +1180,9 @@
       "source_file": "components/AccountSettings.tsx",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_accountsettings_tsx",
-      "target": "types_ts",
-      "confidence_score": 1.0
+      "target": "types_ts"
     },
     {
       "relation": "imports_from",
@@ -1191,9 +1191,9 @@
       "source_file": "components/PDFPreview.tsx",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_pdfpreview_tsx",
-      "target": "types_ts",
-      "confidence_score": 1.0
+      "target": "types_ts"
     },
     {
       "relation": "imports_from",
@@ -1202,9 +1202,9 @@
       "source_file": "components/Pricing.tsx",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_pricing_tsx",
-      "target": "types_ts",
-      "confidence_score": 1.0
+      "target": "types_ts"
     },
     {
       "relation": "imports_from",
@@ -1213,9 +1213,20 @@
       "source_file": "components/VoiceInterviewer.tsx",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_voiceinterviewer_tsx",
-      "target": "types_ts",
-      "confidence_score": 1.0
+      "target": "types_ts"
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "netlify/functions/analyze.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "netlify_functions_analyze_ts",
+      "target": "types_ts"
     },
     {
       "relation": "imports_from",
@@ -1224,9 +1235,9 @@
       "source_file": "services/geminiService.ts",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_geminiservice_ts",
-      "target": "types_ts",
-      "confidence_score": 1.0
+      "target": "types_ts"
     },
     {
       "relation": "imports_from",
@@ -1235,9 +1246,9 @@
       "source_file": "utils/pdfUtils.ts",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "utils_pdfutils_ts",
-      "target": "types_ts",
-      "confidence_score": 1.0
+      "target": "types_ts"
     },
     {
       "relation": "imports",
@@ -1246,9 +1257,9 @@
       "source_file": "components/PDFPreview.tsx",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_pdfpreview_tsx",
-      "target": "formwiz2_types_formfield",
-      "confidence_score": 1.0
+      "target": "formwiz2_types_formfield"
     },
     {
       "relation": "imports",
@@ -1257,9 +1268,20 @@
       "source_file": "components/VoiceInterviewer.tsx",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_voiceinterviewer_tsx",
-      "target": "formwiz2_types_formfield",
-      "confidence_score": 1.0
+      "target": "formwiz2_types_formfield"
+    },
+    {
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "netlify/functions/analyze.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "netlify_functions_analyze_ts",
+      "target": "formwiz2_types_formfield"
     },
     {
       "relation": "imports",
@@ -1268,9 +1290,9 @@
       "source_file": "services/geminiService.ts",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_geminiservice_ts",
-      "target": "formwiz2_types_formfield",
-      "confidence_score": 1.0
+      "target": "formwiz2_types_formfield"
     },
     {
       "relation": "imports",
@@ -1279,9 +1301,9 @@
       "source_file": "utils/pdfUtils.ts",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "utils_pdfutils_ts",
-      "target": "formwiz2_types_formfield",
-      "confidence_score": 1.0
+      "target": "formwiz2_types_formfield"
     },
     {
       "relation": "imports",
@@ -1290,9 +1312,9 @@
       "source_file": "components/AccountSettings.tsx",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_accountsettings_tsx",
-      "target": "formwiz2_types_plantype",
-      "confidence_score": 1.0
+      "target": "formwiz2_types_plantype"
     },
     {
       "relation": "imports",
@@ -1301,9 +1323,9 @@
       "source_file": "components/Pricing.tsx",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_pricing_tsx",
-      "target": "formwiz2_types_plantype",
-      "confidence_score": 1.0
+      "target": "formwiz2_types_plantype"
     },
     {
       "relation": "imports",
@@ -1312,9 +1334,9 @@
       "source_file": "components/AccountSettings.tsx",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_accountsettings_tsx",
-      "target": "formwiz2_types_usersettings",
-      "confidence_score": 1.0
+      "target": "formwiz2_types_usersettings"
     },
     {
       "relation": "contains",
@@ -1322,9 +1344,9 @@
       "source_file": "vite.config.ts",
       "source_location": "L6",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "vite_config_ts",
-      "target": "formwiz2_vite_config_cwd",
-      "confidence_score": 1.0
+      "target": "formwiz2_vite_config_cwd"
     },
     {
       "relation": "contains",
@@ -1332,9 +1354,9 @@
       "source_file": "vite.config.ts",
       "source_location": "L7",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "vite_config_ts",
-      "target": "formwiz2_vite_config_env",
-      "confidence_score": 1.0
+      "target": "formwiz2_vite_config_env"
     },
     {
       "relation": "contains",
@@ -1342,9 +1364,9 @@
       "source_file": "components/AccountSettings.tsx",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_accountsettings_tsx",
-      "target": "components_accountsettings_accountsettingsprops",
-      "confidence_score": 1.0
+      "target": "components_accountsettings_accountsettingsprops"
     },
     {
       "relation": "contains",
@@ -1352,9 +1374,9 @@
       "source_file": "components/AccountSettings.tsx",
       "source_location": "L15",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_accountsettings_tsx",
-      "target": "components_accountsettings_accountsettings",
-      "confidence_score": 1.0
+      "target": "components_accountsettings_accountsettings"
     },
     {
       "relation": "imports_from",
@@ -1363,9 +1385,9 @@
       "source_file": "components/AnalyzingAnimation.tsx",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_analyzinganimation_tsx",
-      "target": "components_formwizlogo_tsx",
-      "confidence_score": 1.0
+      "target": "components_formwizlogo_tsx"
     },
     {
       "relation": "contains",
@@ -1373,9 +1395,9 @@
       "source_file": "components/AnalyzingAnimation.tsx",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_analyzinganimation_tsx",
-      "target": "components_analyzinganimation_analyzinganimation",
-      "confidence_score": 1.0
+      "target": "components_analyzinganimation_analyzinganimation"
     },
     {
       "relation": "imports_from",
@@ -1384,9 +1406,9 @@
       "source_file": "components/Auth.tsx",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_auth_tsx",
-      "target": "components_formwizlogo_tsx",
-      "confidence_score": 1.0
+      "target": "components_formwizlogo_tsx"
     },
     {
       "relation": "imports_from",
@@ -1395,9 +1417,9 @@
       "source_file": "components/Auth.tsx",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_auth_tsx",
-      "target": "utils_auth_ts",
-      "confidence_score": 1.0
+      "target": "utils_auth_ts"
     },
     {
       "relation": "imports",
@@ -1406,9 +1428,9 @@
       "source_file": "components/Auth.tsx",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_auth_tsx",
-      "target": "utils_auth_auth",
-      "confidence_score": 1.0
+      "target": "utils_auth_auth"
     },
     {
       "relation": "contains",
@@ -1416,9 +1438,9 @@
       "source_file": "components/Auth.tsx",
       "source_location": "L6",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_auth_tsx",
-      "target": "components_auth_authprops",
-      "confidence_score": 1.0
+      "target": "components_auth_authprops"
     },
     {
       "relation": "contains",
@@ -1426,9 +1448,9 @@
       "source_file": "components/Auth.tsx",
       "source_location": "L12",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_auth_tsx",
-      "target": "components_auth_auth",
-      "confidence_score": 1.0
+      "target": "components_auth_auth"
     },
     {
       "relation": "imports_from",
@@ -1437,9 +1459,9 @@
       "source_file": "components/Dashboard.tsx",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_dashboard_tsx",
-      "target": "components_formwizlogo_tsx",
-      "confidence_score": 1.0
+      "target": "components_formwizlogo_tsx"
     },
     {
       "relation": "contains",
@@ -1447,9 +1469,9 @@
       "source_file": "components/Dashboard.tsx",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_dashboard_tsx",
-      "target": "components_dashboard_savedform",
-      "confidence_score": 1.0
+      "target": "components_dashboard_savedform"
     },
     {
       "relation": "contains",
@@ -1457,9 +1479,9 @@
       "source_file": "components/Dashboard.tsx",
       "source_location": "L12",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_dashboard_tsx",
-      "target": "components_dashboard_dashboardprops",
-      "confidence_score": 1.0
+      "target": "components_dashboard_dashboardprops"
     },
     {
       "relation": "contains",
@@ -1467,9 +1489,9 @@
       "source_file": "components/Dashboard.tsx",
       "source_location": "L25",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_dashboard_tsx",
-      "target": "components_dashboard_dashboard",
-      "confidence_score": 1.0
+      "target": "components_dashboard_dashboard"
     },
     {
       "relation": "contains",
@@ -1477,9 +1499,9 @@
       "source_file": "components/EnterpriseContactModal.tsx",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_enterprisecontactmodal_tsx",
-      "target": "components_enterprisecontactmodal_enterprisecontactmodalprops",
-      "confidence_score": 1.0
+      "target": "components_enterprisecontactmodal_enterprisecontactmodalprops"
     },
     {
       "relation": "contains",
@@ -1487,9 +1509,9 @@
       "source_file": "components/EnterpriseContactModal.tsx",
       "source_location": "L9",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_enterprisecontactmodal_tsx",
-      "target": "components_enterprisecontactmodal_enterprisecontactmodal",
-      "confidence_score": 1.0
+      "target": "components_enterprisecontactmodal_enterprisecontactmodal"
     },
     {
       "relation": "imports_from",
@@ -1498,9 +1520,9 @@
       "source_file": "components/Pricing.tsx",
       "source_location": "L8",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_pricing_tsx",
-      "target": "components_enterprisecontactmodal_tsx",
-      "confidence_score": 1.0
+      "target": "components_enterprisecontactmodal_tsx"
     },
     {
       "relation": "contains",
@@ -1508,9 +1530,9 @@
       "source_file": "components/FormWizLogo.tsx",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_formwizlogo_tsx",
-      "target": "components_formwizlogo_formwizlogoprops",
-      "confidence_score": 1.0
+      "target": "components_formwizlogo_formwizlogoprops"
     },
     {
       "relation": "contains",
@@ -1518,9 +1540,9 @@
       "source_file": "components/FormWizLogo.tsx",
       "source_location": "L8",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_formwizlogo_tsx",
-      "target": "components_formwizlogo_formwizlogo",
-      "confidence_score": 1.0
+      "target": "components_formwizlogo_formwizlogo"
     },
     {
       "relation": "imports_from",
@@ -1529,9 +1551,9 @@
       "source_file": "components/Instructions.tsx",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_instructions_tsx",
-      "target": "components_formwizlogo_tsx",
-      "confidence_score": 1.0
+      "target": "components_formwizlogo_tsx"
     },
     {
       "relation": "imports_from",
@@ -1540,9 +1562,9 @@
       "source_file": "components/Pricing.tsx",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_pricing_tsx",
-      "target": "components_formwizlogo_tsx",
-      "confidence_score": 1.0
+      "target": "components_formwizlogo_tsx"
     },
     {
       "relation": "imports_from",
@@ -1551,9 +1573,9 @@
       "source_file": "components/PrivacyPolicy.tsx",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_privacypolicy_tsx",
-      "target": "components_formwizlogo_tsx",
-      "confidence_score": 1.0
+      "target": "components_formwizlogo_tsx"
     },
     {
       "relation": "imports_from",
@@ -1562,9 +1584,9 @@
       "source_file": "components/Splash.tsx",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_splash_tsx",
-      "target": "components_formwizlogo_tsx",
-      "confidence_score": 1.0
+      "target": "components_formwizlogo_tsx"
     },
     {
       "relation": "contains",
@@ -1572,9 +1594,9 @@
       "source_file": "components/Instructions.tsx",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_instructions_tsx",
-      "target": "components_instructions_instructionsprops",
-      "confidence_score": 1.0
+      "target": "components_instructions_instructionsprops"
     },
     {
       "relation": "contains",
@@ -1582,9 +1604,9 @@
       "source_file": "components/Instructions.tsx",
       "source_location": "L9",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_instructions_tsx",
-      "target": "components_instructions_instructions",
-      "confidence_score": 1.0
+      "target": "components_instructions_instructions"
     },
     {
       "relation": "contains",
@@ -1592,9 +1614,9 @@
       "source_file": "components/PDFPreview.tsx",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_pdfpreview_tsx",
-      "target": "components_pdfpreview_pdfpreviewprops",
-      "confidence_score": 1.0
+      "target": "components_pdfpreview_pdfpreviewprops"
     },
     {
       "relation": "contains",
@@ -1602,9 +1624,9 @@
       "source_file": "components/PDFPreview.tsx",
       "source_location": "L15",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_pdfpreview_tsx",
-      "target": "components_pdfpreview_pdfpreview",
-      "confidence_score": 1.0
+      "target": "components_pdfpreview_pdfpreview"
     },
     {
       "relation": "imports_from",
@@ -1613,9 +1635,9 @@
       "source_file": "components/Pricing.tsx",
       "source_location": "L6",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_pricing_tsx",
-      "target": "utils_auth_ts",
-      "confidence_score": 1.0
+      "target": "utils_auth_ts"
     },
     {
       "relation": "imports",
@@ -1624,9 +1646,9 @@
       "source_file": "components/Pricing.tsx",
       "source_location": "L6",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_pricing_tsx",
-      "target": "utils_auth_auth",
-      "confidence_score": 1.0
+      "target": "utils_auth_auth"
     },
     {
       "relation": "imports_from",
@@ -1635,9 +1657,9 @@
       "source_file": "components/Pricing.tsx",
       "source_location": "L7",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_pricing_tsx",
-      "target": "config_stripeconfig_ts",
-      "confidence_score": 1.0
+      "target": "config_stripeconfig_ts"
     },
     {
       "relation": "imports",
@@ -1646,9 +1668,9 @@
       "source_file": "components/Pricing.tsx",
       "source_location": "L7",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_pricing_tsx",
-      "target": "config_stripeconfig_stripe_prices",
-      "confidence_score": 1.0
+      "target": "config_stripeconfig_stripe_prices"
     },
     {
       "relation": "contains",
@@ -1656,9 +1678,9 @@
       "source_file": "components/Pricing.tsx",
       "source_location": "L10",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_pricing_tsx",
-      "target": "components_pricing_pricingprops",
-      "confidence_score": 1.0
+      "target": "components_pricing_pricingprops"
     },
     {
       "relation": "contains",
@@ -1666,9 +1688,9 @@
       "source_file": "components/Pricing.tsx",
       "source_location": "L16",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_pricing_tsx",
-      "target": "components_pricing_pricing",
-      "confidence_score": 1.0
+      "target": "components_pricing_pricing"
     },
     {
       "relation": "contains",
@@ -1676,9 +1698,9 @@
       "source_file": "components/PrivacyPolicy.tsx",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_privacypolicy_tsx",
-      "target": "components_privacypolicy_privacypolicyprops",
-      "confidence_score": 1.0
+      "target": "components_privacypolicy_privacypolicyprops"
     },
     {
       "relation": "contains",
@@ -1686,9 +1708,9 @@
       "source_file": "components/PrivacyPolicy.tsx",
       "source_location": "L9",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_privacypolicy_tsx",
-      "target": "components_privacypolicy_privacypolicy",
-      "confidence_score": 1.0
+      "target": "components_privacypolicy_privacypolicy"
     },
     {
       "relation": "contains",
@@ -1696,9 +1718,9 @@
       "source_file": "components/Splash.tsx",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_splash_tsx",
-      "target": "components_splash_splashprops",
-      "confidence_score": 1.0
+      "target": "components_splash_splashprops"
     },
     {
       "relation": "contains",
@@ -1706,9 +1728,9 @@
       "source_file": "components/Splash.tsx",
       "source_location": "L14",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_splash_tsx",
-      "target": "components_splash_splash",
-      "confidence_score": 1.0
+      "target": "components_splash_splash"
     },
     {
       "relation": "contains",
@@ -1716,9 +1738,9 @@
       "source_file": "components/VoiceInterviewer.tsx",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_voiceinterviewer_tsx",
-      "target": "components_voiceinterviewer_voiceinterviewerprops",
-      "confidence_score": 1.0
+      "target": "components_voiceinterviewer_voiceinterviewerprops"
     },
     {
       "relation": "contains",
@@ -1726,9 +1748,9 @@
       "source_file": "components/VoiceInterviewer.tsx",
       "source_location": "L12",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "components_voiceinterviewer_tsx",
-      "target": "components_voiceinterviewer_voiceinterviewer",
-      "confidence_score": 1.0
+      "target": "components_voiceinterviewer_voiceinterviewer"
     },
     {
       "relation": "contains",
@@ -1736,9 +1758,9 @@
       "source_file": "config/stripeConfig.ts",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "config_stripeconfig_ts",
-      "target": "config_stripeconfig_stripe_prices",
-      "confidence_score": 1.0
+      "target": "config_stripeconfig_stripe_prices"
     },
     {
       "relation": "contains",
@@ -1746,9 +1768,9 @@
       "source_file": "netlify/functions/analyze.ts",
       "source_location": "L6",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "netlify_functions_analyze_ts",
-      "target": "functions_analyze_parsefieldsfromresponse",
-      "confidence_score": 1.0
+      "target": "functions_analyze_parsefieldsfromresponse"
     },
     {
       "relation": "contains",
@@ -1756,9 +1778,9 @@
       "source_file": "netlify/functions/analyze.ts",
       "source_location": "L43",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "netlify_functions_analyze_ts",
-      "target": "functions_analyze_analyzeformimage",
-      "confidence_score": 1.0
+      "target": "functions_analyze_analyzeformimage"
     },
     {
       "relation": "contains",
@@ -1766,9 +1788,9 @@
       "source_file": "netlify/functions/analyze.ts",
       "source_location": "L103",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "netlify_functions_analyze_ts",
-      "target": "functions_analyze_handler",
-      "confidence_score": 1.0
+      "target": "functions_analyze_handler"
     },
     {
       "relation": "calls",
@@ -1777,9 +1799,9 @@
       "source_file": "netlify/functions/analyze.ts",
       "source_location": "L100",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "functions_analyze_analyzeformimage",
-      "target": "functions_analyze_parsefieldsfromresponse",
-      "confidence_score": 1.0
+      "target": "functions_analyze_parsefieldsfromresponse"
     },
     {
       "relation": "calls",
@@ -1788,9 +1810,9 @@
       "source_file": "netlify/functions/analyze.ts",
       "source_location": "L115",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "functions_analyze_handler",
-      "target": "functions_analyze_analyzeformimage",
-      "confidence_score": 1.0
+      "target": "functions_analyze_analyzeformimage"
     },
     {
       "relation": "imports_from",
@@ -1799,9 +1821,9 @@
       "source_file": "netlify/functions/create-checkout-session.ts",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "netlify_functions_create_checkout_session_ts",
-      "target": "utils_db_ts",
-      "confidence_score": 1.0
+      "target": "utils_db_ts"
     },
     {
       "relation": "imports",
@@ -1810,9 +1832,9 @@
       "source_file": "netlify/functions/create-checkout-session.ts",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "netlify_functions_create_checkout_session_ts",
-      "target": "utils_db_getdb",
-      "confidence_score": 1.0
+      "target": "utils_db_getdb"
     },
     {
       "relation": "imports",
@@ -1821,9 +1843,9 @@
       "source_file": "netlify/functions/create-checkout-session.ts",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "netlify_functions_create_checkout_session_ts",
-      "target": "utils_db_setupdatabase",
-      "confidence_score": 1.0
+      "target": "utils_db_setupdatabase"
     },
     {
       "relation": "contains",
@@ -1831,9 +1853,9 @@
       "source_file": "netlify/functions/create-checkout-session.ts",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "netlify_functions_create_checkout_session_ts",
-      "target": "functions_create_checkout_session_stripe",
-      "confidence_score": 1.0
+      "target": "functions_create_checkout_session_stripe"
     },
     {
       "relation": "contains",
@@ -1841,9 +1863,9 @@
       "source_file": "netlify/functions/create-checkout-session.ts",
       "source_location": "L9",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "netlify_functions_create_checkout_session_ts",
-      "target": "functions_create_checkout_session_handler",
-      "confidence_score": 1.0
+      "target": "functions_create_checkout_session_handler"
     },
     {
       "relation": "calls",
@@ -1874,9 +1896,9 @@
       "source_file": "netlify/functions/get-user.ts",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "netlify_functions_get_user_ts",
-      "target": "utils_db_ts",
-      "confidence_score": 1.0
+      "target": "utils_db_ts"
     },
     {
       "relation": "imports",
@@ -1885,9 +1907,9 @@
       "source_file": "netlify/functions/get-user.ts",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "netlify_functions_get_user_ts",
-      "target": "utils_db_getdb",
-      "confidence_score": 1.0
+      "target": "utils_db_getdb"
     },
     {
       "relation": "imports",
@@ -1896,9 +1918,9 @@
       "source_file": "netlify/functions/get-user.ts",
       "source_location": "L2",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "netlify_functions_get_user_ts",
-      "target": "utils_db_setupdatabase",
-      "confidence_score": 1.0
+      "target": "utils_db_setupdatabase"
     },
     {
       "relation": "contains",
@@ -1906,9 +1928,9 @@
       "source_file": "netlify/functions/get-user.ts",
       "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "netlify_functions_get_user_ts",
-      "target": "functions_get_user_handler",
-      "confidence_score": 1.0
+      "target": "functions_get_user_handler"
     },
     {
       "relation": "calls",
@@ -1939,9 +1961,9 @@
       "source_file": "netlify/functions/stripe-webhook.ts",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "netlify_functions_stripe_webhook_ts",
-      "target": "utils_db_ts",
-      "confidence_score": 1.0
+      "target": "utils_db_ts"
     },
     {
       "relation": "imports",
@@ -1950,9 +1972,9 @@
       "source_file": "netlify/functions/stripe-webhook.ts",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "netlify_functions_stripe_webhook_ts",
-      "target": "utils_db_getdb",
-      "confidence_score": 1.0
+      "target": "utils_db_getdb"
     },
     {
       "relation": "imports",
@@ -1961,9 +1983,9 @@
       "source_file": "netlify/functions/stripe-webhook.ts",
       "source_location": "L3",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "netlify_functions_stripe_webhook_ts",
-      "target": "utils_db_setupdatabase",
-      "confidence_score": 1.0
+      "target": "utils_db_setupdatabase"
     },
     {
       "relation": "contains",
@@ -1971,9 +1993,9 @@
       "source_file": "netlify/functions/stripe-webhook.ts",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "netlify_functions_stripe_webhook_ts",
-      "target": "functions_stripe_webhook_stripe",
-      "confidence_score": 1.0
+      "target": "functions_stripe_webhook_stripe"
     },
     {
       "relation": "contains",
@@ -1981,9 +2003,9 @@
       "source_file": "netlify/functions/stripe-webhook.ts",
       "source_location": "L9",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "netlify_functions_stripe_webhook_ts",
-      "target": "functions_stripe_webhook_handler",
-      "confidence_score": 1.0
+      "target": "functions_stripe_webhook_handler"
     },
     {
       "relation": "calls",
@@ -2011,21 +2033,21 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "services/geminiService.ts",
-      "source_location": "L4",
+      "source_location": "L47",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_geminiservice_ts",
-      "target": "services_geminiservice_parsefieldsfromresponse",
-      "confidence_score": 1.0
+      "target": "services_geminiservice_analyzeformimage"
     },
     {
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "services/geminiService.ts",
-      "source_location": "L47",
+      "source_location": "L4",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_geminiservice_ts",
-      "target": "services_geminiservice_analyzeformimage",
-      "confidence_score": 1.0
+      "target": "services_geminiservice_parsefieldsfromresponse"
     },
     {
       "relation": "calls",
@@ -2034,9 +2056,9 @@
       "source_file": "services/geminiService.ts",
       "source_location": "L117",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "services_geminiservice_analyzeformimage",
-      "target": "services_geminiservice_parsefieldsfromresponse",
-      "confidence_score": 1.0
+      "target": "services_geminiservice_parsefieldsfromresponse"
     },
     {
       "relation": "contains",
@@ -2044,9 +2066,9 @@
       "source_file": "utils/auth.ts",
       "source_location": "L6",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "utils_auth_ts",
-      "target": "utils_auth_auth",
-      "confidence_score": 1.0
+      "target": "utils_auth_auth"
     },
     {
       "relation": "contains",
@@ -2054,9 +2076,9 @@
       "source_file": "utils/db.ts",
       "source_location": "L19",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "utils_db_ts",
-      "target": "utils_db_getdb",
-      "confidence_score": 1.0
+      "target": "utils_db_getdb"
     },
     {
       "relation": "contains",
@@ -2064,9 +2086,9 @@
       "source_file": "utils/db.ts",
       "source_location": "L26",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "utils_db_ts",
-      "target": "utils_db_setupdatabase",
-      "confidence_score": 1.0
+      "target": "utils_db_setupdatabase"
     },
     {
       "relation": "calls",
@@ -2075,9 +2097,9 @@
       "source_file": "utils/db.ts",
       "source_location": "L27",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "utils_db_setupdatabase",
-      "target": "utils_db_getdb",
-      "confidence_score": 1.0
+      "target": "utils_db_getdb"
     },
     {
       "relation": "contains",
@@ -2085,9 +2107,9 @@
       "source_file": "utils/pdfUtils.ts",
       "source_location": "L6",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "utils_pdfutils_ts",
-      "target": "utils_pdfutils_window",
-      "confidence_score": 1.0
+      "target": "utils_pdfutils_window"
     },
     {
       "relation": "contains",
@@ -2095,9 +2117,9 @@
       "source_file": "utils/pdfUtils.ts",
       "source_location": "L15",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "utils_pdfutils_ts",
-      "target": "utils_pdfutils_convertimagetopdf",
-      "confidence_score": 1.0
+      "target": "utils_pdfutils_convertimagetopdf"
     },
     {
       "relation": "contains",
@@ -2105,9 +2127,9 @@
       "source_file": "utils/pdfUtils.ts",
       "source_location": "L70",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "utils_pdfutils_ts",
-      "target": "utils_pdfutils_convertpdftoimages",
-      "confidence_score": 1.0
+      "target": "utils_pdfutils_convertpdftoimages"
     },
     {
       "relation": "contains",
@@ -2115,9 +2137,9 @@
       "source_file": "utils/pdfUtils.ts",
       "source_location": "L99",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "utils_pdfutils_ts",
-      "target": "utils_pdfutils_breaktextintolines",
-      "confidence_score": 1.0
+      "target": "utils_pdfutils_breaktextintolines"
     },
     {
       "relation": "contains",
@@ -2125,9 +2147,9 @@
       "source_file": "utils/pdfUtils.ts",
       "source_location": "L121",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "utils_pdfutils_ts",
-      "target": "utils_pdfutils_generatefilledpdf",
-      "confidence_score": 1.0
+      "target": "utils_pdfutils_generatefilledpdf"
     },
     {
       "relation": "calls",
@@ -2136,9 +2158,9 @@
       "source_file": "utils/pdfUtils.ts",
       "source_location": "L186",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "utils_pdfutils_generatefilledpdf",
-      "target": "utils_pdfutils_breaktextintolines",
-      "confidence_score": 1.0
+      "target": "utils_pdfutils_breaktextintolines"
     },
     {
       "relation": "contains",
@@ -2146,9 +2168,9 @@
       "source_file": "README.md",
       "source_location": "L1",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "readme_md",
-      "target": "formwiz2_readme_formwiz",
-      "confidence_score": 1.0
+      "target": "formwiz2_readme_formwiz"
     },
     {
       "relation": "contains",
@@ -2156,9 +2178,9 @@
       "source_file": "README.md",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "formwiz2_readme_formwiz",
-      "target": "formwiz2_readme_features",
-      "confidence_score": 1.0
+      "target": "formwiz2_readme_features"
     },
     {
       "relation": "contains",
@@ -2166,9 +2188,9 @@
       "source_file": "README.md",
       "source_location": "L13",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "formwiz2_readme_formwiz",
-      "target": "formwiz2_readme_tech_stack",
-      "confidence_score": 1.0
+      "target": "formwiz2_readme_tech_stack"
     },
     {
       "relation": "contains",
@@ -2176,9 +2198,9 @@
       "source_file": "README.md",
       "source_location": "L20",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "formwiz2_readme_formwiz",
-      "target": "formwiz2_readme_setup",
-      "confidence_score": 1.0
+      "target": "formwiz2_readme_setup"
     },
     {
       "relation": "contains",
@@ -2186,11 +2208,11 @@
       "source_file": "README.md",
       "source_location": "L26",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "formwiz2_readme_formwiz",
-      "target": "formwiz2_readme_usage",
-      "confidence_score": 1.0
+      "target": "formwiz2_readme_usage"
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "04ad066335e7817c462f6df0540f65c682f2619b"
+  "built_at_commit": "e05ed574b51c99dde3349df252656196ce13da58"
 }

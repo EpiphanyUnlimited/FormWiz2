@@ -50,7 +50,7 @@ export const convertImageToPDF = async (file: File): Promise<File> => {
                         });
                         
                         const pdfBytes = await pdfDoc.save();
-                        const newFile = new File([pdfBytes], file.name.replace(/\.[^/.]+$/, "") + ".pdf", { type: 'application/pdf' });
+                        const newFile = new File([new Uint8Array(pdfBytes)], file.name.replace(/\.[^/.]+$/, "") + ".pdf", { type: 'application/pdf' });
                         resolve(newFile);
                     } catch (err) {
                         reject(err);
