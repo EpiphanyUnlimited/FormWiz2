@@ -2,9 +2,6 @@ import { Handler, HandlerEvent } from '@netlify/functions';
 import Stripe from 'stripe';
 import { getDb, setupDatabase } from '../../utils/db';
 
-// Omit apiVersion to use the version pinned by the installed Stripe SDK
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
-
 const handler: Handler = async (event: HandlerEvent) => {
   const sig = event.headers['stripe-signature'];
   const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
@@ -12,6 +9,15 @@ const handler: Handler = async (event: HandlerEvent) => {
   if (!sig || !webhookSecret) {
     return { statusCode: 400, body: 'Webhook secret not found.' };
   }
+
+  // Lazy init so a missing key returns a clean error instead of a
+  // module-scope crash (502 with a stack trace).
+  if (!process.env.STRIPE_SECRET_KEY) {
+    console.error('STRIPE_SECRET_KEY is not configured');
+    return { statusCode: 500, body: 'Payments are not configured.' };
+  }
+  // Omit apiVersion to use the version pinned by the installed Stripe SDK
+  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
   let stripeEvent: Stripe.Event;
 

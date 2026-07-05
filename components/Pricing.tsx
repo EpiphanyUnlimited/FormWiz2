@@ -3,7 +3,6 @@ import { Check, ArrowLeft, CreditCard, Sparkles, Building2, Crown, Zap } from 'l
 import { PlanType } from '../types';
 import FormWizLogo from './FormWizLogo';
 import { auth } from '../utils/auth';
-import { STRIPE_PRICES } from '../config/stripeConfig';
 import EnterpriseContactModal from './EnterpriseContactModal';
 
 interface PricingProps {
@@ -33,9 +32,8 @@ const Pricing: React.FC<PricingProps> = ({ onBack, currentPlan, onUpgrade }) => 
             return;
         }
 
-        // 2. Get Price ID (In a real app, strict mapping)
-        const priceId = STRIPE_PRICES[plan as keyof typeof STRIPE_PRICES];
-        if (!priceId) {
+        // 2. Only subscription plans go through Stripe
+        if (plan !== 'premium' && plan !== 'pro') {
             alert("Invalid plan selected.");
             return;
         }
@@ -49,14 +47,16 @@ const Pricing: React.FC<PricingProps> = ({ onBack, currentPlan, onUpgrade }) => 
                 return;
             }
 
-            // 4. Call Netlify Function
+            // 4. Call Netlify Function — the plan key is resolved to a
+            // Stripe price ID server-side, so price IDs never live in
+            // the client (same contract the mobile app uses)
             const response = await fetch('/.netlify/functions/create-checkout-session', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
                 },
-                body: JSON.stringify({ priceId })
+                body: JSON.stringify({ plan })
             });
 
             if (!response.ok) {
