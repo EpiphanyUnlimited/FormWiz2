@@ -2,13 +2,22 @@ import { Handler, HandlerEvent, HandlerContext } from '@netlify/functions';
 import Stripe from 'stripe';
 import { getDb, setupDatabase } from '../../utils/db';
 
-// Omit apiVersion to use the version pinned by the installed Stripe SDK
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!);
-
 const handler: Handler = async (event: HandlerEvent, context: HandlerContext) => {
   if (event.httpMethod !== 'POST') {
     return { statusCode: 405, body: 'Method Not Allowed' };
   }
+
+  // Lazy init so a missing key returns a clean error instead of a
+  // module-scope crash (502 with a stack trace).
+  if (!process.env.STRIPE_SECRET_KEY) {
+    console.error('STRIPE_SECRET_KEY is not configured');
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ error: 'Payments are not configured. Please try again later.' }),
+    };
+  }
+  // Omit apiVersion to use the version pinned by the installed Stripe SDK
+  const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
   const { priceId: rawPriceId, plan } = JSON.parse(event.body || '{}');
   const { user } = context.clientContext!;
