@@ -24,9 +24,12 @@ const handler: Handler = async (event: HandlerEvent, context: HandlerContext) =>
 
   // Accept either an explicit Stripe priceId (web) or a plan key (mobile),
   // resolving plan keys server-side so price IDs never live in clients.
+  // Multiple env spellings accepted to match existing site config.
   const PLAN_PRICE_IDS: Record<string, string | undefined> = {
-    premium: process.env.STRIPE_PRICE_PREMIUM,
-    pro: process.env.STRIPE_PRICE_PRO,
+    premium: process.env.STRIPE_PRICE_PREMIUM ||
+        process.env.STRIPE_PRICE_PREM ||
+        process.env.STRIPE_PRICE_ID_PREMIUM,
+    pro: process.env.STRIPE_PRICE_PRO || process.env.STRIPE_PRICE_ID_PRO,
   };
   const priceId = rawPriceId || (typeof plan === 'string' ? PLAN_PRICE_IDS[plan] : undefined);
 
