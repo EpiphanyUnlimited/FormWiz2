@@ -1,6 +1,6 @@
 {
   "C:\\Users\\givin\\github-repos\\FormWiz2\\App.tsx": {
-    "mtime": 1783251809.7506783,
+    "mtime": 1783277105.4205658,
     "hash": "4e163ef0b208e578d1e639f91a03ae1c"
   },
   "C:\\Users\\givin\\github-repos\\FormWiz2\\index.tsx": {
@@ -12,8 +12,8 @@
     "hash": "e6bfa86f3a2f89c427557b516179eef3"
   },
   "C:\\Users\\givin\\github-repos\\FormWiz2\\vite.config.ts": {
-    "mtime": 1783208135.0550654,
-    "hash": "280bcaf4dba7d8e6ac0d5a06f3aedf91"
+    "mtime": 1783277105.4762547,
+    "hash": "77bb8021289e0bde5a0b6fb5c09f2522"
   },
   "C:\\Users\\givin\\github-repos\\FormWiz2\\components\\AccountSettings.tsx": {
     "mtime": 1783030840.740066,
@@ -24,7 +24,7 @@
     "hash": "761902a2164b8ecff0d5766a0968d1ca"
   },
   "C:\\Users\\givin\\github-repos\\FormWiz2\\components\\Auth.tsx": {
-    "mtime": 1783192723.4312246,
+    "mtime": 1783277105.4235206,
     "hash": "5732c0392f6f8285dbb0a40abda507f1"
   },
   "C:\\Users\\givin\\github-repos\\FormWiz2\\components\\Dashboard.tsx": {
@@ -48,8 +48,8 @@
     "hash": "1b2b6491350db37e9db3fc4150df347f"
   },
   "C:\\Users\\givin\\github-repos\\FormWiz2\\components\\Pricing.tsx": {
-    "mtime": 1783192737.671461,
-    "hash": "23975dc1bc38e953f426c41c175180f4"
+    "mtime": 1783281364.1925604,
+    "hash": "fe61464bf91952e51c8a45d857ca2ce7"
   },
   "C:\\Users\\givin\\github-repos\\FormWiz2\\components\\PrivacyPolicy.tsx": {
     "mtime": 1783030840.7597165,
@@ -63,29 +63,25 @@
     "mtime": 1783030840.7651014,
     "hash": "575f33e36c22bb3baa9ce86d31c9e134"
   },
-  "C:\\Users\\givin\\github-repos\\FormWiz2\\config\\stripeConfig.ts": {
-    "mtime": 1783030840.767608,
-    "hash": "3dd4911ceccae370058a12818e87077b"
-  },
   "C:\\Users\\givin\\github-repos\\FormWiz2\\netlify\\functions\\analyze.ts": {
-    "mtime": 1783208577.6089065,
+    "mtime": 1783277105.4582977,
     "hash": "dbe1839007da02481addddf520f4dae6"
   },
   "C:\\Users\\givin\\github-repos\\FormWiz2\\netlify\\functions\\create-checkout-session.ts": {
-    "mtime": 1783251761.2579405,
-    "hash": "d5e3c83228fdd4c8190a98297da04a27"
+    "mtime": 1783281364.1954753,
+    "hash": "47be41b58e3678bddd6f45f4df52ce16"
   },
   "C:\\Users\\givin\\github-repos\\FormWiz2\\netlify\\functions\\get-user.ts": {
-    "mtime": 1783192748.2706177,
+    "mtime": 1783277105.4626734,
     "hash": "3dea877bb436015e10296b5f9142175e"
   },
   "C:\\Users\\givin\\github-repos\\FormWiz2\\netlify\\functions\\stripe-webhook.ts": {
-    "mtime": 1783200942.97504,
-    "hash": "f2b45e4eeab24dac5ad492724dbbc2e2"
+    "mtime": 1783281364.1981063,
+    "hash": "5c23e18e0a13a27a1f1b63a1339437c2"
   },
   "C:\\Users\\givin\\github-repos\\FormWiz2\\services\\geminiService.ts": {
-    "mtime": 1783208124.949158,
-    "hash": "aa385295c6c72897875a0a47631d7c5e"
+    "mtime": 1783277105.4687562,
+    "hash": "db489fd2e4ab4167a2f992c448635d2d"
   },
   "C:\\Users\\givin\\github-repos\\FormWiz2\\utils\\auth.ts": {
     "mtime": 1783030840.8177254,
@@ -96,11 +92,11 @@
     "hash": "3a4f523785f03fdcedb3fe9c7f5071a3"
   },
   "C:\\Users\\givin\\github-repos\\FormWiz2\\utils\\pdfUtils.ts": {
-    "mtime": 1783192726.7362423,
-    "hash": "e2c5bb05bedcca7a916f372a107b9938"
+    "mtime": 1783277105.4762547,
+    "hash": "262110ffb9f9d69ba9197d9447653701"
   },
   "C:\\Users\\givin\\github-repos\\FormWiz2\\index.html": {
-    "mtime": 1783194030.696243,
+    "mtime": 1783277105.4550397,
     "hash": "d76f63e0072722c23b2750968781ff9e"
   },
   "C:\\Users\\givin\\github-repos\\FormWiz2\\README.md": {

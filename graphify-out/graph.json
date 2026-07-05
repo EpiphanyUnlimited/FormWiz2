@@ -9,7 +9,7 @@
       "source_file": "App.tsx",
       "source_location": "L1",
       "id": "app_tsx",
-      "community": 6,
+      "community": 3,
       "norm_label": "app.tsx"
     },
     {
@@ -18,7 +18,7 @@
       "source_file": "App.tsx",
       "source_location": "L21",
       "id": "formwiz2_app_getstoragekey",
-      "community": 6,
+      "community": 3,
       "norm_label": "getstoragekey()"
     },
     {
@@ -27,7 +27,7 @@
       "source_file": "App.tsx",
       "source_location": "L22",
       "id": "formwiz2_app_getsettingskey",
-      "community": 6,
+      "community": 3,
       "norm_label": "getsettingskey()"
     },
     {
@@ -36,7 +36,7 @@
       "source_file": "App.tsx",
       "source_location": "L24",
       "id": "formwiz2_app_plan_limits",
-      "community": 6,
+      "community": 3,
       "norm_label": "plan_limits"
     },
     {
@@ -45,7 +45,7 @@
       "source_file": "App.tsx",
       "source_location": "L31",
       "id": "formwiz2_app_app",
-      "community": 6,
+      "community": 3,
       "norm_label": "app()"
     },
     {
@@ -54,7 +54,7 @@
       "source_file": "index.tsx",
       "source_location": "L1",
       "id": "index_tsx",
-      "community": 9,
+      "community": 6,
       "norm_label": "index.tsx"
     },
     {
@@ -63,7 +63,7 @@
       "source_file": "index.tsx",
       "source_location": "L5",
       "id": "formwiz2_index_container",
-      "community": 9,
+      "community": 6,
       "norm_label": "container"
     },
     {
@@ -72,7 +72,7 @@
       "source_file": "index.tsx",
       "source_location": "L6",
       "id": "formwiz2_index_root",
-      "community": 9,
+      "community": 6,
       "norm_label": "root"
     },
     {
@@ -81,7 +81,7 @@
       "source_file": "types.ts",
       "source_location": "L1",
       "id": "types_ts",
-      "community": 3,
+      "community": 0,
       "norm_label": "types.ts"
     },
     {
@@ -90,7 +90,7 @@
       "source_file": "types.ts",
       "source_location": "L1",
       "id": "formwiz2_types_formfield",
-      "community": 8,
+      "community": 0,
       "norm_label": "formfield"
     },
     {
@@ -99,7 +99,7 @@
       "source_file": "types.ts",
       "source_location": "L14",
       "id": "formwiz2_types_appstep",
-      "community": 3,
+      "community": 0,
       "norm_label": "appstep"
     },
     {
@@ -108,7 +108,7 @@
       "source_file": "types.ts",
       "source_location": "L16",
       "id": "formwiz2_types_pdfdimensions",
-      "community": 3,
+      "community": 0,
       "norm_label": "pdfdimensions"
     },
     {
@@ -117,7 +117,7 @@
       "source_file": "types.ts",
       "source_location": "L21",
       "id": "formwiz2_types_plantype",
-      "community": 3,
+      "community": 0,
       "norm_label": "plantype"
     },
     {
@@ -126,7 +126,7 @@
       "source_file": "types.ts",
       "source_location": "L23",
       "id": "formwiz2_types_usersettings",
-      "community": 3,
+      "community": 0,
       "norm_label": "usersettings"
     },
     {
@@ -135,7 +135,7 @@
       "source_file": "vite.config.ts",
       "source_location": "L1",
       "id": "vite_config_ts",
-      "community": 10,
+      "community": 7,
       "norm_label": "vite.config.ts"
     },
     {
@@ -144,7 +144,7 @@
       "source_file": "components/AccountSettings.tsx",
       "source_location": "L1",
       "id": "components_accountsettings_tsx",
-      "community": 3,
+      "community": 0,
       "norm_label": "accountsettings.tsx"
     },
     {
@@ -153,7 +153,7 @@
       "source_file": "components/AccountSettings.tsx",
       "source_location": "L5",
       "id": "components_accountsettings_accountsettingsprops",
-      "community": 3,
+      "community": 0,
       "norm_label": "accountsettingsprops"
     },
     {
@@ -162,7 +162,7 @@
       "source_file": "components/AccountSettings.tsx",
       "source_location": "L15",
       "id": "components_accountsettings_accountsettings",
-      "community": 3,
+      "community": 0,
       "norm_label": "accountsettings()"
     },
     {
@@ -171,7 +171,7 @@
       "source_file": "components/AnalyzingAnimation.tsx",
       "source_location": "L1",
       "id": "components_analyzinganimation_tsx",
-      "community": 0,
+      "community": 1,
       "norm_label": "analyzinganimation.tsx"
     },
     {
@@ -180,7 +180,7 @@
       "source_file": "components/AnalyzingAnimation.tsx",
       "source_location": "L5",
       "id": "components_analyzinganimation_analyzinganimation",
-      "community": 0,
+      "community": 1,
       "norm_label": "analyzinganimation()"
     },
     {
@@ -189,7 +189,7 @@
       "source_file": "components/Auth.tsx",
       "source_location": "L1",
       "id": "components_auth_tsx",
-      "community": 1,
+      "community": 2,
       "norm_label": "auth.tsx"
     },
     {
@@ -198,7 +198,7 @@
       "source_file": "components/Auth.tsx",
       "source_location": "L6",
       "id": "components_auth_authprops",
-      "community": 1,
+      "community": 2,
       "norm_label": "authprops"
     },
     {
@@ -207,7 +207,7 @@
       "source_file": "components/Auth.tsx",
       "source_location": "L13",
       "id": "components_auth_auth",
-      "community": 1,
+      "community": 2,
       "norm_label": "auth()"
     },
     {
@@ -216,7 +216,7 @@
       "source_file": "components/Dashboard.tsx",
       "source_location": "L1",
       "id": "components_dashboard_tsx",
-      "community": 0,
+      "community": 1,
       "norm_label": "dashboard.tsx"
     },
     {
@@ -225,7 +225,7 @@
       "source_file": "components/Dashboard.tsx",
       "source_location": "L5",
       "id": "components_dashboard_savedform",
-      "community": 0,
+      "community": 1,
       "norm_label": "savedform"
     },
     {
@@ -234,7 +234,7 @@
       "source_file": "components/Dashboard.tsx",
       "source_location": "L12",
       "id": "components_dashboard_dashboardprops",
-      "community": 0,
+      "community": 1,
       "norm_label": "dashboardprops"
     },
     {
@@ -243,7 +243,7 @@
       "source_file": "components/Dashboard.tsx",
       "source_location": "L25",
       "id": "components_dashboard_dashboard",
-      "community": 0,
+      "community": 1,
       "norm_label": "dashboard()"
     },
     {
@@ -252,7 +252,7 @@
       "source_file": "components/EnterpriseContactModal.tsx",
       "source_location": "L1",
       "id": "components_enterprisecontactmodal_tsx",
-      "community": 1,
+      "community": 2,
       "norm_label": "enterprisecontactmodal.tsx"
     },
     {
@@ -261,7 +261,7 @@
       "source_file": "components/EnterpriseContactModal.tsx",
       "source_location": "L4",
       "id": "components_enterprisecontactmodal_enterprisecontactmodalprops",
-      "community": 1,
+      "community": 2,
       "norm_label": "enterprisecontactmodalprops"
     },
     {
@@ -270,7 +270,7 @@
       "source_file": "components/EnterpriseContactModal.tsx",
       "source_location": "L9",
       "id": "components_enterprisecontactmodal_enterprisecontactmodal",
-      "community": 1,
+      "community": 2,
       "norm_label": "enterprisecontactmodal()"
     },
     {
@@ -279,7 +279,7 @@
       "source_file": "components/FormWizLogo.tsx",
       "source_location": "L1",
       "id": "components_formwizlogo_tsx",
-      "community": 0,
+      "community": 1,
       "norm_label": "formwizlogo.tsx"
     },
     {
@@ -288,7 +288,7 @@
       "source_file": "components/FormWizLogo.tsx",
       "source_location": "L3",
       "id": "components_formwizlogo_formwizlogoprops",
-      "community": 0,
+      "community": 1,
       "norm_label": "formwizlogoprops"
     },
     {
@@ -297,7 +297,7 @@
       "source_file": "components/FormWizLogo.tsx",
       "source_location": "L8",
       "id": "components_formwizlogo_formwizlogo",
-      "community": 0,
+      "community": 1,
       "norm_label": "formwizlogo()"
     },
     {
@@ -306,7 +306,7 @@
       "source_file": "components/Instructions.tsx",
       "source_location": "L1",
       "id": "components_instructions_tsx",
-      "community": 0,
+      "community": 1,
       "norm_label": "instructions.tsx"
     },
     {
@@ -315,7 +315,7 @@
       "source_file": "components/Instructions.tsx",
       "source_location": "L5",
       "id": "components_instructions_instructionsprops",
-      "community": 0,
+      "community": 1,
       "norm_label": "instructionsprops"
     },
     {
@@ -324,7 +324,7 @@
       "source_file": "components/Instructions.tsx",
       "source_location": "L9",
       "id": "components_instructions_instructions",
-      "community": 0,
+      "community": 1,
       "norm_label": "instructions()"
     },
     {
@@ -333,7 +333,7 @@
       "source_file": "components/PDFPreview.tsx",
       "source_location": "L1",
       "id": "components_pdfpreview_tsx",
-      "community": 8,
+      "community": 0,
       "norm_label": "pdfpreview.tsx"
     },
     {
@@ -342,7 +342,7 @@
       "source_file": "components/PDFPreview.tsx",
       "source_location": "L5",
       "id": "components_pdfpreview_pdfpreviewprops",
-      "community": 8,
+      "community": 0,
       "norm_label": "pdfpreviewprops"
     },
     {
@@ -351,7 +351,7 @@
       "source_file": "components/PDFPreview.tsx",
       "source_location": "L15",
       "id": "components_pdfpreview_pdfpreview",
-      "community": 8,
+      "community": 0,
       "norm_label": "pdfpreview()"
     },
     {
@@ -360,25 +360,25 @@
       "source_file": "components/Pricing.tsx",
       "source_location": "L1",
       "id": "components_pricing_tsx",
-      "community": 1,
+      "community": 2,
       "norm_label": "pricing.tsx"
     },
     {
       "label": "PricingProps",
       "file_type": "code",
       "source_file": "components/Pricing.tsx",
-      "source_location": "L9",
+      "source_location": "L8",
       "id": "components_pricing_pricingprops",
-      "community": 1,
+      "community": 2,
       "norm_label": "pricingprops"
     },
     {
       "label": "Pricing()",
       "file_type": "code",
       "source_file": "components/Pricing.tsx",
-      "source_location": "L15",
+      "source_location": "L14",
       "id": "components_pricing_pricing",
-      "community": 1,
+      "community": 2,
       "norm_label": "pricing()"
     },
     {
@@ -387,7 +387,7 @@
       "source_file": "components/PrivacyPolicy.tsx",
       "source_location": "L1",
       "id": "components_privacypolicy_tsx",
-      "community": 0,
+      "community": 1,
       "norm_label": "privacypolicy.tsx"
     },
     {
@@ -396,7 +396,7 @@
       "source_file": "components/PrivacyPolicy.tsx",
       "source_location": "L5",
       "id": "components_privacypolicy_privacypolicyprops",
-      "community": 0,
+      "community": 1,
       "norm_label": "privacypolicyprops"
     },
     {
@@ -405,7 +405,7 @@
       "source_file": "components/PrivacyPolicy.tsx",
       "source_location": "L9",
       "id": "components_privacypolicy_privacypolicy",
-      "community": 0,
+      "community": 1,
       "norm_label": "privacypolicy()"
     },
     {
@@ -414,7 +414,7 @@
       "source_file": "components/Splash.tsx",
       "source_location": "L1",
       "id": "components_splash_tsx",
-      "community": 0,
+      "community": 1,
       "norm_label": "splash.tsx"
     },
     {
@@ -423,7 +423,7 @@
       "source_file": "components/Splash.tsx",
       "source_location": "L5",
       "id": "components_splash_splashprops",
-      "community": 0,
+      "community": 1,
       "norm_label": "splashprops"
     },
     {
@@ -432,7 +432,7 @@
       "source_file": "components/Splash.tsx",
       "source_location": "L14",
       "id": "components_splash_splash",
-      "community": 0,
+      "community": 1,
       "norm_label": "splash()"
     },
     {
@@ -441,7 +441,7 @@
       "source_file": "components/VoiceInterviewer.tsx",
       "source_location": "L1",
       "id": "components_voiceinterviewer_tsx",
-      "community": 12,
+      "community": 0,
       "norm_label": "voiceinterviewer.tsx"
     },
     {
@@ -450,7 +450,7 @@
       "source_file": "components/VoiceInterviewer.tsx",
       "source_location": "L5",
       "id": "components_voiceinterviewer_voiceinterviewerprops",
-      "community": 12,
+      "community": 0,
       "norm_label": "voiceinterviewerprops"
     },
     {
@@ -459,26 +459,8 @@
       "source_file": "components/VoiceInterviewer.tsx",
       "source_location": "L12",
       "id": "components_voiceinterviewer_voiceinterviewer",
-      "community": 12,
+      "community": 0,
       "norm_label": "voiceinterviewer()"
-    },
-    {
-      "label": "stripeConfig.ts",
-      "file_type": "code",
-      "source_file": "config/stripeConfig.ts",
-      "source_location": "L1",
-      "id": "config_stripeconfig_ts",
-      "community": 1,
-      "norm_label": "stripeconfig.ts"
-    },
-    {
-      "label": "STRIPE_PRICES",
-      "file_type": "code",
-      "source_file": "config/stripeConfig.ts",
-      "source_location": "L1",
-      "id": "config_stripeconfig_stripe_prices",
-      "community": 1,
-      "norm_label": "stripe_prices"
     },
     {
       "label": "analyze.ts",
@@ -486,7 +468,7 @@
       "source_file": "netlify/functions/analyze.ts",
       "source_location": "L1",
       "id": "netlify_functions_analyze_ts",
-      "community": 7,
+      "community": 0,
       "norm_label": "analyze.ts"
     },
     {
@@ -495,7 +477,7 @@
       "source_file": "netlify/functions/analyze.ts",
       "source_location": "L6",
       "id": "functions_analyze_parsefieldsfromresponse",
-      "community": 7,
+      "community": 0,
       "norm_label": "parsefieldsfromresponse()"
     },
     {
@@ -504,7 +486,7 @@
       "source_file": "netlify/functions/analyze.ts",
       "source_location": "L43",
       "id": "functions_analyze_analyzeformimage",
-      "community": 7,
+      "community": 0,
       "norm_label": "analyzeformimage()"
     },
     {
@@ -513,7 +495,7 @@
       "source_file": "netlify/functions/analyze.ts",
       "source_location": "L103",
       "id": "functions_analyze_handler",
-      "community": 7,
+      "community": 0,
       "norm_label": "handler()"
     },
     {
@@ -522,25 +504,16 @@
       "source_file": "netlify/functions/create-checkout-session.ts",
       "source_location": "L1",
       "id": "netlify_functions_create_checkout_session_ts",
-      "community": 2,
+      "community": 4,
       "norm_label": "create-checkout-session.ts"
-    },
-    {
-      "label": "stripe",
-      "file_type": "code",
-      "source_file": "netlify/functions/create-checkout-session.ts",
-      "source_location": "L6",
-      "id": "functions_create_checkout_session_stripe",
-      "community": 2,
-      "norm_label": "stripe"
     },
     {
       "label": "handler()",
       "file_type": "code",
       "source_file": "netlify/functions/create-checkout-session.ts",
-      "source_location": "L8",
+      "source_location": "L5",
       "id": "functions_create_checkout_session_handler",
-      "community": 2,
+      "community": 4,
       "norm_label": "handler()"
     },
     {
@@ -549,7 +522,7 @@
       "source_file": "netlify/functions/get-user.ts",
       "source_location": "L1",
       "id": "netlify_functions_get_user_ts",
-      "community": 2,
+      "community": 4,
       "norm_label": "get-user.ts"
     },
     {
@@ -558,7 +531,7 @@
       "source_file": "netlify/functions/get-user.ts",
       "source_location": "L4",
       "id": "functions_get_user_handler",
-      "community": 2,
+      "community": 4,
       "norm_label": "handler()"
     },
     {
@@ -567,25 +540,16 @@
       "source_file": "netlify/functions/stripe-webhook.ts",
       "source_location": "L1",
       "id": "netlify_functions_stripe_webhook_ts",
-      "community": 2,
+      "community": 4,
       "norm_label": "stripe-webhook.ts"
-    },
-    {
-      "label": "stripe",
-      "file_type": "code",
-      "source_file": "netlify/functions/stripe-webhook.ts",
-      "source_location": "L6",
-      "id": "functions_stripe_webhook_stripe",
-      "community": 2,
-      "norm_label": "stripe"
     },
     {
       "label": "handler()",
       "file_type": "code",
       "source_file": "netlify/functions/stripe-webhook.ts",
-      "source_location": "L8",
+      "source_location": "L5",
       "id": "functions_stripe_webhook_handler",
-      "community": 2,
+      "community": 4,
       "norm_label": "handler()"
     },
     {
@@ -594,7 +558,7 @@
       "source_file": "services/geminiService.ts",
       "source_location": "L1",
       "id": "services_geminiservice_ts",
-      "community": 11,
+      "community": 8,
       "norm_label": "geminiservice.ts"
     },
     {
@@ -603,7 +567,7 @@
       "source_file": "services/geminiService.ts",
       "source_location": "L10",
       "id": "services_geminiservice_analyzeformimage",
-      "community": 11,
+      "community": 8,
       "norm_label": "analyzeformimage()"
     },
     {
@@ -612,7 +576,7 @@
       "source_file": "utils/auth.ts",
       "source_location": "L1",
       "id": "utils_auth_ts",
-      "community": 1,
+      "community": 2,
       "norm_label": "auth.ts"
     },
     {
@@ -621,7 +585,7 @@
       "source_file": "utils/auth.ts",
       "source_location": "L6",
       "id": "utils_auth_auth",
-      "community": 1,
+      "community": 2,
       "norm_label": "auth"
     },
     {
@@ -630,7 +594,7 @@
       "source_file": "utils/db.ts",
       "source_location": "L1",
       "id": "utils_db_ts",
-      "community": 2,
+      "community": 4,
       "norm_label": "db.ts"
     },
     {
@@ -639,7 +603,7 @@
       "source_file": "utils/db.ts",
       "source_location": "L19",
       "id": "utils_db_getdb",
-      "community": 2,
+      "community": 4,
       "norm_label": "getdb()"
     },
     {
@@ -648,7 +612,7 @@
       "source_file": "utils/db.ts",
       "source_location": "L26",
       "id": "utils_db_setupdatabase",
-      "community": 2,
+      "community": 4,
       "norm_label": "setupdatabase()"
     },
     {
@@ -657,7 +621,7 @@
       "source_file": "utils/pdfUtils.ts",
       "source_location": "L1",
       "id": "utils_pdfutils_ts",
-      "community": 4,
+      "community": 3,
       "norm_label": "pdfutils.ts"
     },
     {
@@ -666,7 +630,7 @@
       "source_file": "utils/pdfUtils.ts",
       "source_location": "L6",
       "id": "utils_pdfutils_window",
-      "community": 4,
+      "community": 3,
       "norm_label": "window"
     },
     {
@@ -675,7 +639,7 @@
       "source_file": "utils/pdfUtils.ts",
       "source_location": "L15",
       "id": "utils_pdfutils_convertimagetopdf",
-      "community": 4,
+      "community": 3,
       "norm_label": "convertimagetopdf()"
     },
     {
@@ -684,25 +648,34 @@
       "source_file": "utils/pdfUtils.ts",
       "source_location": "L70",
       "id": "utils_pdfutils_convertpdftoimages",
-      "community": 4,
+      "community": 3,
       "norm_label": "convertpdftoimages()"
+    },
+    {
+      "label": "normalizeFieldValue()",
+      "file_type": "code",
+      "source_file": "utils/pdfUtils.ts",
+      "source_location": "L104",
+      "id": "utils_pdfutils_normalizefieldvalue",
+      "community": 3,
+      "norm_label": "normalizefieldvalue()"
     },
     {
       "label": "breakTextIntoLines()",
       "file_type": "code",
       "source_file": "utils/pdfUtils.ts",
-      "source_location": "L99",
+      "source_location": "L138",
       "id": "utils_pdfutils_breaktextintolines",
-      "community": 4,
+      "community": 3,
       "norm_label": "breaktextintolines()"
     },
     {
       "label": "generateFilledPDF()",
       "file_type": "code",
       "source_file": "utils/pdfUtils.ts",
-      "source_location": "L121",
+      "source_location": "L160",
       "id": "utils_pdfutils_generatefilledpdf",
-      "community": 4,
+      "community": 3,
       "norm_label": "generatefilledpdf()"
     },
     {
@@ -760,11 +733,47 @@
       "norm_label": "usage"
     },
     {
+      "label": "stripeConfig.ts",
+      "file_type": "code",
+      "source_file": "config/stripeConfig.ts",
+      "source_location": "L1",
+      "community": 2,
+      "norm_label": "stripeconfig.ts",
+      "id": "config_stripeconfig_ts"
+    },
+    {
+      "label": "STRIPE_PRICES",
+      "file_type": "code",
+      "source_file": "config/stripeConfig.ts",
+      "source_location": "L1",
+      "community": 2,
+      "norm_label": "stripe_prices",
+      "id": "config_stripeconfig_stripe_prices"
+    },
+    {
+      "label": "stripe",
+      "file_type": "code",
+      "source_file": "netlify/functions/create-checkout-session.ts",
+      "source_location": "L6",
+      "community": 4,
+      "norm_label": "stripe",
+      "id": "functions_create_checkout_session_stripe"
+    },
+    {
+      "label": "stripe",
+      "file_type": "code",
+      "source_file": "netlify/functions/stripe-webhook.ts",
+      "source_location": "L6",
+      "community": 4,
+      "norm_label": "stripe",
+      "id": "functions_stripe_webhook_stripe"
+    },
+    {
       "label": "cwd",
       "file_type": "code",
       "source_file": "vite.config.ts",
       "source_location": "L6",
-      "community": 10,
+      "community": 7,
       "norm_label": "cwd",
       "id": "formwiz2_vite_config_cwd"
     },
@@ -773,7 +782,7 @@
       "file_type": "code",
       "source_file": "vite.config.ts",
       "source_location": "L7",
-      "community": 10,
+      "community": 7,
       "norm_label": "env",
       "id": "formwiz2_vite_config_env"
     },
@@ -782,7 +791,7 @@
       "file_type": "code",
       "source_file": "services/geminiService.ts",
       "source_location": "L4",
-      "community": 11,
+      "community": 8,
       "norm_label": "parsefieldsfromresponse()",
       "id": "services_geminiservice_parsefieldsfromresponse"
     }
@@ -1651,6 +1660,26 @@
       "target": "utils_auth_auth"
     },
     {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/Pricing.tsx",
+      "source_location": "L10",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_pricing_tsx",
+      "target": "components_pricing_pricingprops"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "components/Pricing.tsx",
+      "source_location": "L16",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "components_pricing_tsx",
+      "target": "components_pricing_pricing"
+    },
+    {
       "relation": "imports_from",
       "context": "import",
       "confidence": "EXTRACTED",
@@ -1671,26 +1700,6 @@
       "confidence_score": 1.0,
       "source": "components_pricing_tsx",
       "target": "config_stripeconfig_stripe_prices"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/Pricing.tsx",
-      "source_location": "L10",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "components_pricing_tsx",
-      "target": "components_pricing_pricingprops"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "components/Pricing.tsx",
-      "source_location": "L16",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "components_pricing_tsx",
-      "target": "components_pricing_pricing"
     },
     {
       "relation": "contains",
@@ -1751,16 +1760,6 @@
       "confidence_score": 1.0,
       "source": "components_voiceinterviewer_tsx",
       "target": "components_voiceinterviewer_voiceinterviewer"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "config/stripeConfig.ts",
-      "source_location": "L1",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "config_stripeconfig_ts",
-      "target": "config_stripeconfig_stripe_prices"
     },
     {
       "relation": "contains",
@@ -1851,21 +1850,21 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "netlify/functions/create-checkout-session.ts",
-      "source_location": "L5",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "netlify_functions_create_checkout_session_ts",
-      "target": "functions_create_checkout_session_stripe"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "netlify/functions/create-checkout-session.ts",
       "source_location": "L9",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "netlify_functions_create_checkout_session_ts",
       "target": "functions_create_checkout_session_handler"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "netlify/functions/create-checkout-session.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "netlify_functions_create_checkout_session_ts",
+      "target": "functions_create_checkout_session_stripe"
     },
     {
       "relation": "calls",
@@ -1991,21 +1990,21 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "netlify/functions/stripe-webhook.ts",
-      "source_location": "L5",
-      "weight": 1.0,
-      "confidence_score": 1.0,
-      "source": "netlify_functions_stripe_webhook_ts",
-      "target": "functions_stripe_webhook_stripe"
-    },
-    {
-      "relation": "contains",
-      "confidence": "EXTRACTED",
-      "source_file": "netlify/functions/stripe-webhook.ts",
       "source_location": "L9",
       "weight": 1.0,
       "confidence_score": 1.0,
       "source": "netlify_functions_stripe_webhook_ts",
       "target": "functions_stripe_webhook_handler"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "netlify/functions/stripe-webhook.ts",
+      "source_location": "L5",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "netlify_functions_stripe_webhook_ts",
+      "target": "functions_stripe_webhook_stripe"
     },
     {
       "relation": "calls",
@@ -2135,6 +2134,16 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "utils/pdfUtils.ts",
+      "source_location": "L104",
+      "weight": 1.0,
+      "source": "utils_pdfutils_ts",
+      "target": "utils_pdfutils_normalizefieldvalue",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "utils/pdfUtils.ts",
       "source_location": "L99",
       "weight": 1.0,
       "confidence_score": 1.0,
@@ -2150,6 +2159,17 @@
       "confidence_score": 1.0,
       "source": "utils_pdfutils_ts",
       "target": "utils_pdfutils_generatefilledpdf"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "utils/pdfUtils.ts",
+      "source_location": "L226",
+      "weight": 1.0,
+      "source": "utils_pdfutils_generatefilledpdf",
+      "target": "utils_pdfutils_normalizefieldvalue",
+      "confidence_score": 1.0
     },
     {
       "relation": "calls",
@@ -2211,8 +2231,18 @@
       "confidence_score": 1.0,
       "source": "formwiz2_readme_formwiz",
       "target": "formwiz2_readme_usage"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "config/stripeConfig.ts",
+      "source_location": "L1",
+      "weight": 1.0,
+      "confidence_score": 1.0,
+      "source": "config_stripeconfig_ts",
+      "target": "config_stripeconfig_stripe_prices"
     }
   ],
   "hyperedges": [],
-  "built_at_commit": "e05ed574b51c99dde3349df252656196ce13da58"
+  "built_at_commit": "4cdbdff38e3049fba8428277a77f4a0380ba7015"
 }
