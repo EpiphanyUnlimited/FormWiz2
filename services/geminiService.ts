@@ -26,5 +26,20 @@ export const analyzeFormImage = async (base64Image: string, pageIndex: number): 
   }
 
   const fields = await response.json();
-  return Array.isArray(fields) ? fields : [];
+  if (!Array.isArray(fields)) return [];
+
+  // Gemini's box for text fields tends to hug the ruled answer LINE itself
+  // (a thin box straddling it), but answers are written ABOVE the line —
+  // lift thin boxes to cover the writing area. Checkboxes stay untouched.
+  return fields.map((field: FormField) => {
+    if (field.type === 'checkbox' || !Array.isArray(field.rect)) return field;
+    const [ymin, xmin, ymax, xmax] = field.rect;
+    const h = ymax - ymin;
+    if (h >= 25) return field; // already a tall writing-area box
+    const writeHeight = Math.min(Math.max(h * 2.5, 22), 45);
+    return {
+      ...field,
+      rect: [Math.max(ymin - writeHeight, 0), xmin, ymin, xmax] as [number, number, number, number],
+    };
+  });
 };

@@ -96,6 +96,37 @@ export const convertPDFToImages = async (file: File): Promise<{ images: string[]
   return { images, dimensions };
 };
 
+/**
+ * Normalizes values to standard presentation for common field types:
+ * ssn ###-##-####, phone (###) ###-####, date MM/DD/YYYY, zip #####(-####).
+ * Returns the value unchanged when it can't be confidently normalized.
+ */
+const normalizeFieldValue = (value: string, commonType?: string): string => {
+  const digits = value.replace(/\D/g, '');
+  switch (commonType) {
+    case 'ssn':
+      return digits.length === 9
+        ? `${digits.slice(0, 3)}-${digits.slice(3, 5)}-${digits.slice(5)}`
+        : value;
+    case 'phone': {
+      const d = digits.length === 11 && digits.startsWith('1') ? digits.slice(1) : digits;
+      return d.length === 10
+        ? `(${d.slice(0, 3)}) ${d.slice(3, 6)}-${d.slice(6)}`
+        : value;
+    }
+    case 'date':
+      return digits.length === 8 || digits.length === 6
+        ? `${digits.slice(0, 2)}/${digits.slice(2, 4)}/${digits.slice(4)}`
+        : value;
+    case 'zip':
+      if (digits.length === 9) return `${digits.slice(0, 5)}-${digits.slice(5)}`;
+      if (digits.length === 5) return digits;
+      return value;
+    default:
+      return value;
+  }
+};
+
 const breakTextIntoLines = (text: string, size: number, font: PDFFont, maxWidth: number): string[] => {
   // Safety check: ensure maxWidth is positive to prevent infinite loops or weird behavior
   const effectiveMaxWidth = Math.max(maxWidth, 20); 
@@ -182,13 +213,19 @@ export const generateFilledPDF = async (originalFile: File, fields: FormField[])
       const fontSize = 10;
       const padding = 4;
       const lineHeight = fontSize * 1.2;
-      
-      const lines = breakTextIntoLines(field.value, fontSize, helveticaFont, boxWidth - (padding * 2));
 
-      let currentY = pdfBoxTopY - padding - fontSize; 
+      const value = normalizeFieldValue(field.value, field.commonType);
+      const lines = breakTextIntoLines(value, fontSize, helveticaFont, boxWidth - (padding * 2));
+
+      // Anchor the text block to the BOTTOM of the box so answers sit just
+      // above the form's ruled line (like handwriting). If the block is too
+      // tall for the box, fall back to starting at the box top.
+      const pdfBoxBottomY = pdfBoxTopY - boxHeight;
+      const bottomAnchoredStart = pdfBoxBottomY + padding + (lines.length - 1) * lineHeight;
+      let currentY = Math.min(pdfBoxTopY - padding - fontSize, bottomAnchoredStart);
 
       for (const line of lines) {
-          if (currentY < 10) break; 
+          if (currentY < 10) break;
 
           page.drawText(line, {
               x: boxX + padding,
