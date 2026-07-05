@@ -10,10 +10,18 @@ const handler: Handler = async (event: HandlerEvent, context: HandlerContext) =>
   // Lazy init so a missing key returns a clean error instead of a
   // module-scope crash (502 with a stack trace).
   if (!process.env.STRIPE_SECRET_KEY) {
-    console.error('STRIPE_SECRET_KEY is not configured');
+    // TEMP diagnostic while payments are being configured: report which
+    // STRIPE* variable NAMES are visible to the function (never values).
+    const visibleStripeVars = Object.keys(process.env)
+      .filter((k) => k.toUpperCase().includes('STRIPE'))
+      .sort();
+    console.error('STRIPE_SECRET_KEY is not configured. Visible:', visibleStripeVars);
     return {
       statusCode: 500,
-      body: JSON.stringify({ error: 'Payments are not configured. Please try again later.' }),
+      body: JSON.stringify({
+        error: 'Payments are not configured. Please try again later.',
+        visibleStripeVars,
+      }),
     };
   }
   // Omit apiVersion to use the version pinned by the installed Stripe SDK
