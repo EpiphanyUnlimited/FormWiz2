@@ -12,18 +12,10 @@ const handler: Handler = async (event: HandlerEvent, context: HandlerContext) =>
   // STRIPE_SK accepted as an alternate name for STRIPE_SECRET_KEY.
   const stripeSecretKey = process.env.STRIPE_SECRET_KEY || process.env.STRIPE_SK;
   if (!stripeSecretKey) {
-    // TEMP diagnostic while payments are being configured: report which
-    // STRIPE* variable NAMES are visible to the function (never values).
-    const visibleStripeVars = Object.keys(process.env)
-      .filter((k) => k.toUpperCase().includes('STRIPE'))
-      .sort();
-    console.error('Stripe secret key is not configured. Visible:', visibleStripeVars);
+    console.error('Stripe secret key is not configured');
     return {
       statusCode: 500,
-      body: JSON.stringify({
-        error: 'Payments are not configured. Please try again later.',
-        visibleStripeVars,
-      }),
+      body: JSON.stringify({ error: 'Payments are not configured. Please try again later.' }),
     };
   }
   // Omit apiVersion to use the version pinned by the installed Stripe SDK
