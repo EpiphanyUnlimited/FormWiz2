@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git add *)",
+      "Bash(git commit -q -m 'Add Tailwind v4 + shadcn-style login/signup demo component and refresh graphify output *)",
+      "Bash(git push *)"
+    ]
+  }
+}
