@@ -12,6 +12,8 @@ import PrivacyPolicy from './components/PrivacyPolicy';
 import Instructions from './components/Instructions';
 import Pricing from './components/Pricing';
 import AccountSettings from './components/AccountSettings';
+import DeleteAccountInfo from './components/DeleteAccountInfo';
+import AdminAccounts from './components/AdminAccounts';
 import FormWizLogo from './components/FormWizLogo';
 import AnalyzingAnimation from './components/AnalyzingAnimation';
 import { auth } from './utils/auth';
@@ -30,7 +32,19 @@ const PLAN_LIMITS = {
 
 function App() {
     const [user, setUser] = useState<string | null>(null);
-    const [view, setView] = useState<'splash' | 'auth' | 'dashboard' | 'editor' | 'privacy' | 'instructions' | 'pricing' | 'settings'>('splash');
+    const [view, setView] = useState<'splash' | 'auth' | 'dashboard' | 'editor' | 'privacy' | 'instructions' | 'pricing' | 'settings' | 'delete-account' | 'admin'>(() => {
+        // Direct-URL routing for pages declared publicly (Play Console,
+        // privacy regulators): /privacy and /delete-account must resolve
+        // without navigating through the app. /admin is the owner console
+        // (server-authorized; harmless for anyone else to visit).
+        if (typeof window !== 'undefined') {
+            const path = window.location.pathname.replace(/\/+$/, '');
+            if (path === '/privacy') return 'privacy';
+            if (path === '/delete-account') return 'delete-account';
+            if (path === '/admin') return 'admin';
+        }
+        return 'splash';
+    });
 
     // User Settings (Plan & Usage)
     const [settings, setSettings] = useState<UserSettings>({
@@ -529,6 +543,20 @@ function App() {
                 onBack={() => setView(user ? 'dashboard' : 'splash')}
                 currentPlan={settings.plan}
                 onUpgrade={handleUpgradePlan}
+            />
+        );
+    }
+
+    if (view === 'admin') {
+        return <AdminAccounts onBack={() => setView(user ? 'dashboard' : 'splash')} />;
+    }
+
+    if (view === 'delete-account') {
+        return (
+            <DeleteAccountInfo
+                onBack={() => setView(user ? 'dashboard' : 'splash')}
+                onGoToSettings={() => setView(user ? 'settings' : 'auth')}
+                isSignedIn={!!user}
             />
         );
     }

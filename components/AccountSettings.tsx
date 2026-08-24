@@ -1,6 +1,7 @@
-import React from 'react';
-import { User, CreditCard, Shield, Moon, Sun, LogOut, ArrowLeft, Trash2, Crown, Download, FileText } from 'lucide-react';
+import React, { useState } from 'react';
+import { User, CreditCard, Shield, Moon, Sun, LogOut, ArrowLeft, Trash2, Crown, Download, FileText, UserX } from 'lucide-react';
 import { UserSettings, PlanType } from '../types';
+import { auth } from '../utils/auth';
 
 interface AccountSettingsProps {
     userEmail: string;
@@ -30,6 +31,53 @@ const AccountSettings: React.FC<AccountSettingsProps> = ({
     };
 
     const limits = PLAN_LIMITS[settings.plan];
+    const [isDeleting, setIsDeleting] = useState(false);
+
+    // Remove ONLY this account's locally stored data. Never localStorage.clear():
+    // other accounts on a shared browser must keep their own data (and must
+    // never have it destroyed by someone else, either).
+    const clearThisAccountsLocalData = () => {
+        localStorage.removeItem(`autoform_forms_${userEmail}`);
+        localStorage.removeItem(`autoform_settings_${userEmail}`);
+    };
+
+    const handleDeleteLocalData = () => {
+        if (window.confirm('Delete all forms and settings saved for THIS account in this browser? This cannot be undone.')) {
+            clearThisAccountsLocalData();
+            window.location.reload();
+        }
+    };
+
+    // Permanent server-side account deletion (Google Play / privacy requirement).
+    const handleDeleteAccount = async () => {
+        const typed = window.prompt(
+            'This permanently deletes your FormWiz account, cancels any subscription, and removes your data. ' +
+            'This cannot be undone.\n\nType DELETE to confirm:'
+        );
+        if (typed !== 'DELETE') return;
+
+        setIsDeleting(true);
+        try {
+            const token = await auth.getToken();
+            if (!token) throw new Error('Not signed in.');
+            const res = await fetch('/.netlify/functions/delete-account', {
+                method: 'POST',
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            if (!res.ok) {
+                const data = await res.json().catch(() => ({}));
+                throw new Error(data.error || 'Deletion failed. Please try again or email info@epiphanyunltd.com.');
+            }
+            clearThisAccountsLocalData();
+            auth.logout();
+            window.alert('Your account has been permanently deleted.');
+            window.location.href = '/';
+        } catch (e: any) {
+            window.alert(e.message || 'Deletion failed. Please try again or email info@epiphanyunltd.com.');
+        } finally {
+            setIsDeleting(false);
+        }
+    };
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-blue-50 via-blue-50 to-indigo-50 dark:from-slate-900 dark:via-slate-800 dark:to-indigo-950 text-slate-900 dark:text-slate-100 font-sans p-6 transition-colors duration-300">
@@ -131,9 +179,10 @@ const AccountSettings: React.FC<AccountSettingsProps> = ({
                 <div className="bg-red-50 dark:bg-red-900/10 rounded-2xl border border-red-100 dark:border-red-900/30 p-6">
                     <h3 className="text-red-700 dark:text-red-400 font-bold mb-2">Danger Zone</h3>
                     <p className="text-sm text-red-600/70 dark:text-red-400/70 mb-4">
-                        Deleting your account will permanently remove all saved forms and settings from this device.
+                        "Delete Local Data" removes this account's forms and settings from this browser only.
+                        "Delete Account" permanently deletes your FormWiz account, cancels any subscription, and removes your data from our systems.
                     </p>
-                    <div className="flex gap-4">
+                    <div className="flex gap-4 flex-wrap">
                         <button
                             onClick={onLogout}
                             className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-700 font-medium text-sm"
@@ -141,15 +190,17 @@ const AccountSettings: React.FC<AccountSettingsProps> = ({
                             <LogOut size={16} /> Sign Out
                         </button>
                         <button
-                            onClick={() => {
-                                if (window.confirm("Are you sure? This will wipe all local data.")) {
-                                    localStorage.clear();
-                                    window.location.reload();
-                                }
-                            }}
-                            className="flex items-center gap-2 px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg font-medium text-sm transition-colors"
+                            onClick={handleDeleteLocalData}
+                            className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-slate-800 border border-red-200 dark:border-red-900/50 text-red-600 dark:text-red-400 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 font-medium text-sm transition-colors"
                         >
-                            <Trash2 size={16} /> Delete Data
+                            <Trash2 size={16} /> Delete Local Data
+                        </button>
+                        <button
+                            onClick={handleDeleteAccount}
+                            disabled={isDeleting}
+                            className="flex items-center gap-2 px-4 py-2 bg-red-600 hover:bg-red-700 disabled:opacity-60 text-white rounded-lg font-medium text-sm transition-colors"
+                        >
+                            <UserX size={16} /> {isDeleting ? 'Deleting…' : 'Delete Account'}
                         </button>
                     </div>
                 </div>

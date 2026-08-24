@@ -1,4 +1,5 @@
 import { FormField } from "../types";
+import { auth } from "../utils/auth";
 
 /**
  * Analyzes a form page image by calling the server-side Netlify function.
@@ -8,9 +9,17 @@ import { FormField } from "../types";
  * which baked the API key into the client bundle.)
  */
 export const analyzeFormImage = async (base64Image: string, pageIndex: number): Promise<FormField[]> => {
+  // The endpoint requires the signed-in user's Identity JWT.
+  const token = await auth.getToken();
+  if (!token) {
+    throw new Error('Please sign in to analyze documents.');
+  }
   const response = await fetch('/.netlify/functions/analyze', {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`,
+    },
     body: JSON.stringify({ base64Image, pageIndex }),
   });
 

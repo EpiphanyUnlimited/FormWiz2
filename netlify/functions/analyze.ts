@@ -1,5 +1,5 @@
 
-import { Handler, HandlerEvent } from "@netlify/functions";
+import { Handler, HandlerEvent, HandlerContext } from "@netlify/functions";
 import { GoogleGenAI, Type } from "@google/genai";
 import { FormField } from "../../types";
 
@@ -100,9 +100,18 @@ const analyzeFormImage = async (base64Image: string, pageIndex: number): Promise
   return parseFieldsFromResponse(response.text || "[]", pageIndex);
 };
 
-export const handler: Handler = async (event: HandlerEvent) => {
+export const handler: Handler = async (event: HandlerEvent, context: HandlerContext) => {
   if (event.httpMethod !== 'POST') {
     return { statusCode: 405, body: 'Method Not Allowed' };
+  }
+
+  // Require a signed-in user: uploaded documents are sensitive user content,
+  // and an open endpoint would also let anyone burn the Gemini quota.
+  // Netlify validates the Identity JWT from the Authorization header and
+  // populates clientContext.user for both the web app and the mobile app.
+  const { user } = (context.clientContext ?? {}) as { user?: { sub: string } };
+  if (!user) {
+    return { statusCode: 401, body: JSON.stringify({ error: 'Please sign in to analyze documents.' }) };
   }
 
   try {
